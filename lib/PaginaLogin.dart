@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:app/PaginaAjustes.dart';
 
 class PaginaLogin extends StatefulWidget {
   @override
@@ -9,6 +10,7 @@ class PaginaLogin extends StatefulWidget {
 
 class _PaginaLoginState extends State<PaginaLogin> {
   List<String> Usuarios = ['José', 'María', 'Paco', 'Laura', 'Alex', 'Marta', 'Antonio', 'Pablo', 'Inés', 'Jorge', 'David', 'Ana', 'Lucía'];
+
   int NumeroPagina = 0;
   int NumeroFilas = 4;
   int NumeroColumnas = 2;
@@ -23,7 +25,6 @@ class _PaginaLoginState extends State<PaginaLogin> {
     void RealizarAccion(String value) {
       switch (value) {
         case 'Ajustes':
-          print('Click en Ajustes');
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => PaginaAjustes()),
@@ -44,7 +45,6 @@ class _PaginaLoginState extends State<PaginaLogin> {
         if(NumeroPagina < (Usuarios.length / NumeroCasillasTotales - 1))
           NumeroPagina++;
       });
-
     }
 
     return Scaffold(
@@ -66,7 +66,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
         ],
       ),
       body: Column(
-        children: [
+        children: <Widget>[
           Container(
             height: MediaQuery.of(context).size.height * 0.75,
             width: MediaQuery.of(context).size.width,
@@ -126,24 +126,6 @@ class _PaginaLoginState extends State<PaginaLogin> {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class PaginaAjustes extends StatefulWidget {
-  @override
-  _PaginaAjustesState createState() => _PaginaAjustesState();
-}
-
-class _PaginaAjustesState extends State<PaginaAjustes> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: Text("Ajustes"),
       ),
     );
   }
