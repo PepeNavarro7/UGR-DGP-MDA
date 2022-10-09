@@ -1,7 +1,9 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:app/PaginaAjustes.dart';
+
+int NumeroPagina = 0;
+int NumeroFilas = 4;
+int NumeroColumnas = 2;
+int NumeroCasillasTotales = 0;
 
 class PaginaLogin extends StatefulWidget {
   @override
@@ -11,11 +13,6 @@ class PaginaLogin extends StatefulWidget {
 class _PaginaLoginState extends State<PaginaLogin> {
   List<String> Usuarios = ['José', 'María', 'Paco', 'Laura', 'Alex', 'Marta', 'Antonio', 'Pablo', 'Inés', 'Jorge', 'David', 'Ana', 'Lucía'];
 
-  int NumeroPagina = 0;
-  int NumeroFilas = 4;
-  int NumeroColumnas = 2;
-  int NumeroCasillasTotales = 0;
-
   @override
   Widget build(BuildContext context) {
     double EscalaTexto = MediaQuery.of(context).textScaleFactor;
@@ -24,10 +21,48 @@ class _PaginaLoginState extends State<PaginaLogin> {
 
     void RealizarAccion(String value) {
       switch (value) {
-        case 'Ajustes':
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => PaginaAjustes()),
+        case "Ajustes":
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  content: Container(
+                    height: 150,
+                    child: Column(
+                      children: [
+                        Text('Tamaño iconos:', style: TextStyle(fontSize: TamanioLetra)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton(
+                                child: Text("2x1", style: TextStyle(fontSize: TamanioLetra, color: Colors.black)),
+                                onPressed: () {
+                                  setState(() {
+                                    NumeroPagina = 0;
+                                    NumeroFilas = 2;
+                                    NumeroColumnas = 1;
+                                    NumeroCasillasTotales = NumeroFilas * NumeroColumnas;
+                                  });
+                                }
+                            ),
+                            TextButton(
+                                child: Text("4x2", style: TextStyle(fontSize: TamanioLetra, color: Colors.black)),
+                                onPressed: () {
+                                  setState(() {
+                                    NumeroPagina = 0;
+                                    NumeroFilas = 4;
+                                    NumeroColumnas = 2;
+                                    NumeroCasillasTotales = NumeroFilas * NumeroColumnas;
+                                  });
+                                }
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
           );
           break;
       }
@@ -78,7 +113,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
                   crossAxisCount: NumeroColumnas,
                   crossAxisSpacing: 4.0,
                   mainAxisSpacing: 4.0,
-                childAspectRatio: 1.2
+                  childAspectRatio: 1.2
               ),
               itemBuilder: (BuildContext context, int index){
                 index += NumeroPagina * NumeroCasillasTotales;
@@ -86,9 +121,12 @@ class _PaginaLoginState extends State<PaginaLogin> {
                   return Container();
                 } else {
                   return Container(color: Colors.red,
-                    margin: EdgeInsets.all(2),
-                    child: Text(Usuarios[index],
-                        style: TextStyle(fontSize: TamanioLetra)),);
+                      margin: EdgeInsets.all(2),
+                      child: Center(
+                        child: Text(Usuarios[index],
+                            style: TextStyle(fontSize: TamanioLetra)),
+                      )
+                  );
                 }
               },
             ),
@@ -100,15 +138,15 @@ class _PaginaLoginState extends State<PaginaLogin> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   SizedBox(
-                    height: 100,
-                    width: 100,
-                    child: Visibility(
-                      visible: NumeroPagina > 0,
-                      child: IconButton(
-                        icon: new Icon(Icons.arrow_back, size: 70.0),
-                        onPressed: PaginaAnterior,
-                      ),
-                    )
+                      height: 100,
+                      width: 100,
+                      child: Visibility(
+                        visible: NumeroPagina > 0,
+                        child: IconButton(
+                          icon: new Icon(Icons.arrow_back, size: 70.0),
+                          onPressed: PaginaAnterior,
+                        ),
+                      )
                   ),
                   SizedBox(
                       height: 100,
