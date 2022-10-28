@@ -44,6 +44,9 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   // Lista que almacena todas los pictogramas seleccionados por el usuario
   List<XFile>? listaPictogramas = [];
 
+  // Foto del Estudiante
+  XFile? fotoEstudiante = null;
+
   // Función para seleccionar los pictogramas de la galería
   void seleccionarPictogramas() async {
     final List<XFile>? pictogramasSeleccionados = await selectorImagenes.pickMultiImage();
@@ -68,18 +71,20 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
 
   // Función para seleccionar la foto de perfil del estudiante de la galería o camara
   void seleccionarFotoEstudiante() async {
-
+    fotoEstudiante = await selectorImagenes.pickImage(source: ImageSource.gallery);
+    setState(() {});
+    print(fotoEstudiante!.path);
   }
 
   Widget FotoEstudiante() {
     return GestureDetector(
-      onTap: () {},
+      onTap: seleccionarFotoEstudiante,
       child: Container(
         height: 250,
         width: 250,
         padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
         child: CircleAvatar(
-          backgroundImage: AssetImage("assets/imagenes/sin_foto_perfil.jpg"),
+          backgroundImage: fotoEstudiante == null ? AssetImage("assets/imagenes/sin_foto_perfil.jpg") : AssetImage("assets/imagenes/sin_foto_perfil.jpg"),
         ),
       ),
     );
