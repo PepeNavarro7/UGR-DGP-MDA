@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
@@ -13,10 +14,6 @@ import 'package:image_picker/image_picker.dart';
 // aplicación. Cualquier cambio en este cambio modificará el campo contraseña
 final List<String> tipoDeAccesos = <String>["Alfanumerico", "Pictogramas"];
 
-// Lista de tipo String que contiene todos los grados de accesibilidad
-final List<String> gradosDeAccesibilidad = <String>["Cognitiva", "Motora", "Visual"];
-
-
 class RegistrarEstudiante extends StatefulWidget {
   @override
   _RegistrarEstudianteState createState() => _RegistrarEstudianteState();
@@ -27,7 +24,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   final colorAppBar = Colors.green;
 
 // Color de los ElevatedButton
-  final colorElevatedButton = Colors.green;
+  final colorBotones = Colors.green;
 
   // Distancia en píxeles que estará separados los elementos unos de otros
   final double separacionElementos = 20.0;
@@ -35,17 +32,27 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   // Valor del desplegable del tipo de acceso, por defecto es la primera opción
   String valorTipoAcceso = tipoDeAccesos.first;
 
-  // Valor del desplegable del grado de accesibilidad, por defecto es la primera opción
-  String valorGradoAccesibilidad = gradosDeAccesibilidad.first;
-
   // Controlador para gestionar la selección de los pictogramas
   final ImagePicker selectorImagenes = ImagePicker();
 
   // Lista que almacena todas los pictogramas seleccionados por el usuario
   List<XFile>? listaPictogramas = [];
 
+  // Lista que almacena todas los pictogramas seleccionados para la clave por el usuario
+  List<XFile>? listaPictogramasClave = [];
+
   // Foto del Estudiante
   XFile? fotoEstudiante = null;
+
+  // Datos del estudiante
+  String nombre = "";
+  String apellidos = "";
+  String email = "";
+  String password = "";
+
+  // Necesidades del estudiante
+  bool video = false;
+  bool audio = false;
 
   // Función para seleccionar los pictogramas de la galería
   void seleccionarPictogramas() async {
@@ -54,8 +61,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     if (pictogramasSeleccionados!.isNotEmpty) {
       listaPictogramas!.addAll(pictogramasSeleccionados);
 
-      if (listaPictogramas!.length > 4) {
-        listaPictogramas!.length = 4;
+      if (listaPictogramas!.length > 9) {
+        listaPictogramas!.length = 9;
       }
     }
 
@@ -69,11 +76,19 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     });
   }
 
-  // Función para seleccionar la foto de perfil del estudiante de la galería o camara
+  // Función para seleccionar la foto de perfil del estudiante de la galería
   void seleccionarFotoEstudiante() async {
     fotoEstudiante = await selectorImagenes.pickImage(source: ImageSource.gallery);
     setState(() {});
     print(fotoEstudiante!.path);
+  }
+
+  // Función para registrar estudiante
+  void registrar() {
+    print("Nombre: $nombre");
+    print("Apellidos: $apellidos");
+    print("Email: $email");
+    print("Contraseña: $password");
   }
 
   Widget FotoEstudiante() {
@@ -83,9 +98,54 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
         height: 250,
         width: 250,
         padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-        child: CircleAvatar(
-          backgroundImage: fotoEstudiante == null ? AssetImage("assets/imagenes/sin_foto_perfil.jpg") : AssetImage("assets/imagenes/sin_foto_perfil.jpg"),
-        ),
+        child: fotoEstudiante == null ?
+          CircleAvatar(backgroundImage: AssetImage("assets/imagenes/sin_foto_perfil.jpg"), backgroundColor: Colors.grey) :
+          CircleAvatar(backgroundImage: FileImage(File(fotoEstudiante!.path)), backgroundColor: Colors.grey),
+      ),
+    );
+  }
+
+  // Widget de las necesidades del estudiante (CheckBoxes)
+  Widget NecesidadesEstudiante() {
+    return Container(
+      padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text("Necesidades para el estudiante", style: TextStyle(fontSize: 17))
+          ),
+          Row(
+            children: [
+              Checkbox(
+                checkColor: Colors.white,
+                activeColor: colorBotones,
+                value: video,
+                onChanged: (bool? valor) {
+                  setState(() {
+                    video = !video;
+                  });
+                },
+              ),
+              Text("Video")
+            ],
+          ),
+          Row(
+            children: [
+              Checkbox(
+                checkColor: Colors.white,
+                activeColor: colorBotones,
+                value: audio,
+                onChanged: (bool? valor) {
+                  setState(() {
+                    audio = !audio;
+                  });
+                },
+              ),
+              Text("Audio")
+            ],
+          ),
+        ],
       ),
     );
   }
@@ -104,6 +164,10 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     return Container(
       padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
       child: TextField(
+        obscureText: true,
+        onChanged: (text) {
+          password = text;
+        },
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Contraseña",
@@ -116,6 +180,21 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   Widget PasswordPictogramas() {
       return Column(
         children: [
+          Container(
+            padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, separacionElementos / 2),
+            child: Column(
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text("Pictogramas que se le mostrarán al estudiante", style: TextStyle(fontSize: 17))
+                ),
+                Container(
+                    alignment: Alignment.centerLeft,
+                    child: Text("Seleccione los pictogramas de la clave", style: TextStyle(fontSize: 17))
+                )
+              ],
+            )
+          ),
           cuadriculaPictogramas(),
           Container(
             padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
@@ -123,39 +202,97 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: listaPictogramas!.length < 4 ? seleccionarPictogramas : null,
+                  onPressed: listaPictogramas!.length < 9 ? seleccionarPictogramas : null,
                   child: Text("Añadir Pictogramas"),
                   style: ElevatedButton.styleFrom(
-                    primary: colorElevatedButton,
+                    primary: colorBotones,
                   ),
                 ),
                 ElevatedButton(
                   onPressed: listaPictogramas!.isNotEmpty ? eliminarPictogramas : null,
                   child: Text("Eliminar Pictogramas"),
                   style: ElevatedButton.styleFrom(
-                    primary: colorElevatedButton,
+                    primary: colorBotones,
                   ),
                 ),
               ],
             ),
-          )
+          ),
+          (listaPictogramas!.length == 9 && listaPictogramasClave!.isNotEmpty) ?
+          Container(
+            child: Column(
+              children: [
+                Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, separacionElementos / 2),
+                    child: Text("Pictogramas de la clave del estudiante", style: TextStyle(fontSize: 17))
+                ),
+                cuadriculaPictogramasClave()
+              ],
+            )
+          ) :
+          Container(),
         ],
       );
   }
 
-  // Widget para mostrar los pictogramas seleccionados en una cuadricula de 2x2
+  // Widget para mostrar los pictogramas seleccionados en una cuadricula de 3x3
   Widget cuadriculaPictogramas() {
-    return SizedBox(
-      height: listaPictogramas!.length == 0 ? 0.0 : (listaPictogramas!.length < 3 ? MediaQuery.of(context).size.width / 2 : MediaQuery.of(context).size.width),
-      child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        itemCount: listaPictogramas!.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+    return Container(
+      padding: EdgeInsets.all(2.0),
+      child: SizedBox(
+        height: listaPictogramas!.isEmpty ? 0.0 : MediaQuery.of(context).size.width / 3 * (((listaPictogramas!.length - 1) / 3).toInt() + 1),
+        child: GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: listaPictogramas!.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              padding: EdgeInsets.all(2.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (!listaPictogramasClave!.contains(listaPictogramas![index])) {
+                      if (listaPictogramasClave!.length < 4)
+                        listaPictogramasClave!.add(listaPictogramas![index]);
+                    } else {
+                      listaPictogramasClave!.remove(listaPictogramas![index]);
+                    }
+                  });
+                },
+                child: Image.file(
+                    File(listaPictogramas![index].path),
+                    fit: BoxFit.cover
+                ),
+              ),
+            );
+          },
         ),
-        itemBuilder: (BuildContext context, int index) {
-          return Image.file(File(listaPictogramas![index].path), fit: BoxFit.cover);
-        },
+      )
+    );
+  }
+
+  // Widget para mostrar los pictogramas seleccionados para la clave en una cuadricula de 2x2
+  Widget cuadriculaPictogramasClave() {
+    return Container(
+      padding: EdgeInsets.all(2.0),
+      child: SizedBox(
+        height: listaPictogramasClave!.isEmpty ? 0.0 : MediaQuery.of(context).size.width / 2 * (((listaPictogramasClave!.length - 1) / 2).toInt() + 1),
+        child: GridView.builder(
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: listaPictogramasClave!.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              padding: EdgeInsets.all(2.0),
+              child: Image.file(File(listaPictogramasClave![index].path), fit: BoxFit.cover)
+            );
+          },
+        ),
       ),
     );
   }
@@ -167,8 +304,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
    *    2. Nombre (TextField)
    *    3. Apellidos (TextField)
    *    4. Email (TextField)
-   *    5. Tipo de Acceso (DropDown)
-   *    6. Grado de Accesibilidad (DropDown)
+   *    5. Necesidades del estudiante (Checkboxes)
+   *    6. Tipo de Acceso (DropDown)
    *    7. Contraseña (TextField o Pictogramas)
    *    8. Registrar (ElevatedButton)
    */
@@ -189,6 +326,9 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
+                onChanged: (text) {
+                  nombre = text;
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Nombre",
@@ -200,6 +340,9 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
+                onChanged: (text) {
+                  apellidos = text;
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Apellidos",
@@ -211,6 +354,9 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
+                onChanged: (text) {
+                  email = text;
+                },
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Email",
@@ -218,10 +364,13 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               ),
             ),
 
+            // Necesidades del estudiante
+            NecesidadesEstudiante(),
+
             // Tipo de Acceso
             Container(
               width: MediaQuery.of(context).size.width - separacionElementos,
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              padding: EdgeInsets.fromLTRB(separacionElementos, 0.0, separacionElementos, 0.0),
               child: DropdownButton(
                 value: valorTipoAcceso,
                 items: tipoDeAccesos.map<DropdownMenuItem<String>>((String valor) {
@@ -238,26 +387,6 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               )
             ),
 
-            // Grado de accesibilidad
-            Container(
-                width: MediaQuery.of(context).size.width - separacionElementos,
-                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-                child: DropdownButton(
-                  value: valorGradoAccesibilidad,
-                  items: gradosDeAccesibilidad.map<DropdownMenuItem<String>>((String valor) {
-                    return DropdownMenuItem<String>(
-                      value: valor,
-                      child: Text(valor),
-                    );
-                  }).toList(),
-                  onChanged: (String? valor) {
-                    setState(() {
-                      valorGradoAccesibilidad = valor!;
-                    });
-                  },
-                )
-            ),
-
             // Contraseña
             Container(
               child: PasswordWidget(valorTipoAcceso),
@@ -268,10 +397,10 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, separacionElementos),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: registrar,
                 child: Text("Registrar"),
                 style: ElevatedButton.styleFrom(
-                  primary: colorElevatedButton,
+                  primary: colorBotones,
                 ),
               ),
             )
