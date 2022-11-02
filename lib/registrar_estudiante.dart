@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 /*
- * Clase Registrar Estudiante herede de StatefulWidget para que el campo de la
+ * Clase Registrar Estudiante hereda de StatefulWidget para que el campo de la
  * contraseña sea dinámico, es decir, pueda cambiar entre los tipos alfanumérico
  * o por pictogramas. Esto dependerá del tipo de Acceso que se seleccione
  */
@@ -21,10 +21,10 @@ class RegistrarEstudiante extends StatefulWidget {
 
 class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   // Color de la AppBar
-  final colorAppBar = Colors.green;
+  final colorAppBar = Colors.blue;
 
 // Color de los ElevatedButton
-  final colorBotones = Colors.green;
+  final colorBotones = Colors.blue;
 
   // Distancia en píxeles que estará separados los elementos unos de otros
   final double separacionElementos = 20.0;
@@ -371,8 +371,10 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
             Container(
               width: MediaQuery.of(context).size.width - separacionElementos,
               padding: EdgeInsets.fromLTRB(separacionElementos, 0.0, separacionElementos, 0.0),
+              margin: EdgeInsets.all(10),
               child: DropdownButton(
                 value: valorTipoAcceso,
+                isExpanded: true,
                 items: tipoDeAccesos.map<DropdownMenuItem<String>>((String valor) {
                   return DropdownMenuItem<String>(
                     value: valor,
