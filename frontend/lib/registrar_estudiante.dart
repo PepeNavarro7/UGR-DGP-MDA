@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'dart:io';
-
 import 'package:image_picker/image_picker.dart';
-import 'package:mysql1/mysql1.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
 
 /*
  * Clase Registrar Estudiante hereda de StatefulWidget para que el campo de la
@@ -49,7 +48,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   String nombre = "";
   String apellidos = "";
   String email = "";
-  String password = "";
+  String passwordUsuario = "";
 
   // Necesidades del estudiante
   bool audio = false;
@@ -105,19 +104,26 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     print("Email: $email");
     print("Acceso: $valorTipoAcceso");
     print("Accesibilidad: $accesibilidad");
-    print("Password: $password");
+    print("Password: $passwordUsuario");
     print("Foto: $foto");
 
-    var settings = new ConnectionSettings(
-        host: 'localhost',
-        port: 3306,
-        user: 'root',
-        password: '',
-        db: 'DGP'
-    );
-    var conn = await MySqlConnection.connect(settings);
+    try {
+      String uri = "http://10.0.2.2/dgp_php_scripts/insertar_estudiante.php";
 
-    //var result = await conn.query('insert into Estudiantes (Nombre, Apellidos, Email, Acceso, Accesibilidad, Password, Foto) values (?, ?, ?, ?, ?, ?, ?)', [nombre, apellidos, email, valorTipoAcceso, accesibilidad, password, foto]);
+      final response = await http.post(Uri.parse(uri), body: {
+        "nombre": "a",
+        "apellidos": "a",
+        "email": "a",
+        "acceso": "a",
+        "accesibilidad": "a",
+        "password_usuario": "a",
+        "foto": "a"
+      });
+
+      print("Estudiante registrado");
+    } catch (e) {
+      print("Exception: $e");
+    }
   }
 
   Widget FotoEstudiante() {
@@ -195,7 +201,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
       child: TextField(
         obscureText: true,
         onChanged: (text) {
-          password = text;
+          passwordUsuario = text;
         },
         decoration: InputDecoration(
           border: OutlineInputBorder(),
