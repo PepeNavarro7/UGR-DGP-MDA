@@ -39,6 +39,8 @@ dependencies:
   # Dependencias added to project
   image_picker: ^0.8.6
   intl: ^0.17.0
+  mysql1: ^0.20.0
+  html: ^0.15.1
 
 dev_dependencies:
   flutter_test:

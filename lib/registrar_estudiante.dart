@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
+import 'package:mysql1/mysql1.dart';
 
 /*
  * Clase Registrar Estudiante hereda de StatefulWidget para que el campo de la
@@ -51,8 +52,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   String password = "";
 
   // Necesidades del estudiante
-  bool video = false;
   bool audio = false;
+  bool video = false;
 
   // Función para seleccionar los pictogramas de la galería
   void seleccionarPictogramas() async {
@@ -84,11 +85,39 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   }
 
   // Función para registrar estudiante
-  void registrar() {
+  Future<void> registrar() async {
+    String accesibilidad = "";
+
+    if (audio && video) {
+      accesibilidad = "audio y video";
+    } else if (audio) {
+      accesibilidad = "audio";
+    } else if (video) {
+      accesibilidad = "video";
+    } else {
+      accesibilidad = "ninguna";
+    }
+
+    String foto = "a";
+
     print("Nombre: $nombre");
     print("Apellidos: $apellidos");
     print("Email: $email");
-    print("Contraseña: $password");
+    print("Acceso: $valorTipoAcceso");
+    print("Accesibilidad: $accesibilidad");
+    print("Password: $password");
+    print("Foto: $foto");
+
+    var settings = new ConnectionSettings(
+        host: 'localhost',
+        port: 3306,
+        user: 'root',
+        password: '',
+        db: 'DGP'
+    );
+    var conn = await MySqlConnection.connect(settings);
+
+    //var result = await conn.query('insert into Estudiantes (Nombre, Apellidos, Email, Acceso, Accesibilidad, Password, Foto) values (?, ?, ?, ?, ?, ?, ?)', [nombre, apellidos, email, valorTipoAcceso, accesibilidad, password, foto]);
   }
 
   Widget FotoEstudiante() {
@@ -120,21 +149,6 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               Checkbox(
                 checkColor: Colors.white,
                 activeColor: colorBotones,
-                value: video,
-                onChanged: (bool? valor) {
-                  setState(() {
-                    video = !video;
-                  });
-                },
-              ),
-              Text("Video")
-            ],
-          ),
-          Row(
-            children: [
-              Checkbox(
-                checkColor: Colors.white,
-                activeColor: colorBotones,
                 value: audio,
                 onChanged: (bool? valor) {
                   setState(() {
@@ -143,6 +157,21 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
                 },
               ),
               Text("Audio")
+            ],
+          ),
+          Row(
+            children: [
+              Checkbox(
+                checkColor: Colors.white,
+                activeColor: colorBotones,
+                value: video,
+                onChanged: (bool? valor) {
+                  setState(() {
+                    video = !video;
+                  });
+                },
+              ),
+              Text("Video")
             ],
           ),
         ],
