@@ -83,46 +83,63 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     print(fotoEstudiante!.path);
   }
 
+  bool datosCompletos() {
+    if (nombre == "")
+      return false;
+    if (apellidos == "")
+      return false;
+    if (email == "")
+      return false;
+    if (valorTipoAcceso == "Alfanumerico" && passwordUsuario == "")
+      return false;
+
+    return true;
+  }
+
   // Función para registrar estudiante
   Future<void> registrar() async {
-    String accesibilidad = "";
+    if (datosCompletos()) {
+      String accesibilidad = "";
 
-    if (audio && video) {
-      accesibilidad = "audio y video";
-    } else if (audio) {
-      accesibilidad = "audio";
-    } else if (video) {
-      accesibilidad = "video";
+      if (audio && video) {
+        accesibilidad = "audio y video";
+      } else if (audio) {
+        accesibilidad = "audio";
+      } else if (video) {
+        accesibilidad = "video";
+      } else {
+        accesibilidad = "ninguna";
+      }
+
+      String foto = "a";
+
+      print("Nombre: $nombre");
+      print("Apellidos: $apellidos");
+      print("Email: $email");
+      print("Acceso: $valorTipoAcceso");
+      print("Accesibilidad: $accesibilidad");
+      print("Password: $passwordUsuario");
+      print("Foto: $foto");
+
+      try {
+        String uri = "http://10.0.2.2/dgp_php_scripts/insertar_estudiante.php";
+
+        final response = await http.post(Uri.parse(uri), body: {
+          "nombre": nombre,
+          "apellidos": apellidos,
+          "email": email,
+          "acceso": valorTipoAcceso,
+          "accesibilidad": accesibilidad,
+          "password_usuario": passwordUsuario,
+          "foto": "a",
+        });
+
+        print("Estudiante registrado");
+      } catch (e) {
+        print("Exception: $e");
+      }
     } else {
-      accesibilidad = "ninguna";
-    }
-
-    String foto = "a";
-
-    print("Nombre: $nombre");
-    print("Apellidos: $apellidos");
-    print("Email: $email");
-    print("Acceso: $valorTipoAcceso");
-    print("Accesibilidad: $accesibilidad");
-    print("Password: $passwordUsuario");
-    print("Foto: $foto");
-
-    try {
-      String uri = "http://10.0.2.2/dgp_php_scripts/insertar_estudiante.php";
-
-      final response = await http.post(Uri.parse(uri), body: {
-        "nombre": "a",
-        "apellidos": "a",
-        "email": "a",
-        "acceso": "a",
-        "accesibilidad": "a",
-        "password_usuario": "a",
-        "foto": "a"
-      });
-
-      print("Estudiante registrado");
-    } catch (e) {
-      print("Exception: $e");
+      print("Estudiante no registrado (faltan datos)");
     }
   }
 

@@ -24,8 +24,8 @@ if(isset($_POST["accesibilidad"])) {
     $accesibilidad = $_POST["accesibilidad"];
 } else return;
 
-if(isset($_POST["password"])) {
-    $password = $_POST["password"];
+if(isset($_POST["password_usuario"])) {
+    $password_usuario = $_POST["password_usuario"];
 } else return;
 
 if(isset($_POST["foto"])) {
@@ -39,8 +39,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO estudiantes (nombre, apellidos, email, acceso, accesibilidad, password, foto)
-VALUES ('$nombre', '$apellidos', '$email', '$acceso', '$accesibilidad', $password, '$foto')";
+$sql = "INSERT INTO estudiantes (nombre, apellidos, email, acceso, accesibilidad, password_usuario, foto)
+VALUES ('$nombre', '$apellidos', '$email', '$acceso', '$accesibilidad', '$password_usuario', '$foto')";
 
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";
