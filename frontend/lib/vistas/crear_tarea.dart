@@ -50,7 +50,7 @@ class _CrearTareaState extends State<CrearTarea> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Center(child: Text("Crear Tarea")),
+        title: Text("Crear Tarea"),
       ),
       body: SafeArea(
         child: ListView(

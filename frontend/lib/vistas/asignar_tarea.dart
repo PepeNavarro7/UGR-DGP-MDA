@@ -45,7 +45,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Center(child: Text("Asignar Tarea")),
+        title: Text("Asignar Tarea"),
       ),
       body: SafeArea(
         child: ListView(

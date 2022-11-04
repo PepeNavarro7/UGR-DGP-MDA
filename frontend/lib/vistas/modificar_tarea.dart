@@ -50,7 +50,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Center(child: Text("Modificar Tarea")),
+        title: Text("Modificar Tarea"),
       ),
       body: SafeArea(
         child: ListView(

@@ -366,7 +366,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Center(child: Text("Registrar Estudiante")),
+        title: Text("Registrar Estudiante"),
       ),
       body: SafeArea(
         child: ListView(
