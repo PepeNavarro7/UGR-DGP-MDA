@@ -87,10 +87,9 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
                       children: [
                         IconButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ModificarEstudiante(estudiante)),
-                            );
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => ModificarEstudiante(estudiante))).then((value) {
+                              actualizarListaEstudiantes();
+                            });
                           },
                           icon: Icon(Icons.edit)
                         ),
@@ -108,7 +107,13 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
             );
           }).toList()
         ),
-      )
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          actualizarListaEstudiantes();
+        },
+        child: Icon(Icons.update),
+      ),
     );
   }
 }

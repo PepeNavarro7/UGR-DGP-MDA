@@ -149,6 +149,8 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
       } catch (e) {
         print("Exception: $e");
       }
+
+      Navigator.pop(context);
     } else {
       print("Estudiante no modificado (faltan datos)");
     }
