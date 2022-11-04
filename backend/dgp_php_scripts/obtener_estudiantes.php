@@ -11,13 +11,27 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT nombre, apellidos, email, acceso, accesibilidad, password_usuario, foto FROM estudiantes";
+$sql_query = "SELECT nombre, apellidos, email, acceso, accesibilidad, password_usuario, foto FROM estudiantes";
 
-if ($conn->query($sql) === TRUE) {
-  echo "New record created successfully";
-} else {
-  echo "Error: " . $sql . "<br>" . $conn->error;
+$result = mysqli_query($conn, $sql_query);
+if ($result) {
+  $i = 0;
+  while ($row = mysqli_fetch_assoc($result)) {
+    $response[$i]['nombre'] = $row['nombre'];
+    $response[$i]['apellidos'] = $row['apellidos'];
+    $response[$i]['email'] = $row['email'];
+    $response[$i]['acceso'] = $row['acceso'];
+    $response[$i]['accesibilidad'] = $row['accesibilidad'];
+    $response[$i]['password_usuario'] = $row['password_usuario'];
+    $response[$i]['foto'] = $row['foto'];
+    $i++;
+  }
+
+  echo json_encode($response, JSON_PRETTY_PRINT);
 }
+
+
+
 
 $conn->close();
 ?>
