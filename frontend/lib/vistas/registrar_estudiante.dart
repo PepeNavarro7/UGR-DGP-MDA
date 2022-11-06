@@ -135,6 +135,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
         });
 
         print("Estudiante registrado");
+        Navigator.pop(context);
       } catch (e) {
         print("Exception: $e");
       }
