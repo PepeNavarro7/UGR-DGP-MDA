@@ -1,8 +1,10 @@
+import 'package:app/vistas/inicio_profesor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 
 /*
  * Clase Registrar Estudiante hereda de StatefulWidget para que el campo de la
@@ -13,6 +15,8 @@ import 'dart:io';
 // Lista de tipo String que contiene todos los tipos de acceso que soporta la
 // aplicación. Cualquier cambio en este cambio modificará el campo contraseña
 final List<String> tipoDeAccesos = <String>["Alfanumerico", "Pictogramas"];
+
+FToast ventana_mensajes = FToast();
 
 class RegistrarEstudiante extends StatefulWidget {
   @override
@@ -98,6 +102,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
 
   // Función para registrar estudiante
   Future<void> registrar() async {
+    ventana_mensajes.init(context);
     if (datosCompletos()) {
       String accesibilidad = "";
 
@@ -135,12 +140,20 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
         });
 
         print("Estudiante registrado");
-        Navigator.pop(context);
+        FToast().showToast(
+            child: Text("Estudiante registrado",
+            style: TextStyle(fontSize: 25, color: Colors.green),
+            )
+        );
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>InicioProfesor(),),);
       } catch (e) {
         print("Exception: $e");
       }
     } else {
       print("Estudiante no registrado (faltan datos)");
+      FToast().showToast(
+          child: Text("Estudiante no registrado (faltan datos)",
+              style: TextStyle(fontSize: 25, color: Colors.red)));
     }
   }
 

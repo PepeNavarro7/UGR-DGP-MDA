@@ -35,10 +35,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RegistrarEstudiante()),
-                  );
+                  Navigator.push( context, MaterialPageRoute(builder: (context) => RegistrarEstudiante()), );
                 },
                 child: Text("Registrar estudiante"),
               ),
@@ -65,15 +62,11 @@ class _InicioProfesorState extends State<InicioProfesor> {
                     print("Exception: $e");
                   }
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VerEstudiantes(listaEstudiantes)),
-                  );
+                  Navigator.push( context, MaterialPageRoute(builder: (context) => VerEstudiantes(listaEstudiantes) ), );
                 },
                 child: Text("Ver estudiantes"),
               ),
             ),
-
           ],
         ),
       ),
