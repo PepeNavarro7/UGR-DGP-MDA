@@ -21,6 +21,7 @@ Estudiante? estudianteAModificar;
 class ModificarEstudiante extends StatefulWidget {
   ModificarEstudiante(Estudiante estudiante) {
     estudianteAModificar = estudiante;
+
   }
 
   @override
@@ -38,10 +39,17 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
   final double separacionElementos = 20.0;
 
   // Valor del desplegable del tipo de acceso, por defecto es la primera opción
-  String valorTipoAcceso = tipoDeAccesos.first;
+  String valorTipoAcceso = estudianteAModificar!.acceso;
 
   // Controlador para gestionar la selección de los pictogramas
   final ImagePicker selectorImagenes = ImagePicker();
+
+  // Valor inicial del campo nombre
+  TextEditingController controladorNombre = new TextEditingController(text: estudianteAModificar!.nombre);
+  TextEditingController controladorApellidos = new TextEditingController(text: estudianteAModificar!.apellidos);
+  TextEditingController controladorMail = new TextEditingController(text: estudianteAModificar!.email);
+  TextEditingController controladorPassword = new TextEditingController(text: estudianteAModificar!.password);
+
 
   // Lista que almacena todas los pictogramas seleccionados por el usuario
   List<XFile>? listaPictogramas = [];
@@ -59,8 +67,8 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
   String passwordUsuario = "";
 
   // Necesidades del estudiante
-  bool audio = false;
-  bool video = false;
+  bool audio = estudianteAModificar!.accesibilidad.contains("audio");
+  bool video = estudianteAModificar!.accesibilidad.contains("video");
 
   // Función para seleccionar los pictogramas de la galería
   void seleccionarPictogramas() async {
@@ -106,28 +114,39 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
 
   // Función para registrar estudiante
   Future<void> modificar() async {
-    if (datosCompletos()) {
-      String accesibilidad = "";
+    String accesibilidad = "";
 
-      if (audio && video) {
-        accesibilidad = "audio y video";
-      } else if (audio) {
-        accesibilidad = "audio";
-      } else if (video) {
-        accesibilidad = "video";
-      } else {
-        accesibilidad = "ninguna";
+    if (audio && video) {
+      accesibilidad = "audio y video";
+    } else if (audio) {
+      accesibilidad = "audio";
+    } else if (video) {
+      accesibilidad = "video";
+    } else {
+      accesibilidad = "ninguna";
+    }
+
+    String foto = "a";
+
+    nombre = controladorNombre.text;
+    apellidos = controladorApellidos.text;
+    email = controladorMail.text;
+    passwordUsuario = controladorPassword.text;
+
+    if (valorTipoAcceso == "Pictogramas")
+      {
+        passwordUsuario="NULL";
       }
 
-      String foto = "a";
+    print("Nombre: $nombre");
+    print("Apellidos: $apellidos");
+    print("Email: $email");
+    print("Acceso: $valorTipoAcceso");
+    print("Accesibilidad: $accesibilidad");
+    print("Password: $passwordUsuario");
+    print("Foto: $foto");
+    if (datosCompletos()) {
 
-      print("Nombre: $nombre");
-      print("Apellidos: $apellidos");
-      print("Email: $email");
-      print("Acceso: $valorTipoAcceso");
-      print("Accesibilidad: $accesibilidad");
-      print("Password: $passwordUsuario");
-      print("Foto: $foto");
 
       try {
         String uri = "http://10.0.2.2/dgp_php_scripts/modificar_estudiante.php";
@@ -229,6 +248,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
     return Container(
       padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
       child: TextField(
+        controller: controladorPassword,
         obscureText: true,
         onChanged: (text) {
           passwordUsuario = text;
@@ -391,6 +411,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
+                controller: controladorNombre,
                 onChanged: (text) {
                   nombre = text;
                 },
@@ -405,6 +426,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
+                controller: controladorApellidos,
                 onChanged: (text) {
                   apellidos = text;
                 },
@@ -419,6 +441,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
+                controller: controladorMail,
                 onChanged: (text) {
                   email = text;
                 },
@@ -457,6 +480,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
             // Contraseña
             Container(
               child: PasswordWidget(valorTipoAcceso),
+
             ),
 
             //Registrar

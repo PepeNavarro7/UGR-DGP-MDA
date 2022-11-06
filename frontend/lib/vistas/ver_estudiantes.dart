@@ -108,12 +108,6 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
           }).toList()
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          actualizarListaEstudiantes();
-        },
-        child: Icon(Icons.update),
-      ),
     );
   }
 }
