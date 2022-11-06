@@ -151,9 +151,19 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
       }
     } else {
       print("Estudiante no registrado (faltan datos)");
-      FToast().showToast(
-          child: Text("Estudiante no registrado (faltan datos)",
-              style: TextStyle(fontSize: 25, color: Colors.red)));
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          content:
+            Text("Estudiante no registrado (faltan datos)"),
+          actions: [
+            TextButton(
+              child: Text("Vale"),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ]
+        )
+      );
     }
   }
 
