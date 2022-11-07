@@ -45,7 +45,7 @@ if(isset($_POST["foto_nuevo"])) {
 } else return;
 
 // Create connection
-$conn = new mysqli($servername, $username_db, $password_db, $name_db);
+$conn = new mysqli($servername, $username_db, $_db, $name_db);
 // Check connection
 if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);

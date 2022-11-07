@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'dart:convert';
+
+import 'inicio_profesor.dart';
 
 // Lista de tipo String que contiene todos los lugares de una tarea
-final List<String> listaLugares = ["Lugar 1", "Lugar 2", "Lugar 3"];
+final List<String> listaTipos = ["Tarea normal", "Comanda", "Menú"];
 
 /*
  * Clase Crear Tarea hereda de StatefulWidget para que los distintos elementos
@@ -28,13 +32,10 @@ class _CrearTareaState extends State<CrearTarea> {
   // Datos de la tarea
   String nombre = "";
   String descripcion = "";
-  String fecha = "";
-  String lugar = listaLugares.first;
+  String lugar = "";
+  String tipo = listaTipos.first;
   String paso = "";
   List<String> listaPasos = [];
-
-  // Cotrolador del campo fecha
-  TextEditingController controladorFecha = TextEditingController();
 
   // Función que añade un paso a la lista de pasos, solo añade si no es null, el texto
   // no son solo espacio y no esta repetido el paso
@@ -54,12 +55,50 @@ class _CrearTareaState extends State<CrearTarea> {
     });
   }
 
+  void registrarTarea() async{
+
+    String auxTarea = "";
+    if(tipo == "Tarea normal"){
+      auxTarea = "N";
+    }
+    else if(tipo == "Comanda"){
+      auxTarea = "C";
+    }
+    else{
+      auxTarea = "M";
+    }
+
+    String jsonPasos = jsonEncode(listaPasos);
+
+    try {
+      String uri = "http://10.0.2.2/dgp_php_scripts/crear_tarea.php";
+
+      final response = await http.post(Uri.parse(uri), body: {
+        "nombre": nombre,
+        "descripcion": descripcion,
+        "lugar": lugar,
+        "tipo": auxTarea,
+        "pasos": jsonPasos
+      });
+
+      print("Estudiante registrado");
+      /*FToast().showToast(
+          child: Text("Estudiante registrado",
+            style: TextStyle(fontSize: 25, color: Colors.green),
+          )
+      );*/
+      Navigator.push(context, MaterialPageRoute(builder: (context)=>InicioProfesor(),),);
+    } catch (e) {
+      print("Exception: $e");
+    }
+  }
+
+
   /*
    * Devuelve un Widget para mostrar el menú de Crear Tarea, con todos
    * sus elementos. Los elementos que lo conforman son:
    *    1. Nombre (TextField)
    *    2. Descripción (TextField)
-   *    3. Fecha (DatePicker)
    *    4. Lugar (Dropdown)
    *    5. Pasos (ListView)
    *    8. Botones Cancelar y Crear (ElevatedButtons en un Row)
@@ -104,45 +143,29 @@ class _CrearTareaState extends State<CrearTarea> {
               ),
             ),
 
-            // Fecha
+            // Lugar
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
-                controller: controladorFecha,
-                decoration: const InputDecoration(
-                  icon: Icon(Icons.calendar_today),
-                  labelText: "Fecha de la tarea",
-                  fillColor: Colors.green,
+                onChanged: (text) {
+                  lugar = text;
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Lugar",
                 ),
-                readOnly: true,
-                onTap: () async {
-                  DateTime? fechaSeleccionada = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime.now(),
-                    firstDate:DateTime.now(),
-                    lastDate: DateTime(2050),
-                  );
-
-                  if (fechaSeleccionada != null) {
-                    setState(() {
-                      String fechaConFormato = DateFormat("dd/MM/yyyy").format(fechaSeleccionada);
-                      controladorFecha.text = fechaConFormato.toString();
-                      fecha = controladorFecha.text;
-                    });
-                  }
-                }
               ),
             ),
 
-            // Lugar
+            // Tipo
             Container(
                 width: MediaQuery.of(context).size.width - separacionElementos,
                 padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
                 margin: EdgeInsets.all(10),
                 child: DropdownButton(
-                  value: lugar,
+                  value: tipo,
                   isExpanded: true,
-                  items: listaLugares.map<DropdownMenuItem<String>>((String valor) {
+                  items: listaTipos.map<DropdownMenuItem<String>>((String valor) {
                     return DropdownMenuItem<String>(
                       value: valor,
                       child: Text(valor),
@@ -150,7 +173,7 @@ class _CrearTareaState extends State<CrearTarea> {
                   }).toList(),
                   onChanged: (String? valor) {
                     setState(() {
-                      lugar = valor!;
+                      tipo = valor!;
                     });
                   },
                 )
@@ -219,7 +242,7 @@ class _CrearTareaState extends State<CrearTarea> {
               width: MediaQuery.of(context).size.width - separacionElementos,
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: registrarTarea,
                 child: Text("Crear"),
               ),
             ),
