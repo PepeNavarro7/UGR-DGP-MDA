@@ -29,6 +29,9 @@ class _CrearTareaState extends State<CrearTarea> {
   // Distancia en píxeles que estará separados los elementos unos de otros
   final double separacionElementos = 20.0;
 
+  //Variable para controlar los pasos que se añaden
+  TextEditingController controladorPasos = new TextEditingController();
+
   // Datos de la tarea
   String nombre = "";
   String descripcion = "";
@@ -57,6 +60,7 @@ class _CrearTareaState extends State<CrearTarea> {
 
   void registrarTarea() async{
 
+    print("pito");
     String auxTarea = "";
     if(tipo == "Tarea normal"){
       auxTarea = "N";
@@ -77,6 +81,7 @@ class _CrearTareaState extends State<CrearTarea> {
     print("Pasos: $jsonPasos");
 
     try {
+
       String uri = "http://10.0.2.2/dgp_php_scripts/crear_tarea.php";
 
       final response = await http.post(Uri.parse(uri), body: {
@@ -183,6 +188,7 @@ class _CrearTareaState extends State<CrearTarea> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
+                controller: controladorPasos,
                 onChanged: (text) {
                   paso = text;
                 },
@@ -209,6 +215,7 @@ class _CrearTareaState extends State<CrearTarea> {
                   ElevatedButton(
                     onPressed: () {
                       aniadirPaso(paso);
+                      controladorPasos.text = "";
                     },
                     child: Text("Añadir pasos"),
                   )
@@ -242,7 +249,9 @@ class _CrearTareaState extends State<CrearTarea> {
               width: MediaQuery.of(context).size.width - separacionElementos,
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: ElevatedButton(
-                onPressed: registrarTarea,
+                onPressed: () {
+                  registrarTarea();
+                },
                 child: Text("Crear"),
               ),
             ),

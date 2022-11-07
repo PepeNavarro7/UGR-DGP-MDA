@@ -28,13 +28,14 @@ class _InicioProfesorState extends State<InicioProfesor> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Inicio Profesor"),
+        title: Text("Colegio San Rafael"),
       ),
       body: Center(
         child: Column(
           children: [
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              width: MediaQuery.of(context).size.width*0.8,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push( context, MaterialPageRoute(builder: (context) => RegistrarEstudiante()), );
@@ -45,6 +46,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              width: MediaQuery.of(context).size.width*0.8,
               child: ElevatedButton(
                 onPressed: () async {
                   List<Estudiante> listaEstudiantes = [];
@@ -71,6 +73,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
             ),
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              width: MediaQuery.of(context).size.width*0.8,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push( context, MaterialPageRoute(builder: (context) => CrearTarea()), );
