@@ -62,7 +62,7 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
         });
       }
     } catch (e) {
-    print("Exception: $e");
+      print("Exception: $e");
     }
   }
 

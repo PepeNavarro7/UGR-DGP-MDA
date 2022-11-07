@@ -5,8 +5,11 @@ import 'package:app/vistas/crear_tarea.dart';
 import 'package:app/vistas/modificar_tarea.dart';
 import 'package:app/vistas/registrar_estudiante.dart';
 import 'package:app/vistas/ver_estudiantes.dart';
+import 'package:app/vistas/ver_tareas.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import '../clases/tarea.dart';
 
 class InicioProfesor extends StatefulWidget {
   @override
@@ -71,6 +74,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                 child: Text("Ver estudiantes"),
               ),
             ),
+
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
@@ -79,6 +83,35 @@ class _InicioProfesorState extends State<InicioProfesor> {
                   Navigator.push( context, MaterialPageRoute(builder: (context) => CrearTarea()), );
                 },
                 child: Text("Crear tarea"),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              width: MediaQuery.of(context).size.width*0.8,
+              child: ElevatedButton(
+                onPressed: () async {
+                  List<Tarea> listaTareas = [];
+
+                  try {
+                    String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                    final response = await http.get(Uri.parse(uri));
+
+                    if (response.statusCode == 200) {
+                      var tareasJSON = json.decode(response.body);
+                      for (var tarea in tareasJSON) {
+                        List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+                        Tarea tareaAux = new Tarea(tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                        listaTareas.add(tareaAux);
+                      }
+                    }
+                  } catch (e) {
+                    print("Exception: $e");
+                  }
+
+                  Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareas(listaTareas)));
+                },
+                child: Text("Ver tareas"),
               ),
             ),
           ],

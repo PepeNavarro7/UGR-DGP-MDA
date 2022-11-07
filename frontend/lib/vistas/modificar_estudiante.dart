@@ -44,7 +44,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
   // Controlador para gestionar la selección de los pictogramas
   final ImagePicker selectorImagenes = ImagePicker();
 
-  // Valor inicial del campo nombre
+  // Controladores para poner valores iniciales
   TextEditingController controladorNombre = new TextEditingController(text: estudianteAModificar!.nombre);
   TextEditingController controladorApellidos = new TextEditingController(text: estudianteAModificar!.apellidos);
   TextEditingController controladorMail = new TextEditingController(text: estudianteAModificar!.email);
@@ -134,9 +134,9 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
     passwordUsuario = controladorPassword.text;
 
     if (valorTipoAcceso == "Pictogramas")
-      {
-        passwordUsuario="NULL";
-      }
+    {
+      passwordUsuario="NULL";
+    }
 
     print("Nombre: $nombre");
     print("Apellidos: $apellidos");
