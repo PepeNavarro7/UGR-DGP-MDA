@@ -146,7 +146,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
             style: TextStyle(fontSize: 25, color: Colors.green),
             )
         );
-        //Navigator.pop(context);
+        Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()), );
       } catch (e) {
         print("Exception: $e");
       }
