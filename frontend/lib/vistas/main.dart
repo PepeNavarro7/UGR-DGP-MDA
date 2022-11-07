@@ -1,7 +1,10 @@
+import 'package:app/clases/estudiante.dart';
 import 'package:app/vistas/asignar_tarea.dart';
 import 'package:app/vistas/crear_tarea.dart';
 import 'package:app/vistas/inicio_profesor.dart';
+import 'package:app/vistas/modificar_estudiante.dart';
 import 'package:app/vistas/modificar_tarea.dart';
+import 'package:app/vistas/pagina_login.dart';
 import 'package:app/vistas/registrar_estudiante.dart';
 import 'package:flutter/material.dart';
 import 'package:app/vistas/marcar_tarea_completada.dart';
@@ -14,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: InicioProfesor(),
+      home: RegistrarEstudiante(),
     );
   }
 }

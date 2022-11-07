@@ -105,7 +105,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
       return Scaffold(
         appBar: AppBar(
           title: Text("Página Login", style: TextStyle(fontSize: TamanioLetra)),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.blue,
           automaticallyImplyLeading: false,
         ),
       );
@@ -130,7 +130,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
             if(index >= Usuarios.length) {
               return Container();
             } else {
-              return Container(color: Colors.red,
+              return Container(color: Colors.greenAccent,
                   margin: EdgeInsets.all(2),
                   child: Center(
                     child: TextButton(
@@ -184,7 +184,7 @@ class _PaginaLoginState extends State<PaginaLogin> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.blue,
         title: Text("Página Login", style: TextStyle(fontSize: TamanioLetra)),
         actions: <Widget>[
           PopupMenu(),
