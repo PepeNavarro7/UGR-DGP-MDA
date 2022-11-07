@@ -137,7 +137,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
               style: TextStyle(fontSize: 25, color: Colors.green),
             )
         );
-        Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()), );
+        Navigator.pop(context);
       } catch (e) {
         print("Exception: $e");
       }
