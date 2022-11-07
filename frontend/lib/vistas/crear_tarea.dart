@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -7,6 +8,7 @@ import 'inicio_profesor.dart';
 
 // Lista de tipo String que contiene todos los lugares de una tarea
 final List<String> listaTipos = ["Tarea normal", "Comanda", "Menú"];
+FToast ventana_mensajes = FToast();
 
 /*
  * Clase Crear Tarea hereda de StatefulWidget para que los distintos elementos
@@ -57,44 +59,79 @@ class _CrearTareaState extends State<CrearTarea> {
       listaPasos.clear();
     });
   }
+  bool datosCompletos() {
+    bool aux = true;
+    if (nombre == ""){
+      aux=false;
+    }
+    if (descripcion == ""){
+      aux=false;
+    }
+    if (lugar == ""){
+      aux=false;
+    }
+    return aux;
+  }
 
   void registrarTarea() async{
+    if(datosCompletos()){
+      ventana_mensajes.init(context);
+      String auxTarea = "";
+      if(tipo == "Tarea normal"){
+        auxTarea = "N";
+      }
+      else if(tipo == "Comanda"){
+        auxTarea = "C";
+      }
+      else{
+        auxTarea = "M";
+      }
 
-    print("pito");
-    String auxTarea = "";
-    if(tipo == "Tarea normal"){
-      auxTarea = "N";
-    }
-    else if(tipo == "Comanda"){
-      auxTarea = "C";
-    }
-    else{
-      auxTarea = "M";
-    }
+      String jsonPasos = jsonEncode(listaPasos);
 
-    String jsonPasos = jsonEncode(listaPasos);
+      print("Nombre: $nombre");
+      print("Descripción: $descripcion");
+      print("Lugar: $lugar");
+      print("Tipo: $auxTarea");
+      print("Pasos: $jsonPasos");
 
-    print("Nombre: $nombre");
-    print("Descripción: $descripcion");
-    print("Lugar: $lugar");
-    print("Tipo: $auxTarea");
-    print("Pasos: $jsonPasos");
+      try {
 
-    try {
+        String uri = "http://10.0.2.2/dgp_php_scripts/crear_tarea.php";
 
-      String uri = "http://10.0.2.2/dgp_php_scripts/crear_tarea.php";
+        final response = await http.post(Uri.parse(uri), body: {
+          "nombre": nombre,
+          "descripcion": descripcion,
+          "lugar": lugar,
+          "tipo": auxTarea,
+          "pasos": jsonPasos.toString(),
+        });
 
-      final response = await http.post(Uri.parse(uri), body: {
-        "nombre": nombre,
-        "descripcion": descripcion,
-        "lugar": lugar,
-        "tipo": auxTarea,
-        "pasos": jsonPasos.toString(),
-      });
-
-      print("Tarea registrada");
-    } catch (e) {
-      print("Exception: $e");
+        print("Tarea registrada");
+        FToast().showToast(
+            child: Text("Tarea creada",
+              style: TextStyle(fontSize: 25, color: Colors.green),
+            )
+        );
+        Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()), );
+      } catch (e) {
+        print("Exception: $e");
+      }
+    } else{
+      print("Tarea no creada (faltan datos)");
+      showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+              content:
+              Text("Tarea no creada (faltan datos)"),
+              actions: [
+                TextButton(
+                  child: Text("Vale"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+              ]
+          )
+      );
     }
   }
 
