@@ -31,8 +31,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO caca (nombre, descripcion, lugar, tipo, pasos)
-VALUES ('HOla', 'XD', 'HombreListo', 't', '[\"tagA\",\"tagB\",\"tagC\"]')";
+$sql = "INSERT INTO tareas (nombre, descripcion, lugar, tipo, pasos)
+VALUES ('$nombre', '$descripcion', '$lugar', '$tipo', '$pasos')";
 
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";

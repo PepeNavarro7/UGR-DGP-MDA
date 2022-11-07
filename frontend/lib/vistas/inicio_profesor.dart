@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/clases/estudiante.dart';
+import 'package:app/vistas/crear_tarea.dart';
 import 'package:app/vistas/modificar_tarea.dart';
 import 'package:app/vistas/registrar_estudiante.dart';
 import 'package:app/vistas/ver_estudiantes.dart';
@@ -72,9 +73,9 @@ class _InicioProfesorState extends State<InicioProfesor> {
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push( context, MaterialPageRoute(builder: (context) => ModificarTarea()), );
+                  Navigator.push( context, MaterialPageRoute(builder: (context) => CrearTarea()), );
                 },
-                child: Text("Modificar tarea"),
+                child: Text("Crear tarea"),
               ),
             ),
           ],

@@ -70,6 +70,12 @@ class _CrearTareaState extends State<CrearTarea> {
 
     String jsonPasos = jsonEncode(listaPasos);
 
+    print("Nombre: $nombre");
+    print("Descripción: $descripcion");
+    print("Lugar: $lugar");
+    print("Tipo: $auxTarea");
+    print("Pasos: $jsonPasos");
+
     try {
       String uri = "http://10.0.2.2/dgp_php_scripts/crear_tarea.php";
 
@@ -78,16 +84,10 @@ class _CrearTareaState extends State<CrearTarea> {
         "descripcion": descripcion,
         "lugar": lugar,
         "tipo": auxTarea,
-        "pasos": jsonPasos
+        "pasos": jsonPasos.toString(),
       });
 
-      print("Estudiante registrado");
-      /*FToast().showToast(
-          child: Text("Estudiante registrado",
-            style: TextStyle(fontSize: 25, color: Colors.green),
-          )
-      );*/
-      Navigator.push(context, MaterialPageRoute(builder: (context)=>InicioProfesor(),),);
+      print("Tarea registrada");
     } catch (e) {
       print("Exception: $e");
     }

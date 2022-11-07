@@ -1,6 +1,7 @@
 import 'package:app/vistas/inicio_profesor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
@@ -136,7 +137,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
           "acceso": valorTipoAcceso,
           "accesibilidad": accesibilidad,
           "password_usuario": passwordUsuario,
-          "foto": "a",
+          "foto": foto,
         });
 
         print("Estudiante registrado");
@@ -145,7 +146,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
             style: TextStyle(fontSize: 25, color: Colors.green),
             )
         );
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>InicioProfesor(),),);
+        //Navigator.pop(context);
       } catch (e) {
         print("Exception: $e");
       }
