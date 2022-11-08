@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../clases/tarea.dart';
+import 'asignar_tarea.dart';
 
 class InicioProfesor extends StatefulWidget {
   @override
@@ -112,6 +113,52 @@ class _InicioProfesorState extends State<InicioProfesor> {
                   Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareas(listaTareas)));
                 },
                 child: Text("Ver tareas"),
+              ),
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              width: MediaQuery.of(context).size.width*0.8,
+              child: ElevatedButton(
+                onPressed: () async {
+                  List<Tarea> listaTareas = [];
+
+                  try {
+                    String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                    final response = await http.get(Uri.parse(uri));
+
+                    if (response.statusCode == 200) {
+                      var tareasJSON = json.decode(response.body);
+                      for (var tarea in tareasJSON) {
+                        List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+                        Tarea tareaAux = new Tarea(tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                        listaTareas.add(tareaAux);
+                      }
+                    }
+                  } catch (e) {
+                    print("Exception: $e");
+                  }
+
+                  List<Estudiante> listaEstudiantes = [];
+
+                  try {
+                    String uri = "http://10.0.2.2/dgp_php_scripts/obtener_estudiantes.php";
+                    final response = await http.get(Uri.parse(uri));
+
+                    if (response.statusCode == 200) {
+                      var estudiantesJSON = json.decode(response.body);
+                      for (var estudiante in estudiantesJSON) {
+                        Estudiante estudianteAux = new Estudiante(estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
+                        listaEstudiantes.add(estudianteAux);
+                      }
+                    }
+                  } catch (e) {
+                    print("Exception: $e");
+                  }
+
+                  Navigator.push( context, MaterialPageRoute(builder: (context) => AsignarTarea(listaTareas, listaEstudiantes)));
+                },
+                child: Text("Asignar tarea"),
               ),
             ),
           ],
