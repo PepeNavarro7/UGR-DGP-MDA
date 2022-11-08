@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/clases/estudiante.dart';
+import 'package:app/vistas/datos_estudiante.dart';
 import 'package:app/vistas/modificar_estudiante.dart';
 import 'package:app/vistas/registrar_estudiante.dart';
 import 'package:flutter/material.dart';
@@ -85,6 +86,13 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
                     Text(estudiante.nombre + " " + estudiante.apellidos),
                     Row(
                       children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => DatosEstudiante(estudiante)));
+                          },
+                          icon: Icon(Icons.remove_red_eye),
+                        ),
+
                         IconButton(
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: (_) => ModificarEstudiante(estudiante))).then((value) {
