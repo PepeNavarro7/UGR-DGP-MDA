@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 // Lista de tipo String que contiene todas las tareas asignadas no completadas de un alumno
 List<String> listaTareasAsignadasNoCompletadas = <String>[];
 
+int numeroTareasRealizadas = 0;
+int numeroTareasBienRealizadas = 0;
+int numeroTareasMuyBienRealizadas = 0;
 
 // Lista de tipo String que contiene todos los alumnos
 final List<String> listaAlumnos = <String>["Alumno 1", "Alumno 2", "Alumno 3"];
@@ -24,22 +27,20 @@ class _SeguimientoState extends State<Seguimiento> {
   // Color de la AppBar
   final colorAppBar = Colors.blue;
 
-// Color de los ElevatedButton
+  // Color de los ElevatedButton
   final colorBotones = Colors.blue;
 
   // Distancia en píxeles que estará separados los elementos unos de otros
   final double separacionElementos = 20.0;
 
-  // Datos de la asignación
+  // Datos de la búsqueda
   String alumno = listaAlumnos.first;
-  bool alumno_seleccionado = false;
+  bool alumnoSeleccionado = false;
 
-  // Cotrolador del campo fecha
-  TextEditingController controladorFecha = TextEditingController();
 
-  void buscar_tareas_de_alumno(String alumno)
+  void buscarTareasDeAlumno(String alumno)
   {
-    alumno_seleccionado = true;
+    alumnoSeleccionado = true;
     listaTareasAsignadasCompletadas = <String>["Tarea 1", "Tarea 2", "Tarea 3"];
     listaTareasAsignadasNoCompletadas = <String>["Tarea A", "Tarea B", "Tarea C"];
   }
@@ -59,18 +60,18 @@ class _SeguimientoState extends State<Seguimiento> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Seguimiento de Alumno"),
+        title: const Text("Seguimiento de Alumno"),
       ),
       body: SafeArea(
         child: ListView(
             children: [
               Container(
                   padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-                  child: Text("Seleccione el Alumno")),
+                  child: const Text("Seleccione el Alumno")),
               Container(
                   width: MediaQuery.of(context).size.width - separacionElementos,
                   padding: EdgeInsets.fromLTRB(separacionElementos, 0, separacionElementos, 0.0),
-                  margin: EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(10),
                   child: DropdownButton(
                     value: alumno,
                     isExpanded: true,
@@ -83,47 +84,64 @@ class _SeguimientoState extends State<Seguimiento> {
                     onChanged: (String? valor) {
                       setState(() {
                         alumno = valor!;
-                        buscar_tareas_de_alumno(alumno);
+                        buscarTareasDeAlumno(alumno);
                       });
                     },
                   )
               ),
 
               //Contenedor para tareas asignadas y completadas
-              if(alumno_seleccionado) Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width - separacionElementos,
-                    padding: EdgeInsets.fromLTRB(
-                        separacionElementos, separacionElementos,
-                        separacionElementos, 0.0),
-                    margin: EdgeInsets.all(10),
-                child: RichText(
+              if(alumnoSeleccionado) SingleChildScrollView(
+                padding: EdgeInsets.fromLTRB(
+                    separacionElementos, separacionElementos,
+                    separacionElementos, 0.0),
+
+                child:
+                RichText(
                   text: TextSpan(children: <InlineSpan>[
-                    for (var string in listaTareasAsignadasCompletadas)
-                      TextSpan(text: string, style: TextStyle(color: Colors.black)),
+                    const TextSpan(text: "Tareas asignadas completadas\n\n", style: TextStyle(color: Colors.black)),
+                    for (var string in listaTareasAsignadasNoCompletadas)
+                      TextSpan(text: "\t$string\n", style: const TextStyle(color: Colors.black)),
                   ]),
                 ),
-                ),
+              ),
 
                 //Contenedor para tareas asignadas no completadas
-              if(alumno_seleccionado) Container(
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width - separacionElementos,
+              if(alumnoSeleccionado) SingleChildScrollView(
                   padding: EdgeInsets.fromLTRB(
                       separacionElementos, separacionElementos,
                       separacionElementos, 0.0),
-                  margin: EdgeInsets.all(10),
-                  child: RichText(
-                      text: TextSpan(children: <InlineSpan>[
-                        for (var string in listaTareasAsignadasNoCompletadas)
-                          TextSpan(text: string, style: TextStyle(color: Colors.black)),
-                      ]),
-                    ),
-              )
+
+                  child:
+                    RichText(
+                        text: TextSpan(children: <InlineSpan>[
+                          const TextSpan(text: "Tareas asignadas no completadas\n\n", style: TextStyle(color: Colors.black)),
+                          for (var string in listaTareasAsignadasNoCompletadas)
+                            TextSpan(text: "\t$string\n", style: const TextStyle(color: Colors.black)),
+                        ]),
+                      ),
+              ),
+
+              if(alumnoSeleccionado) Container(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width - separacionElementos,
+                padding: EdgeInsets.fromLTRB(
+                    separacionElementos, separacionElementos,
+                    separacionElementos, 0.0),
+                margin: const EdgeInsets.all(10),
+                child: RichText(
+                  text: const TextSpan(children: <InlineSpan>[
+                    TextSpan(text: "Número de tareas bien realizadas:", style: TextStyle(color: Colors.black)),
+                    TextSpan(text:"\n"),
+                    TextSpan(text: "Número de tareas muy bien realizadas:", style: TextStyle(color: Colors.black)),
+                    TextSpan(text:"\n"),
+                    TextSpan(text: "Evaluación media:", style: TextStyle(color: Colors.black)),
+                    TextSpan(text:"\n"),
+                  ]),
+                ),
+              ),
             ], // children
         ),
       ),
