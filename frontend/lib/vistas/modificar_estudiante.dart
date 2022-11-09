@@ -138,6 +138,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
       passwordUsuario="NULL";
     }
 
+    print("Id: " + estudianteAModificar!.id_estudiante);
     print("Nombre: $nombre");
     print("Apellidos: $apellidos");
     print("Email: $email");
@@ -152,16 +153,14 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
         String uri = "http://10.0.2.2/dgp_php_scripts/modificar_estudiante.php";
 
         final response = await http.post(Uri.parse(uri), body: {
-          "nombre_antiguo": estudianteAModificar!.nombre,
-          "apellidos_antiguo": estudianteAModificar!.apellidos,
-          "email_antiguo": estudianteAModificar!.email,
-          "nombre_nuevo": nombre,
-          "apellidos_nuevo": apellidos,
-          "email_nuevo": email,
-          "acceso_nuevo": valorTipoAcceso,
-          "accesibilidad_nuevo": accesibilidad,
-          "password_usuario_nuevo": passwordUsuario,
-          "foto_nuevo": "a",
+          "id_estudiante": estudianteAModificar!.id_estudiante,
+          "nombre": nombre,
+          "apellidos": apellidos,
+          "email": email,
+          "acceso": valorTipoAcceso,
+          "accesibilidad": accesibilidad,
+          "password_usuario": passwordUsuario,
+          "foto": "a",
         });
 
         print("Estudiante modificado  ");

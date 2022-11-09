@@ -123,17 +123,17 @@ class _ModificarTareaState extends State<ModificarTarea> {
         String uri = "http://10.0.2.2/dgp_php_scripts/modificar_tarea.php";
 
         final response = await http.post(Uri.parse(uri), body: {
-          "nombre_antiguo": tareaAModificar!.nombre,
-          "nombre_nuevo": nombre,
-          "descripcion_nuevo": descripcion,
-          "lugar_nuevo": lugar,
-          "tipo_nuevo": auxTarea,
-          "pasos_nuevo": jsonPasos.toString(),
+          "id_tarea": tareaAModificar!.id_tarea,
+          "nombre": nombre,
+          "descripcion": descripcion,
+          "lugar": lugar,
+          "tipo": auxTarea,
+          "pasos": jsonPasos.toString(),
         });
 
         print("Tarea modificada");
         FToast().showToast(
-            child: Text("Tarea creada",
+            child: Text("Tarea modificada",
               style: TextStyle(fontSize: 25, color: Colors.green),
             )
         );
@@ -142,12 +142,12 @@ class _ModificarTareaState extends State<ModificarTarea> {
         print("Exception: $e");
       }
     } else{
-      print("Tarea no creada (faltan datos)");
+      print("Tarea no modificada (faltan datos)");
       showDialog(
           context: context,
           builder: (context) => AlertDialog(
               content:
-              Text("Tarea no creada (faltan datos)"),
+              Text("Tarea no modificada (faltan datos)"),
               actions: [
                 TextButton(
                   child: Text("Vale"),

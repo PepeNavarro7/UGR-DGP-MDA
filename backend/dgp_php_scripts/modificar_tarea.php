@@ -4,28 +4,28 @@ $username_db = "root";
 $password_db = "";
 $name_db = "dgp";
 
-if(isset($_POST["nombre_antiguo"])) {
-    $nombre_antiguo = $_POST["nombre_antiguo"];
+if(isset($_POST["id_tarea"])) {
+    $id_tarea = $_POST["id_tarea"];
 } else return;
 
-if(isset($_POST["nombre_nuevo"])) {
-    $nombre_nuevo = $_POST["nombre_nuevo"];
+if(isset($_POST["nombre"])) {
+    $nombre = $_POST["nombre"];
 } else return;
 
-if(isset($_POST["descripcion_nuevo"])) {
-    $descripcion_nuevo = $_POST["descripcion_nuevo"];
+if(isset($_POST["descripcion"])) {
+    $descripcion = $_POST["descripcion"];
 } else return;
 
-if(isset($_POST["lugar_nuevo"])) {
-  $lugar_nuevo = $_POST["lugar_nuevo"];
+if(isset($_POST["lugar"])) {
+  $lugar = $_POST["lugar"];
 } else return;
 
-if(isset($_POST["tipo_nuevo"])) {
-    $tipo_nuevo = $_POST["tipo_nuevo"];
+if(isset($_POST["tipo"])) {
+    $tipo = $_POST["tipo"];
 } else return;
 
-if(isset($_POST["pasos_nuevo"])) {
-    $pasos_nuevo = $_POST["pasos_nuevo"];
+if(isset($_POST["pasos"])) {
+    $pasos = $_POST["pasos"];
 } else return;
 
 // Create connection
@@ -35,7 +35,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "UPDATE tareas SET nombre='$nombre_nuevo', descripcion='$descripcion_nuevo', lugar='$lugar_nuevo', tipo='$tipo_nuevo', pasos='$pasos_nuevo' WHERE tareas.nombre='$nombre_antiguo'";
+$sql = "UPDATE tareas SET nombre='$nombre', descripcion='$descripcion', lugar='$lugar', tipo='$tipo', pasos='$pasos' WHERE tareas.id_tarea='$id_tarea'";
 
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";

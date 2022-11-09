@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:app/clases/estudiante.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
 // Lista de tipo String que contiene todas las tareas
@@ -50,73 +51,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
   // Fecha del fin de la tarea
   String fechaFin = "";
 
-  // Función que devuelve el índice de la lista con la tarea del mismo nombre
-  int indiceDeTarea(String nombre) {
-    int indice = -1;
-
-    for(int i = 0; i < listaTareas.length && indice == -1; i++)
-      if (listaTareas[i].nombre == nombre)
-        indice = i;
-
-    return indice;
-  }
-
-  // Función que devuelve el índice de la lista con el estudiante del mismo nombre
-  int indiceDeEstudiante(String nombre) {
-    int indice = -1;
-
-    for(int i = 0; i < listaEstudiantes.length && indice == -1; i++)
-      if (listaEstudiantes[i].nombre == nombre)
-        indice = i;
-
-    return indice;
-  }
-
-  Future<String> obtenerIdTarea(Tarea tarea) async {
-    String idTarea = "";
-
-    try {
-      String uri = "http://10.0.2.2/dgp_php_scripts/obtener_id_tarea.php";
-
-      final response = await http.post(Uri.parse(uri), body: {
-        "nombre": tarea.nombre,
-      });
-      
-      if (response.statusCode == 200) {
-        var responseJSON = json.decode(response.body);
-        for(var tarea in responseJSON)
-          idTarea = tarea['id_tarea'];
-      }
-    } catch (e) {
-      print("Exception: $e");
-    }
-
-    return idTarea;
-  }
-
-  Future<String> obtenerIdEstudiante(Estudiante estudiante) async {
-    String idEstudiante = "";
-
-    try {
-      String uri = "http://10.0.2.2/dgp_php_scripts/obtener_id_estudiante.php";
-
-      final response = await http.post(Uri.parse(uri), body: {
-        "nombre": estudiante.nombre,
-        "apellidos": estudiante.apellidos,
-        "email": estudiante.email
-      });
-
-      if (response.statusCode == 200) {
-        var responseJSON = json.decode(response.body);
-        for(var tarea in responseJSON)
-          idEstudiante = tarea['id_estudiante'];
-      }
-    } catch (e) {
-      print("Exception: $e");
-    }
-
-    return idEstudiante;
-  }
+  FToast ventana_mensajes = FToast();
 
   bool datosCompletos() {
     bool aux = true;
@@ -135,13 +70,31 @@ class _AsignarTareaState extends State<AsignarTarea> {
     return aux;
   }
 
+  int indiceDeTarea(String nombre) {
+    int indice = -1;
+
+    for (int i = 0; i < listaTareas.length; i++)
+      if (listaTareas[i].nombre == nombre)
+        indice = i;
+
+    return indice;
+  }
+
+  int indiceDeEstudiante(String nombre) {
+    int indice = -1;
+
+    for (int i = 0; i < listaEstudiantes.length && indice == -1; i++)
+      if (listaEstudiantes[i].nombre == nombre)
+        indice = i;
+
+    return indice;
+  }
+
   Future<void> asignarTarea() async {
     if (datosCompletos()) {
-      String idTarea = await obtenerIdTarea(tarea);
-      String idEstudiante = await obtenerIdEstudiante(estudiante);
-
-      print("idTarea: $idTarea");
-      print("idEstudiante: $idEstudiante");
+      ventana_mensajes.init(context);
+      print("idTarea: " + tarea.id_tarea);
+      print("idEstudiante: " + estudiante.id_estudiante);
       print("fechaInicio: $fechaInicio");
       print("fechaFin: $fechaFin");
 
@@ -149,8 +102,8 @@ class _AsignarTareaState extends State<AsignarTarea> {
         String uri = "http://10.0.2.2/dgp_php_scripts/asignar_tarea_estudiante.php";
 
         final response = await http.post(Uri.parse(uri), body: {
-          "id_tarea": idTarea,
-          "id_estudiante": idEstudiante,
+          "id_tarea": tarea.id_tarea,
+          "id_estudiante": estudiante.id_estudiante,
           "fecha_inicio": fechaInicio,
           "fecha_fin": fechaFin,
           "completada": "0",
@@ -158,6 +111,12 @@ class _AsignarTareaState extends State<AsignarTarea> {
         });
 
         print("Tarea asignada a estudiante");
+        FToast().showToast(
+            child: Text("Tarea asignada",
+              style: TextStyle(fontSize: 25, color: Colors.green),
+            )
+        );
+        Navigator.pop(context);
 
       } catch (e) {
         print("Exception: $e");

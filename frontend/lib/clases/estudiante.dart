@@ -1,4 +1,5 @@
 class Estudiante {
+  String id_estudiante;
   String nombre;
   String apellidos;
   String email;
@@ -6,5 +7,5 @@ class Estudiante {
   String accesibilidad;
   String password;
 
-  Estudiante(this.nombre, this.apellidos, this.email, this.acceso, this.accesibilidad, this.password);
+  Estudiante(this.id_estudiante, this.nombre, this.apellidos, this.email, this.acceso, this.accesibilidad, this.password);
 }

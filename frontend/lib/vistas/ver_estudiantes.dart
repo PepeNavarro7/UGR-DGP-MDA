@@ -34,9 +34,7 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
       String uri = "http://10.0.2.2/dgp_php_scripts/borrar_estudiante.php";
 
       final response = await http.post(Uri.parse(uri), body: {
-        "nombre": estudiante.nombre,
-        "apellidos": estudiante.apellidos,
-        "email": estudiante.email,
+        "id_estudiante": estudiante.id_estudiante
       });
 
       setState(() {
@@ -57,7 +55,7 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
           listaEstudiantes.clear();
           var estudiantesJSON = json.decode(response.body);
           for (var estudiante in estudiantesJSON) {
-            Estudiante estudianteAux = new Estudiante(estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
+            Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
             listaEstudiantes.add(estudianteAux);
           }
         });

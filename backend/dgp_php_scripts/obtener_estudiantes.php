@@ -11,12 +11,13 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql_query = "SELECT nombre, apellidos, email, acceso, accesibilidad, password_usuario, foto FROM estudiantes";
+$sql_query = "SELECT id_estudiante, nombre, apellidos, email, acceso, accesibilidad, password_usuario, foto FROM estudiantes";
 
 $result = mysqli_query($conn, $sql_query);
 if ($result) {
   $i = 0;
   while ($row = mysqli_fetch_assoc($result)) {
+    $response[$i]['id_estudiante'] = $row['id_estudiante'];
     $response[$i]['nombre'] = $row['nombre'];
     $response[$i]['apellidos'] = $row['apellidos'];
     $response[$i]['email'] = $row['email'];

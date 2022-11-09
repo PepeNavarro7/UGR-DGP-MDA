@@ -34,7 +34,7 @@ class _VerTareasState extends State<VerTareas> {
       String uri = "http://10.0.2.2/dgp_php_scripts/borrar_tarea.php";
 
       final response = await http.post(Uri.parse(uri), body: {
-        "nombre": tarea.nombre
+        "id_tarea": tarea.id_tarea
       });
 
       setState(() {
@@ -56,7 +56,7 @@ class _VerTareasState extends State<VerTareas> {
           var tareasJSON = json.decode(response.body);
           for (var tarea in tareasJSON) {
             List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-            Tarea tareaAux = new Tarea(tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+            Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
             listaTareas.add(tareaAux);
           }
         });
