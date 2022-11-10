@@ -140,6 +140,7 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                 children: [
                   Text("Tareas asignadas completadas: " + listaTareasCompletadas.length.toString(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: listaTareasCompletadas.map((tarea) {
                       return Container(
                         padding: EdgeInsets.all(separacionElementos),
