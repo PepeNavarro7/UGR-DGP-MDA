@@ -222,8 +222,50 @@ class _InicioProfesorState extends State<InicioProfesor> {
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push( context, MaterialPageRoute(builder: (context) => SeguimientoEstudiante()), );
+                onPressed: () async {
+                  List<Estudiante> listaEstudiantes = [];
+                  List<Tarea> listaTareas = [];
+                  List<TareaAsignada> tareasAsignadas = [];
+
+                  try {
+                    String uri = "http://10.0.2.2/dgp_php_scripts/obtener_estudiantes.php";
+                    var response = await http.get(Uri.parse(uri));
+
+                    if (response.statusCode == 200) {
+                      var estudiantesJSON = json.decode(response.body);
+                      for (var estudiante in estudiantesJSON) {
+                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
+                        listaEstudiantes.add(estudianteAux);
+                      }
+                    }
+
+                    uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                    response = await http.get(Uri.parse(uri));
+
+                    if (response.statusCode == 200) {
+                      var tareasJSON = json.decode(response.body);
+                      for (var tarea in tareasJSON) {
+                        List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                        listaTareas.add(tareaAux);
+                      }
+                    }
+
+                    uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas_asignadas.php";
+                    response = await http.get(Uri.parse(uri));
+
+                    if (response.statusCode == 200) {
+                      var tareasJSON = json.decode(response.body);
+                      for (var tarea in tareasJSON) {
+                        TareaAsignada tareaAux = new TareaAsignada(tarea['id_tarea'], tarea['id_estudiante'], tarea['fecha_inicio'], tarea['fecha_fin'], tarea['completada'], tarea['calificacion']);
+                        tareasAsignadas.add(tareaAux);
+                      }
+                    }
+
+                  } catch (e) {
+                    print("Exception: $e");
+                  }
+                  Navigator.push( context, MaterialPageRoute(builder: (context) => SeguimientoEstudiante(listaEstudiantes, listaTareas, tareasAsignadas)));
                 },
                 child: Text("Seguimiento estudiantes"),
               ),
