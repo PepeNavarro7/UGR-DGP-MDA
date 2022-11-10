@@ -1,10 +1,10 @@
 class TareaAsignada {
-  String id_tarea;
-  String id_estudiante;
+  String idTarea;
+  String idEstudiante;
   String fechaInicio;
   String fechaFin;
   String completada;
   String calificacion;
 
-  TareaAsignada(this.id_tarea, this.id_estudiante, this.fechaInicio, this.fechaFin, this.completada, this.calificacion);
+  TareaAsignada(this.idTarea, this.idEstudiante, this.fechaInicio, this.fechaFin, this.completada, this.calificacion);
 }
