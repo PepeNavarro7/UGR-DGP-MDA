@@ -14,12 +14,16 @@ TareaAsignada? tareaAsignada;
 Tarea? tarea;
 Estudiante? estudiante;
 
+List<String> calificaciones = ["Normal", "Bien", "Muy bien"];
+String calificacion = "";
+
 
 class MarcarTareaCompletada extends StatefulWidget {
   MarcarTareaCompletada(TareaAsignada ta, Tarea t, Estudiante e) {
     tareaAsignada = ta;
     tarea = t;
     estudiante = e;
+    calificacion = calificaciones.first;
   }
 
   @override
@@ -35,8 +39,6 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
 
   // Distancia en píxeles que estará separados los elementos unos de otros
   final double separacionElementos = 20.0;
-
-  String calificacion = "";
 
   Future<void> tareaCompletada() async {
     if (calificacion != "") {
@@ -161,15 +163,21 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
                 children: [
                   Text("Calificación:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
 
-                  TextField(
-                    onChanged: (text) {
-                      calificacion = text;
+                  DropdownButton(
+                    value: calificacion,
+                    isExpanded: true,
+                    items: calificaciones.map<DropdownMenuItem<String>>((String valor) {
+                      return DropdownMenuItem<String>(
+                        value: valor,
+                        child: Text(valor),
+                      );
+                    }).toList(),
+                    onChanged: (String? valor) {
+                      setState(() {
+                        calificacion = valor!;
+                      });
                     },
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: "Descripción",
-                    ),
-                  ),
+                  )
                 ],
               ),
             ),

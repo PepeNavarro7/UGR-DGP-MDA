@@ -91,9 +91,11 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
             children: listaTareasAsignadas.map((tareaAsignada) {
               return GestureDetector(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => MarcarTareaCompletada(tareaAsignada, listaTareas[indiceDeTarea(tareaAsignada.id_tarea)], listaEstudiantes[indiceDeEstudiante(tareaAsignada.id_estudiante)]))).then((value) {
-                    actualizarListaTareasAsignadas();
-                  });
+                  if (tareaAsignada.completada == '0') {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => MarcarTareaCompletada(tareaAsignada, listaTareas[indiceDeTarea(tareaAsignada.id_tarea)], listaEstudiantes[indiceDeEstudiante(tareaAsignada.id_estudiante)]))).then((value) {
+                      actualizarListaTareasAsignadas();
+                    });
+                  }
                 },
                 child: Card(
                   child: Container(
@@ -104,6 +106,7 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
                         Text("Tarea: " + listaTareas[indiceDeTarea(tareaAsignada.id_tarea)].nombre),
                         Text("Estudiantes: " + listaEstudiantes[indiceDeEstudiante(tareaAsignada.id_estudiante)].nombre),
                         Text(tareaAsignada.completada == "0" ? "No completada" : "Completada"),
+                        Text("Evaluación: " + tareaAsignada.calificacion),
                       ],
                     ),
                   ),
