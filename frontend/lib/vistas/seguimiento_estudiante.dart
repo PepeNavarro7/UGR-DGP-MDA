@@ -31,6 +31,16 @@ Tarea buscarTarea(String idTarea) {
   return t;
 }
 
+TareaAsignada buscarTareaAsignada(String idTarea, String idEstudiante) {
+  TareaAsignada ta = listaTareasAsignadas.first;
+
+  for (TareaAsignada taAux in listaTareasAsignadas)
+    if(taAux.id_tarea == idTarea && taAux.id_estudiante == idEstudiante)
+      ta = taAux;
+
+  return ta;
+}
+
 void actualizarListaTareasCompletadas(Estudiante e) {
   listaTareasCompletadas.clear();
 
@@ -45,6 +55,48 @@ void actualizarListaTareasNoCompletadas(Estudiante e) {
   for (TareaAsignada ta in listaTareasAsignadas)
     if (ta.completada == "0" && ta.id_estudiante == e.id_estudiante)
       listaTareasNoCompletadas.add(buscarTarea(ta.id_tarea));
+}
+
+int numTareasBien() {
+  int contador = 0;
+
+  for (TareaAsignada ta in listaTareasAsignadas)
+    if (ta.completada == "1" && ta.calificacion == "Bien" && ta.id_estudiante == estudiante!.id_estudiante)
+      contador++;
+
+  return contador;
+}
+
+int numTareasMuyBien() {
+  int contador = 0;
+
+  for (TareaAsignada ta in listaTareasAsignadas)
+    if (ta.completada == "1" && ta.calificacion == "Muy bien" && ta.id_estudiante == estudiante!.id_estudiante)
+      contador++;
+
+  return contador;
+}
+
+String evaluacionMedia() {
+  int numBien = numTareasBien();
+  int numMuyBien = numTareasMuyBien();
+  int numNormal = listaTareasCompletadas.length - numMuyBien - numMuyBien;
+
+  double mediaMuyBien = 1.0;
+  double mediaBien = 0.5;
+  double mediaNormal = 0.0;
+
+  double media = ((numNormal * mediaNormal + numBien * mediaBien + numMuyBien * mediaMuyBien) / 3);
+  String evaluacion = "";
+
+  if (media >= 0.75)
+    evaluacion = "Muy bien";
+  else if (media >= 0.5)
+    evaluacion = "Bien";
+  else
+    evaluacion = "Normal";
+
+  return evaluacion;
 }
 
 /*
@@ -144,7 +196,7 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                     children: listaTareasCompletadas.map((tarea) {
                       return Container(
                         padding: EdgeInsets.all(separacionElementos),
-                        child: Text(tarea.nombre, style: TextStyle(fontSize: 18)),
+                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.id_tarea, estudiante!.id_estudiante).calificacion, style: TextStyle(fontSize: 18)),
                       );
                     }).toList(),
                   )
@@ -162,13 +214,25 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                     children: listaTareasNoCompletadas.map((tarea) {
                       return Container(
                         padding: EdgeInsets.all(separacionElementos),
-                        child: Text(tarea.nombre, style: TextStyle(fontSize: 18)),
+                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.id_tarea, estudiante!.id_estudiante).calificacion, style: TextStyle(fontSize: 18)),
                       );
                     }).toList(),
                   )
                 ],
               ),
             ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tareas \"Bien\" realizadas: " + numTareasBien().toString(), style: TextStyle(fontSize: 20)),
+                  Text("Tareas \"Muy Bien\" realizadas: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 20)),
+                  Text("Evaluación media: " + evaluacionMedia(), style: TextStyle(fontSize: 20))
+                ],
+              ),
+            )
           ], // children
         ),
       ),
