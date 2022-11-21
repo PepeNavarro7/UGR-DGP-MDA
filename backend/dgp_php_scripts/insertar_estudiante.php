@@ -30,6 +30,13 @@ if(isset($_POST["password_usuario"])) {
 
 if(isset($_POST["foto"])) {
     $foto = $_POST["foto"];
+    $nombre_sin_espacios = str_replace(' ', '', $nombre);
+    $apellidos_sin_espacios = str_replace(' ', '', $apellidos);
+    $foto_path = "../fotos_estudiantes/$nombre_sin_espacios$apellidos_sin_espacios.jpg";
+    $filehandler = fopen($foto_path, 'wb');
+    fwrite($filehandler, base64_decode($foto));
+    fclose($filehandler);
+
 } else return;
 
 // Create connection
@@ -40,7 +47,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "INSERT INTO estudiantes (nombre, apellidos, email, acceso, accesibilidad, password_usuario, foto)
-VALUES ('$nombre', '$apellidos', '$email', '$acceso', '$accesibilidad', '$password_usuario', '$foto')";
+VALUES ('$nombre', '$apellidos', '$email', '$acceso', '$accesibilidad', '$password_usuario', '$foto_path')";
 
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";

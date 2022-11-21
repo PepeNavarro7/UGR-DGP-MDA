@@ -46,8 +46,8 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
         String uri = "http://10.0.2.2/dgp_php_scripts/modificar_tarea_asignada.php";
 
         final response = await http.post(Uri.parse(uri), body: {
-          "id_tarea": tarea!.id_tarea,
-          "id_estudiante": estudiante!.id_estudiante,
+          "id_tarea": tarea!.idTarea,
+          "id_estudiante": estudiante!.idEstudiante,
           "fecha_inicio": tareaAsignada!.fechaInicio,
           "fecha_fin": tareaAsignada!.fechaFin,
           "completada": "1",

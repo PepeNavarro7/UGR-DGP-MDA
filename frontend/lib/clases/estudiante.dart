@@ -1,11 +1,12 @@
 class Estudiante {
-  String id_estudiante;
+  String idEstudiante;
   String nombre;
   String apellidos;
   String email;
   String acceso;
   String accesibilidad;
   String password;
+  String foto;
 
-  Estudiante(this.id_estudiante, this.nombre, this.apellidos, this.email, this.acceso, this.accesibilidad, this.password);
+  Estudiante(this.idEstudiante, this.nombre, this.apellidos, this.email, this.acceso, this.accesibilidad, this.password, this.foto);
 }

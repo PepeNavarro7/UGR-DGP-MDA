@@ -65,7 +65,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                     if (response.statusCode == 200) {
                       var estudiantesJSON = json.decode(response.body);
                       for (var estudiante in estudiantesJSON) {
-                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
+                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], estudiante['foto']);
                         listaEstudiantes.add(estudianteAux);
                       }
                     }
@@ -151,7 +151,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                     if (response.statusCode == 200) {
                       var estudiantesJSON = json.decode(response.body);
                       for (var estudiante in estudiantesJSON) {
-                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
+                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], estudiante['foto']);
                         listaEstudiantes.add(estudianteAux);
                       }
                     }
@@ -204,7 +204,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                     if (response.statusCode == 200) {
                       var estudiantesJSON = json.decode(response.body);
                       for (var estudiante in estudiantesJSON) {
-                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
+                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], estudiante['foto']);
                         listaEstudiantes.add(estudianteAux);
                       }
                     }
@@ -234,7 +234,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                     if (response.statusCode == 200) {
                       var estudiantesJSON = json.decode(response.body);
                       for (var estudiante in estudiantesJSON) {
-                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario']);
+                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], estudiante['foto']);
                         listaEstudiantes.add(estudianteAux);
                       }
                     }

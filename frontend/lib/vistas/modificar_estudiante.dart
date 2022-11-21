@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:app/clases/estudiante.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -21,7 +23,8 @@ Estudiante? estudianteAModificar;
 class ModificarEstudiante extends StatefulWidget {
   ModificarEstudiante(Estudiante estudiante) {
     estudianteAModificar = estudiante;
-
+    estudianteAModificar!.foto = "http://10.0.2.2/" + estudianteAModificar!.foto.substring(3);
+    print(estudianteAModificar!.foto);
   }
 
   @override
@@ -126,8 +129,6 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
       accesibilidad = "ninguna";
     }
 
-    String foto = "a";
-
     nombre = controladorNombre.text;
     apellidos = controladorApellidos.text;
     email = controladorMail.text;
@@ -138,7 +139,11 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
       passwordUsuario="NULL";
     }
 
-    print("Id: " + estudianteAModificar!.id_estudiante);
+    List<int> bytesImagen = File(fotoEstudiante!.path).readAsBytesSync();
+    String foto = base64Encode(bytesImagen);
+    print("Bytes imagen: " + foto);
+
+    print("Id: " + estudianteAModificar!.idEstudiante);
     print("Nombre: $nombre");
     print("Apellidos: $apellidos");
     print("Email: $email");
@@ -153,14 +158,14 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
         String uri = "http://10.0.2.2/dgp_php_scripts/modificar_estudiante.php";
 
         final response = await http.post(Uri.parse(uri), body: {
-          "id_estudiante": estudianteAModificar!.id_estudiante,
+          "id_estudiante": estudianteAModificar!.idEstudiante,
           "nombre": nombre,
           "apellidos": apellidos,
           "email": email,
           "acceso": valorTipoAcceso,
           "accesibilidad": accesibilidad,
           "password_usuario": passwordUsuario,
-          "foto": "a",
+          "foto": foto,
         });
 
         print("Estudiante modificado  ");
@@ -181,9 +186,9 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
         height: 250,
         width: 250,
         padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-        child: fotoEstudiante == null ?
-        CircleAvatar(backgroundImage: AssetImage("assets/imagenes/sin_foto_perfil.jpg"), backgroundColor: Colors.grey) :
-        CircleAvatar(backgroundImage: FileImage(File(fotoEstudiante!.path)), backgroundColor: Colors.grey),
+        child: fotoEstudiante != null ?
+        CircleAvatar(backgroundImage: FileImage(File(fotoEstudiante!.path)), backgroundColor: Colors.grey) :
+        CircleAvatar(backgroundImage: NetworkImage(estudianteAModificar!.foto)),
       ),
     );
   }

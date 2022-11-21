@@ -25,7 +25,7 @@ Tarea buscarTarea(String idTarea) {
   Tarea t = listaTareas.first;
 
   for (Tarea tAux in listaTareas)
-    if(tAux.id_tarea == idTarea)
+    if(tAux.idTarea == idTarea)
       t = tAux;
 
   return t;
@@ -35,7 +35,7 @@ TareaAsignada buscarTareaAsignada(String idTarea, String idEstudiante) {
   TareaAsignada ta = listaTareasAsignadas.first;
 
   for (TareaAsignada taAux in listaTareasAsignadas)
-    if(taAux.id_tarea == idTarea && taAux.id_estudiante == idEstudiante)
+    if(taAux.idTarea == idTarea && taAux.idEstudiante == idEstudiante)
       ta = taAux;
 
   return ta;
@@ -45,23 +45,23 @@ void actualizarListaTareasCompletadas(Estudiante e) {
   listaTareasCompletadas.clear();
 
   for (TareaAsignada ta in listaTareasAsignadas)
-    if (ta.completada == "1" && ta.id_estudiante == e.id_estudiante)
-      listaTareasCompletadas.add(buscarTarea(ta.id_tarea));
+    if (ta.completada == "1" && ta.idEstudiante == e.idEstudiante)
+      listaTareasCompletadas.add(buscarTarea(ta.idTarea));
 }
 
 void actualizarListaTareasNoCompletadas(Estudiante e) {
   listaTareasNoCompletadas.clear();
 
   for (TareaAsignada ta in listaTareasAsignadas)
-    if (ta.completada == "0" && ta.id_estudiante == e.id_estudiante)
-      listaTareasNoCompletadas.add(buscarTarea(ta.id_tarea));
+    if (ta.completada == "0" && ta.idEstudiante == e.idEstudiante)
+      listaTareasNoCompletadas.add(buscarTarea(ta.idTarea));
 }
 
 int numTareasBien() {
   int contador = 0;
 
   for (TareaAsignada ta in listaTareasAsignadas)
-    if (ta.completada == "1" && ta.calificacion == "Bien" && ta.id_estudiante == estudiante!.id_estudiante)
+    if (ta.completada == "1" && ta.calificacion == "Bien" && ta.idEstudiante == estudiante!.idEstudiante)
       contador++;
 
   return contador;
@@ -71,7 +71,7 @@ int numTareasMuyBien() {
   int contador = 0;
 
   for (TareaAsignada ta in listaTareasAsignadas)
-    if (ta.completada == "1" && ta.calificacion == "Muy bien" && ta.id_estudiante == estudiante!.id_estudiante)
+    if (ta.completada == "1" && ta.calificacion == "Muy bien" && ta.idEstudiante == estudiante!.idEstudiante)
       contador++;
 
   return contador;
@@ -196,7 +196,7 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                     children: listaTareasCompletadas.map((tarea) {
                       return Container(
                         padding: EdgeInsets.all(separacionElementos),
-                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.id_tarea, estudiante!.id_estudiante).calificacion, style: TextStyle(fontSize: 18)),
+                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.idTarea, estudiante!.idEstudiante).calificacion, style: TextStyle(fontSize: 18)),
                       );
                     }).toList(),
                   )
@@ -214,7 +214,7 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                     children: listaTareasNoCompletadas.map((tarea) {
                       return Container(
                         padding: EdgeInsets.all(separacionElementos),
-                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.id_tarea, estudiante!.id_estudiante).calificacion, style: TextStyle(fontSize: 18)),
+                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.idTarea, estudiante!.idEstudiante).calificacion, style: TextStyle(fontSize: 18)),
                       );
                     }).toList(),
                   )

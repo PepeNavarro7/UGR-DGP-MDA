@@ -93,8 +93,8 @@ class _AsignarTareaState extends State<AsignarTarea> {
   Future<void> asignarTarea() async {
     if (datosCompletos()) {
       ventana_mensajes.init(context);
-      print("idTarea: " + tarea.id_tarea);
-      print("idEstudiante: " + estudiante.id_estudiante);
+      print("idTarea: " + tarea.idTarea);
+      print("idEstudiante: " + estudiante.idEstudiante);
       print("fechaInicio: $fechaInicio");
       print("fechaFin: $fechaFin");
 
@@ -102,8 +102,8 @@ class _AsignarTareaState extends State<AsignarTarea> {
         String uri = "http://10.0.2.2/dgp_php_scripts/asignar_tarea_estudiante.php";
 
         final response = await http.post(Uri.parse(uri), body: {
-          "id_tarea": tarea.id_tarea,
-          "id_estudiante": estudiante.id_estudiante,
+          "id_tarea": tarea.idTarea,
+          "id_estudiante": estudiante.idEstudiante,
           "fecha_inicio": fechaInicio,
           "fecha_fin": fechaFin,
           "completada": "0",

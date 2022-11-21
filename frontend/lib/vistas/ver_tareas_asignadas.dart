@@ -43,7 +43,7 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
     int indice = -1;
 
     for(Tarea tarea in listaTareas)
-      if (tarea.id_tarea == idTarea)
+      if (tarea.idTarea == idTarea)
         indice = listaTareas.indexOf(tarea);
 
     return indice;
@@ -53,7 +53,7 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
     int indice = -1;
 
     for(Estudiante estudiante in listaEstudiantes)
-      if (estudiante.id_estudiante == idEstudiante)
+      if (estudiante.idEstudiante == idEstudiante)
         indice = listaEstudiantes.indexOf(estudiante);
 
     return indice;
@@ -92,7 +92,7 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
               return GestureDetector(
                 onTap: () {
                   if (tareaAsignada.completada == '0') {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => MarcarTareaCompletada(tareaAsignada, listaTareas[indiceDeTarea(tareaAsignada.id_tarea)], listaEstudiantes[indiceDeEstudiante(tareaAsignada.id_estudiante)]))).then((value) {
+                    Navigator.push(context, MaterialPageRoute(builder: (_) => MarcarTareaCompletada(tareaAsignada, listaTareas[indiceDeTarea(tareaAsignada.idTarea)], listaEstudiantes[indiceDeEstudiante(tareaAsignada.idEstudiante)]))).then((value) {
                       actualizarListaTareasAsignadas();
                     });
                   }
@@ -103,8 +103,8 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Tarea: " + listaTareas[indiceDeTarea(tareaAsignada.id_tarea)].nombre),
-                        Text("Estudiantes: " + listaEstudiantes[indiceDeEstudiante(tareaAsignada.id_estudiante)].nombre),
+                        Text("Tarea: " + listaTareas[indiceDeTarea(tareaAsignada.idTarea)].nombre),
+                        Text("Estudiantes: " + listaEstudiantes[indiceDeEstudiante(tareaAsignada.idEstudiante)].nombre),
                         Text(tareaAsignada.completada == "0" ? "No completada" : "Completada"),
                         Text("Evaluación: " + tareaAsignada.calificacion),
                       ],

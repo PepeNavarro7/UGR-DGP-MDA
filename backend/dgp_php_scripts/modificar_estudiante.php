@@ -34,6 +34,13 @@ if(isset($_POST["password_usuario"])) {
 
 if(isset($_POST["foto"])) {
     $foto = $_POST["foto"];
+    $nombre_sin_espacios = str_replace(' ', '', $nombre);
+    $apellidos_sin_espacios = str_replace(' ', '', $apellidos);
+    $foto_path = "../fotos_estudiantes/$nombre_sin_espacios$apellidos_sin_espacios.jpg";
+    $filehandler = fopen($foto_path, 'wb');
+    fwrite($filehandler, base64_decode($foto));
+    fclose($filehandler);
+
 } else return;
 
 // Create connection
@@ -43,7 +50,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "UPDATE estudiantes SET nombre='$nombre', apellidos='$apellidos', email='$email', acceso='$acceso', accesibilidad='$accesibilidad', password_usuario='$password_usuario', foto='$foto' WHERE estudiantes.id_estudiante='$id_estudiante'";
+$sql = "UPDATE estudiantes SET nombre='$nombre', apellidos='$apellidos', email='$email', acceso='$acceso', accesibilidad='$accesibilidad', password_usuario='$password_usuario', foto='$foto_path' WHERE estudiantes.id_estudiante='$id_estudiante'";
 
 if ($conn->query($sql) === TRUE) {
   echo "New modification done successfully";

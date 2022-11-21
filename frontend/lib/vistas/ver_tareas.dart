@@ -34,7 +34,7 @@ class _VerTareasState extends State<VerTareas> {
       String uri = "http://10.0.2.2/dgp_php_scripts/borrar_tarea.php";
 
       final response = await http.post(Uri.parse(uri), body: {
-        "id_tarea": tarea.id_tarea
+        "id_tarea": tarea.idTarea
       });
 
       setState(() {

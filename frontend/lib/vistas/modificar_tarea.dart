@@ -123,7 +123,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
         String uri = "http://10.0.2.2/dgp_php_scripts/modificar_tarea.php";
 
         final response = await http.post(Uri.parse(uri), body: {
-          "id_tarea": tareaAModificar!.id_tarea,
+          "id_tarea": tareaAModificar!.idTarea,
           "nombre": nombre,
           "descripcion": descripcion,
           "lugar": lugar,

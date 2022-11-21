@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'dart:convert';
 
 /*
  * Clase Registrar Estudiante hereda de StatefulWidget para que el campo de la
@@ -89,6 +90,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   }
 
   bool datosCompletos() {
+    if (fotoEstudiante == null)
+      return false;
     if (nombre == "")
       return false;
     if (apellidos == "")
@@ -117,7 +120,9 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
         accesibilidad = "ninguna";
       }
 
-      String foto = "a";
+      List<int> bytesImagen = File(fotoEstudiante!.path).readAsBytesSync();
+      String foto = base64Encode(bytesImagen);
+      print("Bytes imagen: " + foto);
 
       print("Nombre: $nombre");
       print("Apellidos: $apellidos");
