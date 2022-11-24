@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:app/clases/estudiante.dart';
-import 'package:app/vistas/datos_estudiante.dart';
-import 'package:app/vistas/modificar_estudiante.dart';
-import 'package:app/vistas/registrar_estudiante.dart';
+import 'package:app/vistas/profesor/datos_estudiante.dart';
+import 'package:app/vistas/profesor/modificar_estudiante.dart';
+import 'package:app/vistas/profesor/registrar_estudiante.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

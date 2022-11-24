@@ -232,6 +232,16 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                   Text("Evaluación media: " + evaluacionMedia(), style: TextStyle(fontSize: 20))
                 ],
               ),
+            ),
+
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              child: ElevatedButton(
+                onPressed: (){ //TO-DO
+                  //IR A VER_GRÁFICA_SEGUIMIENTO - parámetros del constructor: el objeto Estudiante e, listaTareasAsignadas
+                },
+                child: Text("Ver gráfico detallado"),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),)
             )
           ], // children
         ),

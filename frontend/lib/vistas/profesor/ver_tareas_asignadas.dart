@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:app/clases/estudiante.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
-import 'package:app/vistas/asignar_tarea.dart';
-import 'package:app/vistas/marcar_tarea_completada.dart';
-import 'package:app/vistas/modificar_tarea.dart';
+import 'package:app/vistas/profesor/asignar_tarea.dart';
+import 'package:app/vistas/profesor/marcar_tarea_completada.dart';
+import 'package:app/vistas/profesor/modificar_tarea.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 

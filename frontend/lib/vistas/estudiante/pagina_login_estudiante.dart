@@ -6,12 +6,12 @@ int NumeroFilas = 4;
 int NumeroColumnas = 2;
 int NumeroCasillasTotales = 0;
 
-class PaginaLogin extends StatefulWidget {
+class PaginaLoginEstudiante extends StatefulWidget {
   @override
-  _PaginaLoginState createState() => _PaginaLoginState();
+  _PaginaLoginEstudianteState createState() => _PaginaLoginEstudianteState();
 }
 
-class _PaginaLoginState extends State<PaginaLogin> {
+class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
   List<String> Usuarios = ['José', 'María', 'Paco', 'Laura', 'Alex', 'Marta', 'Antonio', 'Pablo', 'Inés', 'Jorge', 'David', 'Ana', 'Lucía'];
 
   @override

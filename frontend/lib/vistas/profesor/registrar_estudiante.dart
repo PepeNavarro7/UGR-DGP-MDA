@@ -1,4 +1,4 @@
-import 'package:app/vistas/inicio_profesor.dart';
+import 'package:app/vistas/profesor/inicio_profesor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
