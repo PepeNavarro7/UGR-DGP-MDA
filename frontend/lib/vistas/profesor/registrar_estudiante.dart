@@ -145,13 +145,16 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
           "foto": foto,
         });
 
-        print("Estudiante registrado");
-        FToast().showToast(
-            child: Text("Estudiante registrado",
-            style: TextStyle(fontSize: 25, color: Colors.green),
-            )
-        );
-        Navigator.pop(context);
+        if(response.body == "Estudiante registrado") {
+          FToast().showToast(
+              child: Text("Estudiante registrado",
+                style: TextStyle(fontSize: 25, color: Colors.green),
+              )
+          );
+
+        }
+        if(response.body == "Estudiante registrado")
+          Navigator.pop(context);
       } catch (e) {
         print("Exception: $e");
       }
