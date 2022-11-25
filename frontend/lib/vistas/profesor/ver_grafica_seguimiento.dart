@@ -18,6 +18,9 @@ class GraficaSeguimiento extends StatefulWidget {
   GraficaSeguimiento(Estudiante e, List<Tarea> listaTareasAsignadas){
     estudiante = e;
     listaTareasAsignadas.addAll(listaTareasAsignadas);
+    actualizarListaTareasCompletadas(e);
+    actualizarListaTareasNoCompletadas(e);
+
   }
 
 
@@ -74,32 +77,76 @@ int numTareasMuyBien() {
   return contador;
 }
 
-String evaluacionMedia() {
-  int numBien = numTareasBien();
-  int numMuyBien = numTareasMuyBien();
-  int numNormal = listaTareasCompletadas.length - numMuyBien - numMuyBien;
 
-  double mediaMuyBien = 1.0;
-  double mediaBien = 0.5;
-  double mediaNormal = 0.0;
-
-  double media = ((numNormal * mediaNormal + numBien * mediaBien + numMuyBien * mediaMuyBien) / 3);
-  String evaluacion = "";
-
-  if (media >= 0.75)
-    evaluacion = "Muy bien";
-  else if (media >= 0.5)
-    evaluacion = "Bien";
-  else
-    evaluacion = "Normal";
-
-  return evaluacion;
+int numTareasNormal() {
+  return (listaTareasCompletadas.length - numTareasMuyBien() - numTareasBien());
 }
 
 
 
+String evaluacionMedia() {
+  int numBien = numTareasBien();
+  int numMuyBien = numTareasMuyBien();
+  int numNormal = numTareasNormal();
+  int numNoCompletada = listaTareasNoCompletadas.length;
+
+  int mediaMuyBien = 8;
+  int mediaBien = 6;
+  int mediaNormal = 4;
+  int mediaNoCompletada = 1;
+
+  double media = ( (numNoCompletada  * mediaNoCompletada + numNormal * mediaNormal + numBien * mediaBien + numMuyBien * mediaMuyBien)
+                  / listaTareasAsignadas.length );
+  String evaluacion = "";
+
+  if (media >= 7)
+    evaluacion = "Muy bien";
+  else if (media >= 5)
+    evaluacion = "Bien";
+  else if (media >= 3)
+    evaluacion = "Normal";
+  else
+    evaluacion = "No completadas";
+
+  return evaluacion;
+}
+
+double porcentajeTareas(String tipo){
+
+  double porcentaje = -1;
+  int numAsignadas = listaTareasAsignadas.length;
+  int numCompletadas = listaTareasCompletadas.length;
+  int numNoCompletadas = listaTareasNoCompletadas.length;
+
+  switch(tipo){
+    case "Completadas":
+      porcentaje = numCompletadas*100 / numAsignadas;
+      break;
+
+    case "No Completadas":
+      porcentaje = numNoCompletadas*100 / numAsignadas;
+      break;
+
+    case "Muy Bien":
+      porcentaje = numTareasMuyBien()*100 / numCompletadas;
+      break;
+
+    case "Bien":
+      porcentaje = numTareasBien()*100 / numCompletadas;
+      break;
+
+    case "Normal":
+      porcentaje = numTareasNormal()*100 / numCompletadas;
+      break;
+  }
+
+  return porcentaje;
+}
+
 void generar_grafico(){
 
+  //En orden de tareas asignadas, codificar con 0 no realizada, 1 realizada, 2 Bien, 3 Muy Bien
+  List<int> evaluaciones = [listaTareasAsignadas.length];
 
 }
 
@@ -123,8 +170,52 @@ class _GraficaSeguimientoState extends State<GraficaSeguimiento> {
         title: const Text("Gráfica de seguimiento"),
       ),
       body: SafeArea(
+        child: ListView(
+          children: [
 
 
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Número de tareas asignadas: " + listaTareasAsignadas.length.toString(), style: TextStyle(fontSize: 20)),
+                  Text("Número de tareas completadas: " + listaTareasCompletadas.length.toString(), style: TextStyle(fontSize: 20)),
+                  Text("Número de tareas no completadas: " + listaTareasNoCompletadas.length.toString(), style: TextStyle(fontSize: 20)),
+                ],
+              ),
+            ),
+
+
+            //////////GRAFICO//////////
+
+            ///////////////////////////
+
+
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  Text("% de tareas completadas: " + porcentajeTareas("Completadas").toString(), style: TextStyle(fontSize: 20)),
+                  Text("% de tareas no completadas: " + porcentajeTareas("No Completadas").toString(), style: TextStyle(fontSize: 20)),
+
+                  Text("\nNúmero de tareas evaluadas Muy Bien: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 20)),
+                  Text("Número de tareas evaluadas Bien: " + numTareasBien().toString(), style: TextStyle(fontSize: 20)),
+                  Text("Número de tareas evaluadas Normal: " + numTareasNormal().toString(), style: TextStyle(fontSize: 20)),
+
+                  Text("\n% de tareas evaluadas Muy Bien: " + porcentajeTareas("Muy Bien").toString(), style: TextStyle(fontSize: 20)),
+                  Text("% de tareas evaluadas Bien: " + porcentajeTareas("Bien").toString(), style: TextStyle(fontSize: 20)),
+                  Text("% de tareas evaluadas Normal: " + porcentajeTareas("Normal").toString(), style: TextStyle(fontSize: 20)),
+
+                  Text("\nEvaluación media: " + evaluacionMedia(), style: TextStyle(fontSize: 20))
+                ],
+              ),
+            ),
+
+
+        ])
       ),
     );
   }

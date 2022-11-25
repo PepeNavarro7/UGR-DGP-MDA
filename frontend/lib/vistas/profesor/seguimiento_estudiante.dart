@@ -229,7 +229,7 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                 children: [
                   Text("Tareas \"Bien\" realizadas: " + numTareasBien().toString(), style: TextStyle(fontSize: 20)),
                   Text("Tareas \"Muy Bien\" realizadas: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 20)),
-                  Text("Evaluación media: " + evaluacionMedia(), style: TextStyle(fontSize: 20))
+                  Text("Evaluación media (sin contar las no completadas): " + evaluacionMedia(), style: TextStyle(fontSize: 20))
                 ],
               ),
             ),
