@@ -34,8 +34,12 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
       String uri = "http://10.0.2.2/dgp_php_scripts/borrar_estudiante.php";
 
       final response = await http.post(Uri.parse(uri), body: {
-        "id_estudiante": estudiante.idEstudiante
+        "id_estudiante": estudiante.idEstudiante,
+        "nombre": estudiante.nombre,
+        "apellidos": estudiante.apellidos
       });
+
+      print(response.body);
 
       setState(() {
         listaEstudiantes.remove(estudiante);
