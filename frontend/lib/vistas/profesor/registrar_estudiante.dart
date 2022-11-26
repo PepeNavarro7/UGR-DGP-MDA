@@ -44,6 +44,9 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   // Lista que almacena todas los pictogramas seleccionados por el usuario
   List<XFile>? listaPictogramas = [];
 
+  // Lista que almacena todas los pictogramas no seleccionados para la clave por el usuario
+  List<XFile>? listaPictogramasNoClave = [];
+
   // Lista que almacena todas los pictogramas seleccionados para la clave por el usuario
   List<XFile>? listaPictogramasClave = [];
 
@@ -67,8 +70,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     if (pictogramasSeleccionados!.isNotEmpty) {
       listaPictogramas!.addAll(pictogramasSeleccionados);
 
-      if (listaPictogramas!.length > 9) {
-        listaPictogramas!.length = 9;
+      if (listaPictogramas!.length > 6) {
+        listaPictogramas!.length = 6;
       }
     }
 
@@ -79,6 +82,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   void eliminarPictogramas() {
     setState(() {
       listaPictogramas!.clear();
+      listaPictogramasNoClave!.clear();
+      listaPictogramasClave!.clear();
     });
   }
 
@@ -99,6 +104,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     if (email == "")
       return false;
     if (valorTipoAcceso == "Alfanumerico" && passwordUsuario == "")
+      return false;
+    if (valorTipoAcceso == "Pictogramas" && (listaPictogramasClave!.length < 2 || listaPictogramas!.length < 6))
       return false;
 
     return true;
@@ -122,7 +129,6 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
 
       List<int> bytesImagen = File(fotoEstudiante!.path).readAsBytesSync();
       String foto = base64Encode(bytesImagen);
-      print("Bytes imagen: " + foto);
 
       print("Nombre: $nombre");
       print("Apellidos: $apellidos");
@@ -131,6 +137,40 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
       print("Accesibilidad: $accesibilidad");
       print("Password: $passwordUsuario");
       print("Foto: $foto");
+
+      String pictogramaClave1 = "";
+      String pictogramaClave2 = "";
+      String pictogramaClave3 = "";
+      String pictogramaClave4 = "";
+      String pictogramaNoClave1 = "";
+      String pictogramaNoClave2 = "";
+
+      if (valorTipoAcceso == "Pictogramas") {
+        List<int> bytesPictogramaClave1 = File(listaPictogramasClave![0].path).readAsBytesSync();
+        pictogramaClave1 = base64Encode(bytesPictogramaClave1);
+
+        List<int> bytesPictogramaClave2 = File(listaPictogramasClave![1].path).readAsBytesSync();
+        pictogramaClave2 = base64Encode(bytesPictogramaClave2);
+
+        List<int> bytesPictogramaClave3 = File(listaPictogramasClave![2].path).readAsBytesSync();
+        pictogramaClave3 = base64Encode(bytesPictogramaClave3);
+
+        List<int> bytesPictogramaClave4 = File(listaPictogramasClave![3].path).readAsBytesSync();
+        pictogramaClave4 = base64Encode(bytesPictogramaClave4);
+
+        // Se calculan los pictogramas no clave
+        listaPictogramasNoClave!.clear();
+        for(int i = 0; i < listaPictogramas!.length; i++) {
+          if (!listaPictogramasClave!.contains(listaPictogramas![i]))
+            listaPictogramasNoClave!.add(listaPictogramas![i]);
+        }
+
+        List<int> bytesPictogramaNoClave1 = File(listaPictogramasNoClave![0].path).readAsBytesSync();
+        pictogramaNoClave1 = base64Encode(bytesPictogramaNoClave1);
+
+        List<int> bytesPictogramaNoClave2 = File(listaPictogramasNoClave![1].path).readAsBytesSync();
+        pictogramaNoClave2 = base64Encode(bytesPictogramaNoClave2);
+      }
 
       try {
         String uri = "http://10.0.2.2/dgp_php_scripts/insertar_estudiante.php";
@@ -143,7 +183,15 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
           "accesibilidad": accesibilidad,
           "password_usuario": passwordUsuario,
           "foto": foto,
+          "pictograma_clave_1": pictogramaClave1,
+          "pictograma_clave_2": pictogramaClave2,
+          "pictograma_clave_3": pictogramaClave3,
+          "pictograma_clave_4": pictogramaClave4,
+          "pictograma_no_clave_1": pictogramaNoClave1,
+          "pictograma_no_clave_2": pictogramaNoClave2,
         });
+
+        print(response.body);
 
         if(response.body == "Estudiante registrado") {
           FToast().showToast(
@@ -153,8 +201,10 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
           );
 
         }
+
         if(response.body == "Estudiante registrado")
           Navigator.pop(context);
+
       } catch (e) {
         print("Exception: $e");
       }
@@ -287,7 +337,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: listaPictogramas!.length < 9 ? seleccionarPictogramas : null,
+                  onPressed: listaPictogramas!.length < 6 ? seleccionarPictogramas : null,
                   child: Text("Añadir Pictogramas"),
                   style: ElevatedButton.styleFrom(
                     primary: colorBotones,
@@ -303,7 +353,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               ],
             ),
           ),
-          (listaPictogramas!.length == 9 && listaPictogramasClave!.isNotEmpty) ?
+          (listaPictogramas!.length == 6 && listaPictogramasClave!.isNotEmpty) ?
           Container(
             child: Column(
               children: [

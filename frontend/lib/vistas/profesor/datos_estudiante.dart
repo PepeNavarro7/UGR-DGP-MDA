@@ -34,6 +34,13 @@ class _DatosEstudianteState extends State<DatosEstudiante> {
         child: ListView(
           children: [
             Container(
+              height: 250,
+              width: 250,
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              child: CircleAvatar(backgroundImage: NetworkImage("http://10.0.2.2/" + estudiante!.foto.substring(3))),
+            ),
+
+            Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: Text("Nombre: " + estudiante!.nombre),
             ),

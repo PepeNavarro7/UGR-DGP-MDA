@@ -6,6 +6,8 @@ import 'package:app/clases/tarea_asignada.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../profesor/registrar_estudiante.dart';
+
 
 class InicioEstudiante extends StatefulWidget {
   // El objeto _estudiante es miembro de la clase InicioEstudiante, para poder utilizarlo
@@ -49,7 +51,7 @@ class _InicioEstudianteState extends State<InicioEstudiante> {
               width: MediaQuery.of(context).size.width*0.8,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push( context, MaterialPageRoute(builder: (context) => RegistrarEstudiante()), );
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => RegistrarEstudiante()), );
                 },
                 child: Text("Registrar estudiante"),
               ),

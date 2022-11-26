@@ -1,5 +1,11 @@
+import 'package:app/vistas/estudiante/inicio_estudiante.dart';
+import 'package:app/vistas/estudiante/inicio_sesion_estudiante.dart';
+import 'package:app/vistas/profesor/inicio_profesor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:app/clases/estudiante.dart';
+
+List<Estudiante> listaEstudiantes = [];
 
 int NumeroPagina = 0;
 int NumeroFilas = 4;
@@ -7,12 +13,16 @@ int NumeroColumnas = 2;
 int NumeroCasillasTotales = 0;
 
 class PaginaLoginEstudiante extends StatefulWidget {
+  PaginaLoginEstudiante(List<Estudiante> lista) {
+    listaEstudiantes.clear();
+    listaEstudiantes.addAll(lista);
+  }
+
   @override
   _PaginaLoginEstudianteState createState() => _PaginaLoginEstudianteState();
 }
 
 class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
-  List<String> Usuarios = ['José', 'María', 'Paco', 'Laura', 'Alex', 'Marta', 'Antonio', 'Pablo', 'Inés', 'Jorge', 'David', 'Ana', 'Lucía'];
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +92,7 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
 
     void PaginaSiguiente() {
       setState(() {
-        if(NumeroPagina < (Usuarios.length / NumeroCasillasTotales - 1))
+        if(NumeroPagina < (listaEstudiantes.length / NumeroCasillasTotales - 1))
           NumeroPagina++;
       });
     }
@@ -98,16 +108,6 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
             );
           }).toList();
         },
-      );
-    }
-
-    Widget Autenticacion() {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text("Página Login", style: TextStyle(fontSize: TamanioLetra)),
-          backgroundColor: Colors.blue,
-          automaticallyImplyLeading: false,
-        ),
       );
     }
 
@@ -127,19 +127,17 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
           ),
           itemBuilder: (BuildContext context, int index){
             index += NumeroPagina * NumeroCasillasTotales;
-            if(index >= Usuarios.length) {
+            if(index >= listaEstudiantes.length) {
               return Container();
             } else {
-              return Container(color: Colors.greenAccent,
-                  margin: EdgeInsets.all(2),
-                  child: Center(
-                    child: TextButton(
-                      child: Text(Usuarios[index], style: TextStyle(fontSize: TamanioLetra, color: Colors.black)),
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Autenticacion()));
-                      },
-                    ),
-                  )
+              return Container(
+                margin: EdgeInsets.all(2),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.push( context, MaterialPageRoute(builder: (context) =>InicioSesionEstudiante(listaEstudiantes[index])));
+                  },
+                  child: Image.network(listaEstudiantes[index].foto, fit: BoxFit.cover)
+                ),
               );
             }
           },
@@ -169,7 +167,7 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
                   height: 100,
                   width: 100,
                   child: Visibility(
-                    visible: NumeroPagina < (Usuarios.length / NumeroCasillasTotales - 1),
+                    visible: NumeroPagina < (listaEstudiantes.length / NumeroCasillasTotales - 1),
                     child: IconButton(
                       icon: new Icon(Icons.arrow_forward, size: 70.0),
                       onPressed: PaginaSiguiente,
