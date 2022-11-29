@@ -1,4 +1,3 @@
-import 'package:app/vistas/estudiante/inicio_estudiante.dart';
 import 'package:app/vistas/estudiante/inicio_sesion_estudiante.dart';
 import 'package:app/vistas/profesor/inicio_profesor.dart';
 import 'package:flutter/material.dart';

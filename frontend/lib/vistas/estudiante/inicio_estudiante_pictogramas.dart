@@ -1,19 +1,12 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:app/clases/estudiante.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
-import 'package:app/vistas/elegir_usuario.dart';
-import 'package:app/vistas/estudiante/inicio_sesion_estudiante.dart';
-import 'package:app/vistas/profesor/ver_tareas_asignadas.dart';
+import 'package:app/vistas/estudiante/ver_tareas_estudiantes.dart';
+import 'package:app/vistas/profesor/ver_grafica_seguimiento.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-import '../profesor/registrar_estudiante.dart';
-import '../profesor/ver_tareas.dart';
-
-import '../estudiante/ver_mi_perfil_estudiante.dart';
 
 
 
@@ -27,7 +20,14 @@ class InicioEstudiantePictograma extends StatefulWidget {
     return this._estudiante;
   }
 
+  List<TareaAsignada> filtrarTareas(List<TareaAsignada> ta) {
+    List<TareaAsignada> aux = [];
+    for (int i = 0; i < ta.length; i++)
+      if (ta[i].idEstudiante == _estudiante.idEstudiante)
+        aux.add(ta[i]);
 
+    return aux;
+  }
 
   // De igual manera, paso el "this" al _InicioEstudianteState, para que pueda acceder a InicioEstudiante
   // y poder llamar a getEstudiante
@@ -62,135 +62,121 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              width: MediaQuery.of(context).size.width*0.8,
-              child:
+            GestureDetector(
+              onTap: () async {
+                List<TareaAsignada> tareasAsignadas = [];
+                List<Tarea> listaTareas = [];
+                List<Estudiante> listaEstudiantes = [];
 
+                try {
+                  String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas_asignadas.php";
+                  var response = await http.get(Uri.parse(uri));
 
-              ElevatedButton(
-                onPressed: () async {
-                  List<TareaAsignada> tareasAsignadas = [];
-                  List<Tarea> listaTareas = [];
-                  List<Estudiante> listaEstudiantes = [];
-
-                  try {
-                    String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas_asignadas.php";
-                    var response = await http.get(Uri.parse(uri));
-
-                    if (response.statusCode == 200) {
-                      var tareasJSON = json.decode(response.body);
-                      for (var tarea in tareasJSON) {
-                        TareaAsignada tareaAux = new TareaAsignada(tarea['id_tarea'], tarea['id_estudiante'], tarea['fecha_inicio'], tarea['fecha_fin'], tarea['completada'], tarea['calificacion']);
-                        tareasAsignadas.add(tareaAux);
-                      }
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      TareaAsignada tareaAux = new TareaAsignada(tarea['id_tarea'], tarea['id_estudiante'], tarea['fecha_inicio'], tarea['fecha_fin'], tarea['completada'], tarea['calificacion']);
+                      tareasAsignadas.add(tareaAux);
                     }
-
-                    uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
-                    response = await http.get(Uri.parse(uri));
-
-                    if (response.statusCode == 200) {
-                      var tareasJSON = json.decode(response.body);
-                      for (var tarea in tareasJSON) {
-                        List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
-                        listaTareas.add(tareaAux);
-                      }
-                    }
-
-                    uri = "http://10.0.2.2/dgp_php_scripts/obtener_estudiantes.php";
-                    response = await http.get(Uri.parse(uri));
-
-                    if (response.statusCode == 200) {
-                      var estudiantesJSON = json.decode(response.body);
-                      for (var estudiante in estudiantesJSON) {
-                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], estudiante['foto']);
-                        listaEstudiantes.add(estudianteAux);
-                      }
-                    }
-                  } catch (e) {
-                    print("Exception: $e");
                   }
-                  Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareasAsignadas(tareasAsignadas, listaTareas, listaEstudiantes)), );
-                },
+
+                  uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                  response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                      listaTareas.add(tareaAux);
+                    }
+                  }
+
+                  uri = "http://10.0.2.2/dgp_php_scripts/obtener_estudiantes.php";
+                  response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var estudiantesJSON = json.decode(response.body);
+                    for (var estudiante in estudiantesJSON) {
+                      Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], estudiante['foto']);
+                      listaEstudiantes.add(estudianteAux);
+                    }
+                  }
+                } catch (e) {
+                  print("Exception: $e");
+                }
+
+                List<TareaAsignada> tareasEstudiante = inicioEstudiante.filtrarTareas(tareasAsignadas);
+
+                Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareasEstudiante(tareasEstudiante, listaTareas, inicioEstudiante.getEstudiante())), );
+              },
+              child: Container(
+                margin: EdgeInsets.all(5),
+                height: MediaQuery.of(context).size.height / 3.75,
+                color: Colors.blue,
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text("        Ver mis tareas    ",style: TextStyle(fontWeight: FontWeight.bold)),
-                    Icon(Icons.directions_walk,color: Colors.white),
+                    Text("Ver mis tareas",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white)),
+                    Icon(Icons.task_rounded,color: Colors.white, size: 40),
                   ],
                 ),
               ),
             ),
 
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              width: MediaQuery.of(context).size.width*0.8,
-              child: ElevatedButton(
-                onPressed: () async {
-                  List<Estudiante> listaEstudiantes = [];
+            GestureDetector(
+              onTap: () async {
+                List<Tarea> listaTareas = [];
 
-                  try {
-                    String uri = "http://10.0.2.2/dgp_php_scripts/obtener_estudiantes.php";
-                    final response = await http.get(Uri.parse(uri));
+                try {
+                  String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                  var response = await http.get(Uri.parse(uri));
 
-                    if (response.statusCode == 200) {
-                      var estudiantesJSON = json.decode(response.body);
-                      for (var estudiante in estudiantesJSON) {
-                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], estudiante['foto']);
-                        listaEstudiantes.add(estudianteAux);
-                      }
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                      listaTareas.add(tareaAux);
                     }
-                  } catch (e) {
-                    print("Exception: $e");
                   }
+                } catch (e) {
+                  print("Exception: $e");
+                }
 
-                  //Navigator.push( context, MaterialPageRoute(builder: (context) => VerEstudiantes(listaEstudiantes) ), );
-                },
-                child:
-                  Row(
-                    children: [
-                      Text("        Ver mis comandas ",style: TextStyle(fontWeight: FontWeight.bold)),
-                      Icon(Icons.task_rounded,color: Colors.white),
-                    ],
-                  ),
-              ),
-            ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              width: MediaQuery.of(context).size.width*0.8,
-              child: ElevatedButton(
-                onPressed: () {
-                  //Navigator.push( context, MaterialPageRoute(builder: (context) => VerMiPerfilEstudiante()), );
-                },
-                child:
-                  Row(
-                    children: [
-                      Text("      Perfil y estadísticas ",style: TextStyle(fontWeight: FontWeight.bold)),
-                      Icon(Icons.face,color: Colors.white),
-                    ],
-                  ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              width: MediaQuery.of(context).size.width*0.8,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.popUntil(context, (Route<dynamic> predicate) => predicate.isFirst);
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
-                  // Background color
+                //Navigator.push( context, MaterialPageRoute(builder: (context) => GraficaSeguimiento(inicioEstudiante.getEstudiante(), listaTareas)));
+              },
+              child: Container(
+                margin: EdgeInsets.all(5),
+                height: MediaQuery.of(context).size.height / 3.75,
+                color: Colors.blue,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("Perfil y estadísticas",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white)),
+                    Icon(Icons.face,color: Colors.white, size: 40),
+                  ],
                 ),
-                child:
-                  Row(
-                    children: [
-                      Text("                LOG OUT   ",style: TextStyle(fontWeight: FontWeight.bold)),
-                      Icon(Icons.logout,color: Colors.white),
-                    ],
-                  ),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                Navigator.popUntil(context, (Route<dynamic> predicate) => predicate.isFirst);
+              },
+              child: Container(
+                margin: EdgeInsets.all(5),
+                height: MediaQuery.of(context).size.height / 3.75,
+                color: Colors.red,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("Cerrar sesión",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white)),
+                    Icon(Icons.logout,color: Colors.white, size: 40),
+                  ],
+                ),
               ),
             ),
           ],

@@ -1,4 +1,4 @@
-import 'package:app/vistas/estudiante/inicio_estudiante.dart';
+import 'package:app/vistas/estudiante/inicio_estudiante_pictogramas.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:app/clases/estudiante.dart';
@@ -168,7 +168,7 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
         ElevatedButton(
           onPressed: () {
             if (loginCorrecto())
-              Navigator.push( context, MaterialPageRoute(builder: (context) =>InicioEstudiante(estudiante!)));
+                Navigator.push( context, MaterialPageRoute(builder: (context) =>InicioEstudiantePictograma(estudiante!)));
           },
           child: Text("Acceder"),
         )

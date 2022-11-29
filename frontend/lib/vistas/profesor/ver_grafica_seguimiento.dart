@@ -1,10 +1,10 @@
-
+/*
 import 'package:app/clases/estudiante.dart';
 import 'package:flutter/material.dart';
 import '../../clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 
-/*
 Estudiante? estudiante;
 
 List<TareaAsignada> listaTareasAsignadas = [];
@@ -13,6 +13,57 @@ List<TareaAsignada> listaTareasAsignadas = [];
 List<TareaAsignada> listaTareasCompletadas = [];
 List<TareaAsignada> listaTareasNoCompletadas = [];
 
+
+/// Sample linear data type.
+class LinearSales {
+  final int year;
+  final int sales;
+
+  LinearSales(this.year, this.sales);
+}
+
+
+class SimpleLineChart extends StatelessWidget {
+  final List<charts.Series<dynamic, int>> seriesList;
+  final bool animate;
+
+  SimpleLineChart(this.seriesList, {required this.animate});
+
+  /// Creates a [LineChart] with sample data and no transition.
+  factory SimpleLineChart.withSampleData() {
+    return new SimpleLineChart(
+      _createSampleData(),
+      // Disable animations for image tests.
+      animate: false,
+    );
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return new charts.LineChart(seriesList, animate: animate);
+  }
+
+  /// Create one series with sample hard coded data.
+  static List<charts.Series<LinearSales, int>> _createSampleData() {
+    final data = [
+      new LinearSales(0, 5),
+      new LinearSales(1, 25),
+      new LinearSales(2, 100),
+      new LinearSales(3, 75),
+    ];
+
+    return [
+      new charts.Series<LinearSales, int>(
+        id: 'Sales',
+        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
+        domainFn: (LinearSales sales, _) => sales.year,
+        measureFn: (LinearSales sales, _) => sales.sales,
+        data: data,
+      )
+    ];
+  }
+}
 
 class GraficaSeguimiento extends StatefulWidget {
 
@@ -97,7 +148,7 @@ String evaluacionMedia() {
   int mediaNoCompletada = 1;
 
   double media = ( (numNoCompletada  * mediaNoCompletada + numNormal * mediaNormal + numBien * mediaBien + numMuyBien * mediaMuyBien)
-                  / listaTareasAsignadas.length );
+      / listaTareasAsignadas.length );
   String evaluacion = "";
 
   if (media >= 7)
@@ -151,7 +202,6 @@ void generar_grafico(){
 
 }
 
-
 class _GraficaSeguimientoState extends State<GraficaSeguimiento> {
   // Color de la AppBar
   final colorAppBar = Colors.blue;
@@ -171,53 +221,54 @@ class _GraficaSeguimientoState extends State<GraficaSeguimiento> {
         title: const Text("Gráfica de seguimiento"),
       ),
       body: SafeArea(
-        child: ListView(
-          children: [
+          child: ListView(
+              children: [
 
 
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("Número de tareas asignadas: " + listaTareasAsignadas.length.toString(), style: TextStyle(fontSize: 20)),
-                  Text("Número de tareas completadas: " + listaTareasCompletadas.length.toString(), style: TextStyle(fontSize: 20)),
-                  Text("Número de tareas no completadas: " + listaTareasNoCompletadas.length.toString(), style: TextStyle(fontSize: 20)),
-                ],
-              ),
-            ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("Número de tareas asignadas: " + listaTareasAsignadas.length.toString(), style: TextStyle(fontSize: 20)),
+                      Text("Número de tareas completadas: " + listaTareasCompletadas.length.toString(), style: TextStyle(fontSize: 20)),
+                      Text("Número de tareas no completadas: " + listaTareasNoCompletadas.length.toString(), style: TextStyle(fontSize: 20)),
+                    ],
+                  ),
+                ),
 
 
-            //////////GRAFICO//////////
+                //////////GRAFICO//////////
 
-            ///////////////////////////
-
-
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  Text("% de tareas completadas: " + porcentajeTareas("Completadas").toString(), style: TextStyle(fontSize: 20)),
-                  Text("% de tareas no completadas: " + porcentajeTareas("No Completadas").toString(), style: TextStyle(fontSize: 20)),
-
-                  Text("\nNúmero de tareas evaluadas Muy Bien: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 20)),
-                  Text("Número de tareas evaluadas Bien: " + numTareasBien().toString(), style: TextStyle(fontSize: 20)),
-                  Text("Número de tareas evaluadas Normal: " + numTareasNormal().toString(), style: TextStyle(fontSize: 20)),
-
-                  Text("\n% de tareas evaluadas Muy Bien: " + porcentajeTareas("Muy Bien").toString(), style: TextStyle(fontSize: 20)),
-                  Text("% de tareas evaluadas Bien: " + porcentajeTareas("Bien").toString(), style: TextStyle(fontSize: 20)),
-                  Text("% de tareas evaluadas Normal: " + porcentajeTareas("Normal").toString(), style: TextStyle(fontSize: 20)),
-
-                  Text("\nEvaluación media: " + evaluacionMedia(), style: TextStyle(fontSize: 20))
-                ],
-              ),
-            ),
+                ///////////////////////////
 
 
-        ])
+                Container(
+                  padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+
+                      Text("% de tareas completadas: " + porcentajeTareas("Completadas").toString(), style: TextStyle(fontSize: 20)),
+                      Text("% de tareas no completadas: " + porcentajeTareas("No Completadas").toString(), style: TextStyle(fontSize: 20)),
+
+                      Text("\nNúmero de tareas evaluadas Muy Bien: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 20)),
+                      Text("Número de tareas evaluadas Bien: " + numTareasBien().toString(), style: TextStyle(fontSize: 20)),
+                      Text("Número de tareas evaluadas Normal: " + numTareasNormal().toString(), style: TextStyle(fontSize: 20)),
+
+                      Text("\n% de tareas evaluadas Muy Bien: " + porcentajeTareas("Muy Bien").toString(), style: TextStyle(fontSize: 20)),
+                      Text("% de tareas evaluadas Bien: " + porcentajeTareas("Bien").toString(), style: TextStyle(fontSize: 20)),
+                      Text("% de tareas evaluadas Normal: " + porcentajeTareas("Normal").toString(), style: TextStyle(fontSize: 20)),
+
+                      Text("\nEvaluación media: " + evaluacionMedia(), style: TextStyle(fontSize: 20))
+                    ],
+                  ),
+                ),
+
+
+              ])
       ),
     );
   }
-}*/
+}
+*/
