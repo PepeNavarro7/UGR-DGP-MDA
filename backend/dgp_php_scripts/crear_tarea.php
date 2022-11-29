@@ -24,6 +24,10 @@ if(isset($_POST["pasos"])) {
     $pasos = $_POST["pasos"];
 } else return;
 
+if(isset($_POST["materiales"])) {
+  $materiales = $_POST["materiales"];
+} else return;
+
 // Create connection
 $conn = new mysqli($servername, $username_db, $password_db, $name_db);
 // Check connection
@@ -31,8 +35,8 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "INSERT INTO tareas (nombre, descripcion, lugar, tipo, pasos)
-VALUES ('$nombre', '$descripcion', '$lugar', '$tipo', '$pasos')";
+$sql = "INSERT INTO tareas (nombre, descripcion, lugar, tipo, materiales, pasos)
+VALUES ('$nombre', '$descripcion', '$lugar', '$materiales', '$tipo', '$pasos')";
 
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";

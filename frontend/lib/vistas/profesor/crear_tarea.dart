@@ -114,12 +114,14 @@ class _CrearTareaState extends State<CrearTarea> {
       }
 
       String jsonPasos = jsonEncode(listaPasos);
+      String jsonMateriales = jsonEncode(listaMateriales);
 
       print("Nombre: $nombre");
       print("Descripción: $descripcion");
       print("Lugar: $lugar");
       print("Tipo: $auxTarea");
       print("Pasos: $jsonPasos");
+      print("Materiales: $jsonMateriales");
 
       try {
 
@@ -131,6 +133,7 @@ class _CrearTareaState extends State<CrearTarea> {
           "lugar": lugar,
           "tipo": auxTarea,
           "pasos": jsonPasos.toString(),
+          "materiales": jsonMateriales.toString()
         });
 
         print("Tarea registrada");
@@ -297,9 +300,11 @@ class _CrearTareaState extends State<CrearTarea> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        aniadirMaterial(material, cantidad);
-                        controladorMaterial.text = "";
-                        controladorCantidad.text = "";
+                        setState(() {
+                          aniadirMaterial(material, cantidad);
+                          controladorMaterial.text = "";
+                          controladorCantidad.text = "";
+                        });
                       },
                       child: Text("Añadir Materiales"),
                     )
