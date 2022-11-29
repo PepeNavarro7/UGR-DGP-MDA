@@ -18,10 +18,11 @@ import '../estudiante/ver_mi_perfil_estudiante.dart';
 
 
 
-class InicioEstudiante extends StatefulWidget {
+
+class InicioEstudiantePictograma extends StatefulWidget {
   // El objeto _estudiante es miembro de la clase InicioEstudiante, para poder utilizarlo
   final Estudiante _estudiante;
-  InicioEstudiante (this._estudiante); // Este es el constructor
+  InicioEstudiantePictograma (this._estudiante); // Este es el constructor
   Estudiante getEstudiante(){
     return this._estudiante;
   }
@@ -31,14 +32,14 @@ class InicioEstudiante extends StatefulWidget {
   // De igual manera, paso el "this" al _InicioEstudianteState, para que pueda acceder a InicioEstudiante
   // y poder llamar a getEstudiante
   @override
-  _InicioEstudianteState createState() => _InicioEstudianteState(this);
+  _InicioEstudiantePictogramaState createState() => _InicioEstudiantePictogramaState(this);
 
 }
 
-class _InicioEstudianteState extends State<InicioEstudiante> {
+class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma> {
   // De forma analoga, la clase "state" tiene como objeto miembro a la clase general, para poder llamarla
-  final InicioEstudiante inicioEstudiante;
-  _InicioEstudianteState(this.inicioEstudiante);
+  final InicioEstudiantePictograma inicioEstudiante;
+  _InicioEstudiantePictogramaState(this.inicioEstudiante);
   // Color de la AppBar
   final colorAppBar = Colors.blue;
 
@@ -113,7 +114,12 @@ class _InicioEstudianteState extends State<InicioEstudiante> {
                   }
                   Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareasAsignadas(tareasAsignadas, listaTareas, listaEstudiantes)), );
                 },
-                child: Text("Ver mis tareas",style: TextStyle(fontWeight: FontWeight.bold)),
+                child: Row(
+                  children: [
+                    Text("        Ver mis tareas    ",style: TextStyle(fontWeight: FontWeight.bold)),
+                    Icon(Icons.directions_walk,color: Colors.white),
+                  ],
+                ),
               ),
             ),
 
@@ -141,7 +147,13 @@ class _InicioEstudianteState extends State<InicioEstudiante> {
 
                   //Navigator.push( context, MaterialPageRoute(builder: (context) => VerEstudiantes(listaEstudiantes) ), );
                 },
-                child: Text("Ver mis comandas",style: TextStyle(fontWeight: FontWeight.bold)),
+                child:
+                  Row(
+                    children: [
+                      Text("        Ver mis comandas ",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Icon(Icons.task_rounded,color: Colors.white),
+                    ],
+                  ),
               ),
             ),
 
@@ -152,7 +164,13 @@ class _InicioEstudianteState extends State<InicioEstudiante> {
                 onPressed: () {
                   //Navigator.push( context, MaterialPageRoute(builder: (context) => VerMiPerfilEstudiante()), );
                 },
-                child: Text("Perfil y estadísticas",style: TextStyle(fontWeight: FontWeight.bold)),
+                child:
+                  Row(
+                    children: [
+                      Text("      Perfil y estadísticas ",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Icon(Icons.face,color: Colors.white),
+                    ],
+                  ),
               ),
             ),
             Container(
@@ -166,7 +184,13 @@ class _InicioEstudianteState extends State<InicioEstudiante> {
                   primary: Colors.red,
                   // Background color
                 ),
-                child: Text("LOG OUT",style: TextStyle(fontWeight: FontWeight.bold)),
+                child:
+                  Row(
+                    children: [
+                      Text("                LOG OUT   ",style: TextStyle(fontWeight: FontWeight.bold)),
+                      Icon(Icons.logout,color: Colors.white),
+                    ],
+                  ),
               ),
             ),
           ],

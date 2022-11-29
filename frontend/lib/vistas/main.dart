@@ -10,8 +10,11 @@ import 'package:app/vistas/estudiante/pagina_login_estudiante.dart';
 import 'package:app/vistas/profesor/registrar_estudiante.dart';
 import 'package:flutter/material.dart';
 import 'package:app/vistas/profesor/marcar_tarea_completada.dart';
+import 'package:app/vistas/estudiante/inicio_estudiante_pictogramas.dart';
 
 void main() => runApp(const MyApp());
+
+Estudiante Alberto=Estudiante("1000", "Alberto", "PG", "alberto@gmail.com", "acceso", "si", "1234", "foto.jpg");
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,7 +22,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ElegirUsuario(),
+      home: //InicioProfesor(),
+      //InicioEstudiantePictograma(Alberto),
+      ElegirUsuario(),
     );
   }
 }
