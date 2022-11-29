@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
 
+/*
 Estudiante? estudiante;
 
 List<TareaAsignada> listaTareasAsignadas = [];
@@ -219,4 +220,4 @@ class _GraficaSeguimientoState extends State<GraficaSeguimiento> {
       ),
     );
   }
-}
+}*/

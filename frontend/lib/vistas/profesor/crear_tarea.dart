@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
+import 'package:app/clases/material.dart';
 
 import 'inicio_profesor.dart';
 
@@ -33,6 +34,8 @@ class _CrearTareaState extends State<CrearTarea> {
 
   //Variable para controlar los pasos que se añaden
   TextEditingController controladorPasos = new TextEditingController();
+  TextEditingController controladorMaterial = new TextEditingController();
+  TextEditingController controladorCantidad = new TextEditingController();
 
   // Datos de la tarea
   String nombre = "";
@@ -40,7 +43,10 @@ class _CrearTareaState extends State<CrearTarea> {
   String lugar = "";
   String tipo = listaTipos.first;
   String paso = "";
+  String material = "";
+  String cantidad = "";
   List<String> listaPasos = [];
+  List<MaterialComanda> listaMateriales = [];
 
   // Función que añade un paso a la lista de pasos, solo añade si no es null, el texto
   // no son solo espacio y no esta repetido el paso
@@ -59,6 +65,26 @@ class _CrearTareaState extends State<CrearTarea> {
       listaPasos.clear();
     });
   }
+
+  // Función que añade un material a la lista de materiales, solo añade si no es null, el texto
+  // no son solo espacio y no esta repetido el material
+  void aniadirMaterial(String material, String cantidad) {
+    setState(() {
+      if (material != null && paso.trim().length != 0 && cantidad != null) {
+        MaterialComanda aux = new MaterialComanda(material, cantidad);
+        listaMateriales.add(aux);
+        print(listaMateriales.length);
+      }
+    });
+  }
+
+  // Función que borrar todos los pasos de una lista
+  void borrarMateriales() {
+    setState(() {
+      listaMateriales.clear();
+    });
+  }
+
   bool datosCompletos() {
     bool aux = true;
     if (nombre == ""){
@@ -165,7 +191,7 @@ class _CrearTareaState extends State<CrearTarea> {
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Nombre",
-                ),
+                )
               ),
             ),
 
@@ -220,7 +246,93 @@ class _CrearTareaState extends State<CrearTarea> {
                   },
                 )
             ),
-            
+
+            // TextFields para escribir el material y la cantidad a añadir
+            Visibility(
+              visible: tipo == "Comanda",
+              child: Container(
+                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextField(
+                      controller: controladorMaterial,
+                      onChanged: (text) {
+                        material = text;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Material",
+                      ),
+                    ),
+                    TextField(
+                      controller: controladorCantidad,
+                      onChanged: (text) {
+                        cantidad = text;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Cantidad",
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            // Botones para añadir y quitar materiales
+            Visibility(
+              visible: tipo == "Comanda",
+              child: Container(
+                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: borrarMateriales,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                      ),
+                      child: Text("Borrar materiales"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        aniadirMaterial(material, cantidad);
+                        controladorMaterial.text = "";
+                        controladorCantidad.text = "";
+                      },
+                      child: Text("Añadir Materiales"),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            // Materiales
+            Visibility(
+              visible: tipo == "Comanda",
+              child: Visibility(
+                visible: listaMateriales.isNotEmpty,
+                child: Container(
+                  height: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width - separacionElementos,
+                  padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                  child: ListView(
+                    children: listaMateriales.map((materialAux) {
+                      return Card(
+                          child: Container(
+                            padding: EdgeInsets.all(separacionElementos),
+                            child: Text(materialAux.cantidad + " " + materialAux.nombre),
+                          )
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
+            ),
+
+
+            /***************************************************/
             // TextField para escribir el paso a añadir
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
