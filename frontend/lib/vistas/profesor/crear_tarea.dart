@@ -99,6 +99,14 @@ class _CrearTareaState extends State<CrearTarea> {
     return aux;
   }
 
+  List<String> convert(List<MaterialComanda> lista){
+    List<String> aux = [];
+    lista.forEach((element) {
+      aux.add(element.lista_string());
+    });
+    return aux;
+  }
+
   void registrarTarea() async{
     if(datosCompletos()){
       ventana_mensajes.init(context);
@@ -114,7 +122,8 @@ class _CrearTareaState extends State<CrearTarea> {
       }
 
       String jsonPasos = jsonEncode(listaPasos);
-      String jsonMateriales = jsonEncode(listaMateriales);
+      String jsonMateriales = jsonEncode(convert(listaMateriales));
+      //jsonEncode(listaMateriales);
 
       print("Nombre: $nombre");
       print("Descripción: $descripcion");
