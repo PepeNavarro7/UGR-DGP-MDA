@@ -36,7 +36,7 @@ if ($conn->connect_error) {
 }
 
 $sql = "INSERT INTO tareas (nombre, descripcion, lugar, tipo, materiales, pasos)
-VALUES ('$nombre', '$descripcion', '$lugar', '$materiales', '$tipo', '$pasos')";
+VALUES ('$nombre', '$descripcion', '$lugar', '$tipo', '$materiales', '$pasos')";
 
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";

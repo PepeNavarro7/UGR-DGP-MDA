@@ -70,7 +70,7 @@ class _CrearTareaState extends State<CrearTarea> {
   // no son solo espacio y no esta repetido el material
   void aniadirMaterial(String material, String cantidad) {
     setState(() {
-      if (material != null && paso.trim().length != 0 && cantidad != null) {
+      if (material != null && material.trim().length != 0 && cantidad != null) {
         MaterialComanda aux = new MaterialComanda(material, cantidad);
         listaMateriales.add(aux);
         print(listaMateriales.length);
@@ -145,13 +145,13 @@ class _CrearTareaState extends State<CrearTarea> {
           "materiales": jsonMateriales.toString()
         });
 
-        print("Tarea registrada");
+        print(response.body);
         FToast().showToast(
             child: Text("Tarea creada",
               style: TextStyle(fontSize: 25, color: Colors.green),
             )
         );
-        Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()), );
+        //Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()), );
       } catch (e) {
         print("Exception: $e");
       }
