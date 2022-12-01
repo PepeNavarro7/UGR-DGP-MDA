@@ -78,7 +78,7 @@ class _CrearTareaState extends State<CrearTarea> {
     });
   }
 
-  // Función que borrar todos los pasos de una lista
+  // Función que borrar todos los materiales de una lista
   void borrarMateriales() {
     setState(() {
       listaMateriales.clear();
@@ -151,7 +151,7 @@ class _CrearTareaState extends State<CrearTarea> {
               style: TextStyle(fontSize: 25, color: Colors.green),
             )
         );
-        //Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()), );
+        Navigator.pop(context);
       } catch (e) {
         print("Exception: $e");
       }

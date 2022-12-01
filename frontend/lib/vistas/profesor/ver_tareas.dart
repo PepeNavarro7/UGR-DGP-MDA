@@ -56,7 +56,7 @@ class _VerTareasState extends State<VerTareas> {
           var tareasJSON = json.decode(response.body);
           for (var tarea in tareasJSON) {
             List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-            Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+            Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
             listaTareas.add(tareaAux);
           }
         });

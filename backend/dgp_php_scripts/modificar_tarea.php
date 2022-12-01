@@ -24,6 +24,10 @@ if(isset($_POST["tipo"])) {
     $tipo = $_POST["tipo"];
 } else return;
 
+if(isset($_POST["materiales"])) {
+    $materiales = $_POST["materiales"];
+} else return;
+
 if(isset($_POST["pasos"])) {
     $pasos = $_POST["pasos"];
 } else return;
@@ -35,7 +39,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "UPDATE tareas SET nombre='$nombre', descripcion='$descripcion', lugar='$lugar', tipo='$tipo', pasos='$pasos' WHERE tareas.id_tarea='$id_tarea'";
+$sql = "UPDATE tareas SET nombre='$nombre', descripcion='$descripcion', lugar='$lugar', tipo='$tipo', materiales='$materiales', pasos='$pasos' WHERE tareas.id_tarea='$id_tarea'";
 
 if ($conn->query($sql) === TRUE) {
   echo "New record created successfully";

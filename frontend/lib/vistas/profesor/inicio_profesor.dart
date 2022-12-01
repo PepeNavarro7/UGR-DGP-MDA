@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/clases/estudiante.dart';
+import 'package:app/clases/material.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
 import 'package:app/vistas/profesor/crear_tarea.dart';
@@ -105,7 +106,14 @@ class _InicioProfesorState extends State<InicioProfesor> {
                       var tareasJSON = json.decode(response.body);
                       for (var tarea in tareasJSON) {
                         List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                        List<MaterialComanda> listaMateriales = [];
+                        List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                        for (int i = 0; i < listaMaterialesString.length; i++) {
+                          MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                          listaMateriales.add(aux);
+                        }
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
                         listaTareas.add(tareaAux);
                       }
                     }
@@ -134,7 +142,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                       var tareasJSON = json.decode(response.body);
                       for (var tarea in tareasJSON) {
                         List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
                         listaTareas.add(tareaAux);
                       }
                     }
@@ -193,7 +201,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                       var tareasJSON = json.decode(response.body);
                       for (var tarea in tareasJSON) {
                         List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
                         listaTareas.add(tareaAux);
                       }
                     }
@@ -242,11 +250,13 @@ class _InicioProfesorState extends State<InicioProfesor> {
                     uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
                     response = await http.get(Uri.parse(uri));
 
+                    print(response.body);
+
                     if (response.statusCode == 200) {
                       var tareasJSON = json.decode(response.body);
                       for (var tarea in tareasJSON) {
                         List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaPasos);
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
                         listaTareas.add(tareaAux);
                       }
                     }

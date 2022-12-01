@@ -11,7 +11,7 @@ if ($conn->connect_error) {
   die("Connection failed: " . $conn->connect_error);
 }
 
-$sql_query = "SELECT id_tarea, nombre, descripcion, lugar, tipo, pasos FROM tareas";
+$sql_query = "SELECT id_tarea, nombre, descripcion, lugar, tipo, materiales, pasos FROM tareas";
 
 $result = mysqli_query($conn, $sql_query);
 if ($result) {
@@ -22,6 +22,7 @@ if ($result) {
     $response[$i]['descripcion'] = $row['descripcion'];
     $response[$i]['lugar'] = $row['lugar'];
     $response[$i]['tipo'] = $row['tipo'];
+    $response[$i]['materiales'] = $row['materiales'];
     $response[$i]['pasos'] = $row['pasos'];
     $i++;
   }

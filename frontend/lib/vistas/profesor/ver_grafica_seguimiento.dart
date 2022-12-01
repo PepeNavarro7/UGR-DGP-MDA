@@ -1,4 +1,6 @@
 /*
+import 'dart:ffi';
+
 import 'package:app/clases/estudiante.dart';
 import 'package:flutter/material.dart';
 import '../../clases/tarea.dart';
@@ -14,24 +16,25 @@ List<TareaAsignada> listaTareasCompletadas = [];
 List<TareaAsignada> listaTareasNoCompletadas = [];
 
 
-/// Sample linear data type.
-class LinearSales {
-  final int year;
-  final int sales;
 
-  LinearSales(this.year, this.sales);
+
+class PuntoDeGrafica {
+  final int nota;
+  final int tarea;
+
+  PuntoDeGrafica(this.nota, this.tarea);
 }
 
 
 class SimpleLineChart extends StatelessWidget {
-  final List<charts.Series<dynamic, int>> seriesList;
+  final List<charts.Series<dynamic, dynamic>> seriesList;
   final bool animate;
 
   SimpleLineChart(this.seriesList, {required this.animate});
 
   /// Creates a [LineChart] with sample data and no transition.
   factory SimpleLineChart.withSampleData() {
-    return new SimpleLineChart(
+    return SimpleLineChart(
       _createSampleData(),
       // Disable animations for image tests.
       animate: false,
@@ -41,29 +44,58 @@ class SimpleLineChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new charts.LineChart(seriesList, animate: animate);
+    List<charts.Series<dynamic, int>> seriesListChart = [];
+    seriesList.forEach((element) {
+      charts.Series<dynamic, int> aux = charts.Series(id: 'Evaluacion de notas' , data: [], domainFn: element.data.first, measureFn: element.data.last);
+      aux.data.first = element.data.first;
+      aux.data.last = element.data.last;
+      seriesListChart.add(aux);
+    });
+
+    return new charts.LineChart(seriesListChart, animate: animate);
   }
 
   /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(0, 5),
-      new LinearSales(1, 25),
-      new LinearSales(2, 100),
-      new LinearSales(3, 75),
-    ];
+  static List<charts.Series<PuntoDeGrafica, dynamic>> _createSampleData() {
+
+
+    final datos = [ new PuntoDeGrafica(0, 0)];
+    datos.removeAt(0);
+    int nota = -1;
+    int i = 0;
+    listaTareasAsignadas.forEach((element) {
+      ++i;
+      switch (element.calificacion){
+        case "Muy Bien":
+          nota = 3;
+          break;
+        case "Bien":
+          nota = 2;
+          break;
+        case "Normal":
+          nota = 1;
+          break;
+        case "Pendiente":
+          nota = 0;
+          break;
+      }
+
+      datos.add(new PuntoDeGrafica(nota, i));
+    });
 
     return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
+      charts.Series<PuntoDeGrafica, dynamic>(
+        id: 'Evaluacion de notas',
         colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
+        domainFn: (PuntoDeGrafica punto, _) => punto.nota,
+        measureFn: (PuntoDeGrafica punto, _) => punto.tarea,
+        data: datos,
       )
     ];
   }
 }
+
+
 
 class GraficaSeguimiento extends StatefulWidget {
 
@@ -202,6 +234,7 @@ void generar_grafico(){
 
 }
 
+
 class _GraficaSeguimientoState extends State<GraficaSeguimiento> {
   // Color de la AppBar
   final colorAppBar = Colors.blue;
@@ -271,4 +304,4 @@ class _GraficaSeguimientoState extends State<GraficaSeguimiento> {
     );
   }
 }
-*/
+ */

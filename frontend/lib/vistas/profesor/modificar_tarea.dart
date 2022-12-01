@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
 
-import 'inicio_profesor.dart';
+import 'package:app/clases/material.dart';
 
 // Lista de tipo String que contiene todos los lugares de una tarea
 final List<String> listaTipos = ["Tarea normal", "Comanda", "Menú"];
@@ -42,6 +42,8 @@ class _ModificarTareaState extends State<ModificarTarea> {
 
   //Variable para controlar los pasos que se añaden
   TextEditingController controladorPasos = new TextEditingController();
+  TextEditingController controladorMaterial = new TextEditingController();
+  TextEditingController controladorCantidad = new TextEditingController();
 
   // Controladores para poner valores iniciales
   TextEditingController controladorNombre = new TextEditingController(text: tareaAModificar!.nombre);
@@ -54,7 +56,10 @@ class _ModificarTareaState extends State<ModificarTarea> {
   String lugar = tareaAModificar!.lugar;
   String tipo = tareaAModificar!.tipo == "N" ? "Tarea normal" : tareaAModificar!.tipo == "C" ? "Comanda" : tareaAModificar!.tipo == "M" ? "Menú" : "Tarea normal";
   String paso = "";
+  String material = "";
+  String cantidad = "";
   List<String> listaPasos = tareaAModificar!.pasos;
+  List<MaterialComanda> listaMateriales = tareaAModificar!.materiales;
 
   // Función que añade un paso a la lista de pasos, solo añade si no es null, el texto
   // no son solo espacio y no esta repetido el paso
@@ -67,12 +72,40 @@ class _ModificarTareaState extends State<ModificarTarea> {
     });
   }
 
+  // Función que añade un material a la lista de materiales, solo añade si no es null, el texto
+  // no son solo espacio y no esta repetido el material
+  void aniadirMaterial(String material, String cantidad) {
+    setState(() {
+      if (material != null && material.trim().length != 0 && cantidad != null) {
+        MaterialComanda aux = new MaterialComanda(material, cantidad);
+        listaMateriales.add(aux);
+        print(listaMateriales.length);
+      }
+    });
+  }
+
   // Función que borrar todos los pasos de una lista
   void borrarPasos() {
     setState(() {
       listaPasos.clear();
     });
   }
+
+  // Función que borrar todos los materiales de una lista
+  void borrarMateriales() {
+    setState(() {
+      listaMateriales.clear();
+    });
+  }
+
+  List<String> convert(List<MaterialComanda> lista){
+    List<String> aux = [];
+    lista.forEach((element) {
+      aux.add(element.lista_string());
+    });
+    return aux;
+  }
+
   bool datosCompletos() {
     bool aux = true;
     if (nombre == ""){
@@ -89,12 +122,14 @@ class _ModificarTareaState extends State<ModificarTarea> {
 
   Future<void> modificarTarea() async{
     String jsonPasos = jsonEncode(listaPasos);
+    String jsonMateriales = jsonEncode(convert(listaMateriales));
 
     print("Nombre: $nombre");
     print("Descripción: $descripcion)");
     print("Lugar: $lugar");
     print("Tipo: $tipo");
     print("pasos: $jsonPasos");
+    print("Materiales: $jsonMateriales");
 
 
     if(datosCompletos()){
@@ -128,6 +163,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
           "descripcion": descripcion,
           "lugar": lugar,
           "tipo": auxTarea,
+          "materiales": jsonMateriales.toString(),
           "pasos": jsonPasos.toString(),
         });
 
@@ -137,6 +173,9 @@ class _ModificarTareaState extends State<ModificarTarea> {
               style: TextStyle(fontSize: 25, color: Colors.green),
             )
         );
+
+        print(response.body);
+
         Navigator.pop(context);
       } catch (e) {
         print("Exception: $e");
@@ -173,7 +212,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Crear Tarea"),
+        title: Text("Modificar Tarea"),
       ),
       body: SafeArea(
         child: ListView(
@@ -245,6 +284,92 @@ class _ModificarTareaState extends State<ModificarTarea> {
                     });
                   },
                 )
+            ),
+
+            // TextFields para escribir el material y la cantidad a añadir
+            Visibility(
+              visible: tipo == "Comanda",
+              child: Container(
+                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextField(
+                      controller: controladorMaterial,
+                      onChanged: (text) {
+                        material = text;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Material",
+                      ),
+                    ),
+                    TextField(
+                      controller: controladorCantidad,
+                      onChanged: (text) {
+                        cantidad = text;
+                      },
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: "Cantidad",
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            // Botones para añadir y quitar materiales
+            Visibility(
+              visible: tipo == "Comanda",
+              child: Container(
+                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: borrarMateriales,
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red,
+                      ),
+                      child: Text("Borrar materiales"),
+                    ),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          aniadirMaterial(material, cantidad);
+                          controladorMaterial.text = "";
+                          controladorCantidad.text = "";
+                        });
+                      },
+                      child: Text("Añadir Materiales"),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            // Materiales
+            Visibility(
+              visible: tipo == "Comanda",
+              child: Visibility(
+                visible: listaMateriales.isNotEmpty,
+                child: Container(
+                  height: MediaQuery.of(context).size.width / 2,
+                  width: MediaQuery.of(context).size.width - separacionElementos,
+                  padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+                  child: ListView(
+                    children: listaMateriales.map((materialAux) {
+                      return Card(
+                          child: Container(
+                            padding: EdgeInsets.all(separacionElementos),
+                            child: Text(materialAux.cantidad + " " + materialAux.nombre),
+                          )
+                      );
+                    }).toList(),
+                  ),
+                ),
+              ),
             ),
 
             // TextField para escribir el paso a añadir
