@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:app/clases/estudiante.dart';
+import 'package:app/clases/material.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
 import 'package:app/vistas/estudiante/ver_tareas_estudiantes.dart';
@@ -89,7 +90,16 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
                     var tareasJSON = json.decode(response.body);
                     for (var tarea in tareasJSON) {
                       List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
+
+                      List<MaterialComanda> listaMateriales = [];
+                      List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                      for (int i = 0; i < listaMaterialesString.length; i++) {
+                        MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                        listaMateriales.add(aux);
+                      }
+
+                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
                       listaTareas.add(tareaAux);
                     }
                   }
