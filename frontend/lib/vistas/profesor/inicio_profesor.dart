@@ -142,7 +142,16 @@ class _InicioProfesorState extends State<InicioProfesor> {
                       var tareasJSON = json.decode(response.body);
                       for (var tarea in tareasJSON) {
                         List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
+
+                        List<MaterialComanda> listaMateriales = [];
+                        List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                        for (int i = 0; i < listaMaterialesString.length; i++) {
+                          MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                          listaMateriales.add(aux);
+                        }
+
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
                         listaTareas.add(tareaAux);
                       }
                     }
@@ -166,6 +175,9 @@ class _InicioProfesorState extends State<InicioProfesor> {
                   } catch (e) {
                     print("Exception: $e");
                   }
+
+                  print(listaTareas.length);
+                  print(listaEstudiantes.length);
 
                   Navigator.push( context, MaterialPageRoute(builder: (context) => AsignarTarea(listaTareas, listaEstudiantes)));
                 },
@@ -201,7 +213,16 @@ class _InicioProfesorState extends State<InicioProfesor> {
                       var tareasJSON = json.decode(response.body);
                       for (var tarea in tareasJSON) {
                         List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
+
+                        List<MaterialComanda> listaMateriales = [];
+                        List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                        for (int i = 0; i < listaMaterialesString.length; i++) {
+                          MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                          listaMateriales.add(aux);
+                        }
+
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
                         listaTareas.add(tareaAux);
                       }
                     }
@@ -256,7 +277,16 @@ class _InicioProfesorState extends State<InicioProfesor> {
                       var tareasJSON = json.decode(response.body);
                       for (var tarea in tareasJSON) {
                         List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
+
+                        List<MaterialComanda> listaMateriales = [];
+                        List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                        for (int i = 0; i < listaMaterialesString.length; i++) {
+                          MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                          listaMateriales.add(aux);
+                        }
+
+                        Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
                         listaTareas.add(tareaAux);
                       }
                     }
