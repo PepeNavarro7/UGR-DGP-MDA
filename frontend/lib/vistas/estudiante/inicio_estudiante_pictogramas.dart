@@ -50,18 +50,14 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
   // Distancia en píxeles que estará separados los elementos unos de otros
   final double separacionElementos = 60.0;
 
-
+  final String fotoEstudiante = "http://10.0.2.2/fotos_estudiantes/" + estudiante!.nombre + estudiante!.apellidos + ".jpg";
 
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorAppBar,
-        title: Text(inicioEstudiante.getEstudiante().nombre+" "+inicioEstudiante.getEstudiante().apellidos,style: TextStyle(fontWeight: FontWeight.bold)),
-      ),
-      body: Center(
+      body: Container(
+        color: Color(0xffffff50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
@@ -123,14 +119,14 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
                 Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareasEstudiante(tareasEstudiante, listaTareas, inicioEstudiante.getEstudiante())), );
               },
               child: Container(
-                margin: EdgeInsets.all(5),
-                height: MediaQuery.of(context).size.height / 3.75,
-                color: Colors.blue,
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text("Ver mis tareas",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white)),
-                    Icon(Icons.task_rounded,color: Colors.white, size: 40),
+                    Text("Ver mis tareas",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+                    Image.asset("assets/imagenes/tareas.png")
                   ],
                 ),
               ),
@@ -159,14 +155,17 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
                 //Navigator.push( context, MaterialPageRoute(builder: (context) => GraficaSeguimiento(inicioEstudiante.getEstudiante(), listaTareas)));
               },
               child: Container(
-                margin: EdgeInsets.all(5),
-                height: MediaQuery.of(context).size.height / 3.75,
-                color: Colors.blue,
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text("Perfil y estadísticas",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white)),
-                    Icon(Icons.face,color: Colors.white, size: 40),
+                    Text("Perfil",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)),
+                    Container(
+                      margin: EdgeInsets.all(10),
+                      child: Image.network("http://10.0.2.2/fotos_estudiantes/${inicioEstudiante.getEstudiante().nombre}${inicioEstudiante.getEstudiante().apellidos.replaceAll(' ', '')}.jpg")
+                    )
                   ],
                 ),
               ),

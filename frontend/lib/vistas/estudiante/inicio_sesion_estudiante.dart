@@ -33,6 +33,8 @@ class InicioSesionEstudiante extends StatefulWidget {
 
     listaPictogramas.addAll(listaPictogramasClave);
     listaPictogramas.addAll(listaPictogramasNoClave);
+
+    listaPictogramas.shuffle();
   }
 
   @override
@@ -121,14 +123,14 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
 
   Widget AccesoPictogramas() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.75,
+      height: MediaQuery.of(context).size.height * 0.5,
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.fromLTRB(15, 10, 15, 0),
       child: GridView.builder(
         itemCount: listaPictogramas.length,
         physics: NeverScrollableScrollPhysics(),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
+            crossAxisCount: 3,
             crossAxisSpacing: 2.0,
             mainAxisSpacing: 2.0,
         ),
