@@ -32,7 +32,7 @@ class _CrearTareaState extends State<CrearTarea> {
   final colorBotones = Colors.blue;
 
   // Distancia en píxeles que estará separados los elementos unos de otros
-  final double separacionElementos = 20.0;
+  final double separacionElementos = 30.0;
 
   //Variable para controlar los pasos que se añaden
   TextEditingController controladorPasos = new TextEditingController();
@@ -210,7 +210,7 @@ class _CrearTareaState extends State<CrearTarea> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Crear Tarea"),
+        title: Text("Crear Tarea", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -222,6 +222,7 @@ class _CrearTareaState extends State<CrearTarea> {
                   onChanged: (text) {
                     nombre = text;
                   },
+                  style: TextStyle(fontSize: 30),
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: "Nombre",
@@ -238,6 +239,7 @@ class _CrearTareaState extends State<CrearTarea> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Descripción",
@@ -252,6 +254,7 @@ class _CrearTareaState extends State<CrearTarea> {
                 onChanged: (text) {
                   lugar = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Lugar",
@@ -270,7 +273,7 @@ class _CrearTareaState extends State<CrearTarea> {
                   items: listaTipos.map<DropdownMenuItem<String>>((String valor) {
                     return DropdownMenuItem<String>(
                       value: valor,
-                      child: Text(valor),
+                      child: Text(valor, style: TextStyle(fontSize: 30)),
                     );
                   }).toList(),
                   onChanged: (String? valor) {
@@ -294,6 +297,7 @@ class _CrearTareaState extends State<CrearTarea> {
                       onChanged: (text) {
                         material = text;
                       },
+                      style: TextStyle(fontSize: 30),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Material",
@@ -304,6 +308,7 @@ class _CrearTareaState extends State<CrearTarea> {
                       onChanged: (text) {
                         cantidad = text;
                       },
+                      style: TextStyle(fontSize: 30),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Cantidad",
@@ -327,7 +332,7 @@ class _CrearTareaState extends State<CrearTarea> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
                       ),
-                      child: Text("Borrar materiales"),
+                      child: Text("Borrar materiales", style: TextStyle(fontSize: 30)),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -337,7 +342,7 @@ class _CrearTareaState extends State<CrearTarea> {
                           controladorCantidad.text = "";
                         });
                       },
-                      child: Text("Añadir Materiales"),
+                      child: Text("Añadir Materiales", style: TextStyle(fontSize: 30)),
                     )
                   ],
                 ),
@@ -358,7 +363,7 @@ class _CrearTareaState extends State<CrearTarea> {
                       return Card(
                           child: Container(
                             padding: EdgeInsets.all(separacionElementos),
-                            child: Text(materialAux.cantidad + " " + materialAux.nombre),
+                            child: Text(materialAux.cantidad + " " + materialAux.nombre, style: TextStyle(fontSize: 30)),
                           )
                       );
                     }).toList(),
@@ -382,6 +387,7 @@ class _CrearTareaState extends State<CrearTarea> {
                       onChanged: (text) {
                         paso = text;
                       },
+                      style: TextStyle(fontSize: 30),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Pasos",
@@ -405,14 +411,14 @@ class _CrearTareaState extends State<CrearTarea> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
                       ),
-                      child: Text("Borrar pasos"),
+                      child: Text("Borrar pasos", style: TextStyle(fontSize: 30)),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         aniadirPaso(paso);
                         controladorPasos.text = "";
                       },
-                      child: Text("Añadir pasos"),
+                      child: Text("Añadir pasos", style: TextStyle(fontSize: 30)),
                     )
                   ],
                 ),
@@ -428,6 +434,7 @@ class _CrearTareaState extends State<CrearTarea> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextField(
+                      style: TextStyle(fontSize: 30),
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                           onPressed: seleccionarFecha,
@@ -456,7 +463,7 @@ class _CrearTareaState extends State<CrearTarea> {
                     return Card(
                         child: Container(
                           padding: EdgeInsets.all(separacionElementos),
-                          child: Text((listaPasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux),
+                          child: Text((listaPasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux, style: TextStyle(fontSize: 30)),
                         )
                     );
                   }).toList(),
@@ -472,7 +479,7 @@ class _CrearTareaState extends State<CrearTarea> {
                 onPressed: () {
                   registrarTarea();
                 },
-                child: Text("Crear"),
+                child: Text("Crear", style: TextStyle(fontSize: 30)),
               ),
             ),
           ],

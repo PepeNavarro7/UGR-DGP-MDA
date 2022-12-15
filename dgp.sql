@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-11-2022 a las 20:50:40
--- Versión del servidor: 10.4.25-MariaDB
--- Versión de PHP: 8.1.10
+-- Tiempo de generación: 15-12-2022 a las 21:27:33
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,14 +36,14 @@ CREATE TABLE `estudiantes` (
   `accesibilidad` varchar(50) NOT NULL,
   `password_usuario` varchar(50) NOT NULL,
   `foto` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `estudiantes`
 --
 
 INSERT INTO `estudiantes` (`id_estudiante`, `nombre`, `apellidos`, `email`, `acceso`, `accesibilidad`, `password_usuario`, `foto`) VALUES
-(61, 'Jesus', 'Garcia Martin', 'jesusgm@gmail.com', 'Alfanumerico', '', '1234', '../fotos_estudiantes/JesusGarciaMartin.jpg');
+(66, 'Pepo', 'Clown', 'pepoclown@gmail.com', 'Pictogramas', 'ninguna', '', '../fotos_estudiantes/PepoClown.jpg');
 
 -- --------------------------------------------------------
 
@@ -58,7 +58,7 @@ CREATE TABLE `realiza` (
   `fecha_fin` datetime DEFAULT NULL,
   `completada` tinyint(1) DEFAULT NULL,
   `calificacion` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -72,8 +72,16 @@ CREATE TABLE `tareas` (
   `descripcion` varchar(500) NOT NULL,
   `lugar` varchar(50) NOT NULL,
   `tipo` char(1) NOT NULL,
-  `pasos` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`pasos`))
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `pasos` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`pasos`)),
+  `materiales` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`materiales`))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tareas`
+--
+
+INSERT INTO `tareas` (`id_tarea`, `nombre`, `descripcion`, `lugar`, `tipo`, `pasos`, `materiales`) VALUES
+(20, 'A', 'A', 'A', 'N', '[\"A\"]', '[]');
 
 --
 -- Índices para tablas volcadas
@@ -106,13 +114,13 @@ ALTER TABLE `tareas`
 -- AUTO_INCREMENT de la tabla `estudiantes`
 --
 ALTER TABLE `estudiantes`
-  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id_estudiante` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`
 --
 ALTER TABLE `tareas`
-  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Restricciones para tablas volcadas

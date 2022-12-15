@@ -74,7 +74,7 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Ver Estudiantes"),
+        title: Text("Ver Estudiantes", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -85,31 +85,35 @@ class _VerEstudiantesState extends State<VerEstudiantes> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(estudiante.nombre + " " + estudiante.apellidos),
-                    Row(
-                      children: [
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => DatosEstudiante(estudiante)));
-                          },
-                          icon: Icon(Icons.remove_red_eye),
-                        ),
-
-                        IconButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (_) => ModificarEstudiante(estudiante))).then((value) {
-                              actualizarListaEstudiantes();
-                            });
-                          },
-                          icon: Icon(Icons.edit)
-                        ),
-                        IconButton(
+                    Text(estudiante.nombre + " " + estudiante.apellidos, style: TextStyle(fontSize: 30)),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          IconButton(
                             onPressed: () {
-                              borrarEstudiante(estudiante);
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => DatosEstudiante(estudiante)));
                             },
-                            icon: Icon(Icons.delete)
-                        )
-                      ],
+                            icon: Icon(Icons.remove_red_eye, size: 50),
+                          ),
+
+                          IconButton(
+                            onPressed: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => ModificarEstudiante(estudiante))).then((value) {
+                                actualizarListaEstudiantes();
+                              });
+                            },
+                            icon: Icon(Icons.edit, size: 50)
+                          ),
+                          IconButton(
+                              onPressed: () {
+                                borrarEstudiante(estudiante);
+                              },
+                              icon: Icon(Icons.delete, size: 50)
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

@@ -33,7 +33,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
   final colorBotones = Colors.blue;
 
   // Distancia en píxeles que estará separados los elementos unos de otros
-  final double separacionElementos = 20.0;
+  final double separacionElementos = 30.0;
 
   // Valor del desplegable del tipo de acceso, por defecto es la primera opción
   String valorTipoAcceso = tipoDeAccesos.first;
@@ -230,8 +230,8 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     return GestureDetector(
       onTap: seleccionarFotoEstudiante,
       child: Container(
-        height: 250,
-        width: 250,
+        height: 500,
+        width: 500,
         padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
         child: fotoEstudiante == null ?
           CircleAvatar(backgroundImage: AssetImage("assets/imagenes/sin_foto_perfil.jpg"), backgroundColor: Colors.grey) :
@@ -248,7 +248,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
         children: [
           Container(
             alignment: Alignment.centerLeft,
-            child: Text("Necesidades para el estudiante", style: TextStyle(fontSize: 17))
+            child: Text("Necesidades para el estudiante", style: TextStyle(fontSize: 30))
           ),
           Row(
             children: [
@@ -262,7 +262,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
                   });
                 },
               ),
-              Text("Audio")
+              Text("Audio", style: TextStyle(fontSize: 30),)
             ],
           ),
           Row(
@@ -277,7 +277,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
                   });
                 },
               ),
-              Text("Video")
+              Text("Video", style: TextStyle(fontSize: 30),)
             ],
           ),
         ],
@@ -303,6 +303,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
         onChanged: (text) {
           passwordUsuario = text;
         },
+        style: TextStyle(fontSize: 30),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Contraseña",
@@ -321,11 +322,11 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               children: [
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text("Pictogramas que se le mostrarán al estudiante", style: TextStyle(fontSize: 17))
+                  child: Text("Pictogramas que se le mostrarán al estudiante", style: TextStyle(fontSize: 30))
                 ),
                 Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("Seleccione los pictogramas de la clave", style: TextStyle(fontSize: 17))
+                    child: Text("Seleccione los pictogramas de la clave", style: TextStyle(fontSize: 30))
                 )
               ],
             )
@@ -449,7 +450,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Registrar Estudiante"),
+        title: Text("Registrar Estudiante", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -464,6 +465,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
                 onChanged: (text) {
                   nombre = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Nombre",
@@ -478,6 +480,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
                 onChanged: (text) {
                   apellidos = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Apellidos",
@@ -492,6 +495,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
                 onChanged: (text) {
                   email = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Email",
@@ -513,7 +517,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
                 items: tipoDeAccesos.map<DropdownMenuItem<String>>((String valor) {
                   return DropdownMenuItem<String>(
                     value: valor,
-                    child: Text(valor),
+                    child: Text(valor, style: TextStyle(fontSize: 30)),
                   );
                 }).toList(),
                 onChanged: (String? valor) {
@@ -535,7 +539,7 @@ class _RegistrarEstudianteState extends State<RegistrarEstudiante> {
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, separacionElementos),
               child: ElevatedButton(
                 onPressed: registrar,
-                child: Text("Registrar"),
+                child: Text("Registrar", style: TextStyle(fontSize: 30)),
                 style: ElevatedButton.styleFrom(
                   primary: colorBotones,
                 ),

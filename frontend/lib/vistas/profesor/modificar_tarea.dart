@@ -212,7 +212,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Modificar Tarea"),
+        title: Text("Modificar Tarea", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -225,6 +225,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                 onChanged: (text) {
                   nombre = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Nombre",
@@ -242,6 +243,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                 },
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Descripción",
@@ -257,6 +259,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                 onChanged: (text) {
                   lugar = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Lugar",
@@ -275,7 +278,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                   items: listaTipos.map<DropdownMenuItem<String>>((String valor) {
                     return DropdownMenuItem<String>(
                       value: valor,
-                      child: Text(valor),
+                      child: Text(valor, style: TextStyle(fontSize: 30)),
                     );
                   }).toList(),
                   onChanged: (String? valor) {
@@ -299,6 +302,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                       onChanged: (text) {
                         material = text;
                       },
+                      style: TextStyle(fontSize: 30),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Material",
@@ -309,6 +313,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                       onChanged: (text) {
                         cantidad = text;
                       },
+                      style: TextStyle(fontSize: 30),
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: "Cantidad",
@@ -332,7 +337,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.red,
                       ),
-                      child: Text("Borrar materiales"),
+                      child: Text("Borrar materiales", style: TextStyle(fontSize: 30)),
                     ),
                     ElevatedButton(
                       onPressed: () {
@@ -342,7 +347,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                           controladorCantidad.text = "";
                         });
                       },
-                      child: Text("Añadir Materiales"),
+                      child: Text("Añadir Materiales", style: TextStyle(fontSize: 30)),
                     )
                   ],
                 ),
@@ -363,7 +368,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                       return Card(
                           child: Container(
                             padding: EdgeInsets.all(separacionElementos),
-                            child: Text(materialAux.cantidad + " " + materialAux.nombre),
+                            child: Text(materialAux.cantidad + " " + materialAux.nombre, style: TextStyle(fontSize: 30)),
                           )
                       );
                     }).toList(),
@@ -380,6 +385,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                 onChanged: (text) {
                   paso = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Paso",
@@ -398,14 +404,14 @@ class _ModificarTareaState extends State<ModificarTarea> {
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red,
                     ),
-                    child: Text("Borrar pasos"),
+                    child: Text("Borrar pasos", style: TextStyle(fontSize: 30)),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       aniadirPaso(paso);
                       controladorPasos.text = "";
                     },
-                    child: Text("Añadir pasos"),
+                    child: Text("Añadir pasos", style: TextStyle(fontSize: 30)),
                   )
                 ],
               ),
@@ -423,7 +429,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
                     return Card(
                         child: Container(
                           padding: EdgeInsets.all(separacionElementos),
-                          child: Text((listaPasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux),
+                          child: Text((listaPasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux, style: TextStyle(fontSize: 30)),
                         )
                     );
                   }).toList(),
@@ -438,7 +444,7 @@ class _ModificarTareaState extends State<ModificarTarea> {
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: ElevatedButton(
                 onPressed: modificarTarea,
-                child: Text("Modificar"),
+                child: Text("Modificar", style: TextStyle(fontSize: 30)),
               ),
             ),
           ],

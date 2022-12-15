@@ -84,7 +84,7 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Ver Tareas"),
+        title: Text("Ver Tareas", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -103,10 +103,10 @@ class _VerTareasAsignadasState extends State<VerTareasAsignadas> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Tarea: " + listaTareas[indiceDeTarea(tareaAsignada.idTarea)].nombre),
-                        Text("Estudiantes: " + listaEstudiantes[indiceDeEstudiante(tareaAsignada.idEstudiante)].nombre),
-                        Text(tareaAsignada.completada == "0" ? "No completada" : "Completada"),
-                        Text("Evaluación: " + tareaAsignada.calificacion),
+                        Text("Tarea: " + listaTareas[indiceDeTarea(tareaAsignada.idTarea)].nombre, style: TextStyle(fontSize: 30)),
+                        Text("Estudiantes: " + listaEstudiantes[indiceDeEstudiante(tareaAsignada.idEstudiante)].nombre, style: TextStyle(fontSize: 30)),
+                        Text(tareaAsignada.completada == "0" ? "No completada" : "Completada", style: TextStyle(fontSize: 30)),
+                        Text("Evaluación: " + tareaAsignada.calificacion, style: TextStyle(fontSize: 30)),
                       ],
                     ),
                   ),

@@ -36,7 +36,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Colegio San Rafael", style: TextStyle(fontSize: 30),),
+        title: Text("Colegio San Rafael", style: TextStyle(fontSize: 30)),
       ),
       body: Center(
         child: Column(

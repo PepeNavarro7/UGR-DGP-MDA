@@ -145,7 +145,7 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: const Text("Seguimiento de Alumno"),
+        title: const Text("Seguimiento de Alumno", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -155,8 +155,8 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
               child:
               Row(
                 children: [
-                  Icon(Icons.person,color: Colors.blue),
-                  Text("Alumno: ", style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                  Icon(Icons.person,color: Colors.blue, size: 30),
+                  Text("Alumno: ", style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
@@ -171,7 +171,7 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                   items: listaEstudiantes.map<DropdownMenuItem<String>>((Estudiante e) {
                     return DropdownMenuItem<String>(
                       value: e.nombre,
-                      child: Text(e.nombre + " " + e.apellidos),
+                      child: Text(e.nombre + " " + e.apellidos, style: TextStyle(fontSize: 30)),
                     );
                   }).toList(),
                   onChanged: (String? nombre) {
@@ -190,13 +190,13 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tareas asignadas completadas: " + listaTareasCompletadas.length.toString(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text("Tareas asignadas completadas: " + listaTareasCompletadas.length.toString(), style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: listaTareasCompletadas.map((tarea) {
                       return Container(
                         padding: EdgeInsets.all(separacionElementos),
-                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.idTarea, estudiante!.idEstudiante).calificacion, style: TextStyle(fontSize: 18)),
+                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.idTarea, estudiante!.idEstudiante).calificacion, style: TextStyle(fontSize: 30)),
                       );
                     }).toList(),
                   )
@@ -209,12 +209,12 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tareas asignadas no completadas: " + listaTareasNoCompletadas.length.toString(), style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text("Tareas asignadas no completadas: " + listaTareasNoCompletadas.length.toString(), style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
                   Column(
                     children: listaTareasNoCompletadas.map((tarea) {
                       return Container(
                         padding: EdgeInsets.all(separacionElementos),
-                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.idTarea, estudiante!.idEstudiante).calificacion, style: TextStyle(fontSize: 18)),
+                        child: Text(tarea.nombre + " - " + buscarTareaAsignada(tarea.idTarea, estudiante!.idEstudiante).calificacion, style: TextStyle(fontSize: 30)),
                       );
                     }).toList(),
                   )
@@ -227,9 +227,9 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tareas \"Bien\" realizadas: " + numTareasBien().toString(), style: TextStyle(fontSize: 20)),
-                  Text("Tareas \"Muy Bien\" realizadas: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 20)),
-                  Text("Evaluación media (sin contar las no completadas): " + evaluacionMedia(), style: TextStyle(fontSize: 20))
+                  Text("Tareas \"Bien\" realizadas: " + numTareasBien().toString(), style: TextStyle(fontSize: 30)),
+                  Text("Tareas \"Muy Bien\" realizadas: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 30)),
+                  Text("Evaluación media (sin contar las no completadas): " + evaluacionMedia(), style: TextStyle(fontSize: 30))
                 ],
               ),
             ),
@@ -240,8 +240,8 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                 onPressed: (){ //TO-DO
                   //IR A VER_GRÁFICA_SEGUIMIENTO - parámetros del constructor: el objeto Estudiante e, listaTareasAsignadas
                 },
-                child: Text("Ver gráfico detallado"),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green),)
+                child: Text("Ver gráfico detallado", style: TextStyle(fontSize: 30)),
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.green))
             )
           ], // children
         ),

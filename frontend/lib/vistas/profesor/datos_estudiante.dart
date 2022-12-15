@@ -28,46 +28,46 @@ class _DatosEstudianteState extends State<DatosEstudiante> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Datos del estudiante"),
+        title: Text("Datos del estudiante", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
           children: [
             Container(
-              height: 250,
-              width: 250,
+              height: 500,
+              width: 500,
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: CircleAvatar(backgroundImage: NetworkImage("http://10.0.2.2/" + estudiante!.foto.substring(3))),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Text("Nombre: " + estudiante!.nombre),
+              child: Text("Nombre: " + estudiante!.nombre, style: TextStyle(fontSize: 30)),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Text("Apellidos: " + estudiante!.apellidos),
+              child: Text("Apellidos: " + estudiante!.apellidos, style: TextStyle(fontSize: 30)),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Text("Email: " + estudiante!.email),
+              child: Text("Email: " + estudiante!.email, style: TextStyle(fontSize: 30)),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Text("Acceso: " + estudiante!.acceso),
+              child: Text("Acceso: " + estudiante!.acceso, style: TextStyle(fontSize: 30)),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Text("Necesidades del estudiante: " + estudiante!.accesibilidad),
+              child: Text("Necesidades del estudiante: " + estudiante!.accesibilidad, style: TextStyle(fontSize: 30)),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: Text("Contraseña: " + estudiante!.password),
+              child: Text("Contraseña: " + estudiante!.password, style: TextStyle(fontSize: 30)),
             )
           ],
         ),

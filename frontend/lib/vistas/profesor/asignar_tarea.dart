@@ -138,7 +138,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Asignar Tarea"),
+        title: Text("Asignar Tarea", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -153,7 +153,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
                   items: listaTareas.map<DropdownMenuItem<String>>((Tarea valor) {
                     return DropdownMenuItem<String>(
                       value: valor.nombre,
-                      child: Text(valor.nombre),
+                      child: Text(valor.nombre, style: TextStyle(fontSize: 30)),
                     );
                   }).toList(),
                   onChanged: (String? valor) {
@@ -174,7 +174,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
                   items: listaEstudiantes.map<DropdownMenuItem<String>>((Estudiante valor) {
                     return DropdownMenuItem<String>(
                       value: valor.nombre,
-                      child: Text(valor.nombre),
+                      child: Text(valor.nombre, style: TextStyle(fontSize: 30)),
                     );
                   }).toList(),
                   onChanged: (String? valor) {
@@ -191,6 +191,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
                 onChanged: (valor) {
                   fechaInicio = valor;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Fecha inicio",
@@ -204,6 +205,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
                 onChanged: (valor) {
                   fechaFin = valor;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Fecha fin",
@@ -216,7 +218,7 @@ class _AsignarTareaState extends State<AsignarTarea> {
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: ElevatedButton(
                 onPressed: asignarTarea,
-                child: Text("Asignar tarea"),
+                child: Text("Asignar tarea", style: TextStyle(fontSize: 30)),
               ),
             )
           ],

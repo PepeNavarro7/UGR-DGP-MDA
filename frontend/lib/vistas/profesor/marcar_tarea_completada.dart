@@ -70,7 +70,7 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Marcar tarea como completada"),
+        title: Text("Marcar tarea como completada", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -80,8 +80,8 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Estudiante: ", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  Text(estudiante!.nombre + " " + estudiante!.apellidos, style: TextStyle(fontSize: 20)),
+                  Text("Estudiante: ", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(estudiante!.nombre + " " + estudiante!.apellidos, style: TextStyle(fontSize: 30)),
                 ],
               ),
             ),
@@ -91,8 +91,8 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Tarea: ", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  Text(tarea!.nombre, style: TextStyle(fontSize: 20)),
+                  Text("Tarea: ", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(tarea!.nombre, style: TextStyle(fontSize: 30)),
                 ],
               ),
             ),
@@ -102,8 +102,8 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Descripcion: ", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  Text(tarea!.descripcion, style: TextStyle(fontSize: 20)),
+                  Text("Descripcion: ", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  Text(tarea!.descripcion, style: TextStyle(fontSize: 30)),
                 ],
               ),
             ),
@@ -113,8 +113,8 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Fecha final:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-                  Text(tareaAsignada!.fechaFin, style: TextStyle(fontSize: 20)),
+                  Text("Fecha final:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                  Text(tareaAsignada!.fechaFin, style: TextStyle(fontSize: 30)),
                 ],
               ),
             ),
@@ -124,8 +124,8 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Lugar:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
-                  Text(tarea!.lugar, style: TextStyle(fontSize: 20)),
+                  Text("Lugar:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
+                  Text(tarea!.lugar, style: TextStyle(fontSize: 30)),
                 ],
               ),
             ),
@@ -135,7 +135,7 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
                 Container(
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-                  child: Text("Pasos:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                  child: Text("Pasos:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
                 ),
 
                 Container(
@@ -147,7 +147,7 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
                           child: Container(
                             width: MediaQuery.of(context).size.width,
                             padding: EdgeInsets.all(separacionElementos),
-                            child: Text((tarea!.pasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux),
+                            child: Text((tarea!.pasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux, style: TextStyle(fontSize: 30)),
                           )
                       );
                     }).toList(),
@@ -161,7 +161,7 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Calificación:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
+                  Text("Calificación:", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30)),
 
                   DropdownButton(
                     value: calificacion,
@@ -169,7 +169,7 @@ class _MarcarTareaCompletadaState extends State<MarcarTareaCompletada> {
                     items: calificaciones.map<DropdownMenuItem<String>>((String valor) {
                       return DropdownMenuItem<String>(
                         value: valor,
-                        child: Text(valor),
+                        child: Text(valor, style: TextStyle(fontSize: 30)),
                       );
                     }).toList(),
                     onChanged: (String? valor) {

@@ -71,7 +71,7 @@ class _VerTareasState extends State<VerTareas> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Ver Tareas"),
+        title: Text("Ver Tareas", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -82,24 +82,28 @@ class _VerTareasState extends State<VerTareas> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(tarea.nombre),
-                      Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (_) => ModificarTarea(tarea))).then((value) {
-                                  actualizarListaTareas();
-                                });
-                              },
-                              icon: Icon(Icons.edit)
-                          ),
-                          IconButton(
-                              onPressed: () {
-                                borrarTarea(tarea);
-                              },
-                              icon: Icon(Icons.delete)
-                          )
-                        ],
+                      Text(tarea.nombre, style: TextStyle(fontSize: 30)),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (_) => ModificarTarea(tarea))).then((value) {
+                                    actualizarListaTareas();
+                                  });
+                                },
+                                icon: Icon(Icons.edit, size: 50)
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  borrarTarea(tarea);
+                                },
+                                icon: Icon(Icons.delete, size: 50)
+                            )
+                          ],
+                        ),
                       ),
                     ],
                   ),

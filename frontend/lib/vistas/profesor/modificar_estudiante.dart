@@ -42,7 +42,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
   final colorBotones = Colors.blue;
 
   // Distancia en píxeles que estará separados los elementos unos de otros
-  final double separacionElementos = 20.0;
+  final double separacionElementos = 30.0;
 
   // Valor del desplegable del tipo de acceso, por defecto es la primera opción
   String valorTipoAcceso = estudianteAModificar!.acceso;
@@ -229,8 +229,8 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
     return GestureDetector(
       onTap: seleccionarFotoEstudiante,
       child: Container(
-        height: 250,
-        width: 250,
+        height: 500,
+        width: 500,
         padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
         child: fotoEstudiante != null ?
         CircleAvatar(backgroundImage: FileImage(File(fotoEstudiante!.path)), backgroundColor: Colors.grey) :
@@ -247,7 +247,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
         children: [
           Container(
               alignment: Alignment.centerLeft,
-              child: Text("Necesidades para el estudiante", style: TextStyle(fontSize: 17))
+              child: Text("Necesidades para el estudiante", style: TextStyle(fontSize: 30))
           ),
           Row(
             children: [
@@ -261,7 +261,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
                   });
                 },
               ),
-              Text("Audio")
+              Text("Audio", style: TextStyle(fontSize: 30))
             ],
           ),
           Row(
@@ -276,7 +276,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
                   });
                 },
               ),
-              Text("Video")
+              Text("Video", style: TextStyle(fontSize: 30))
             ],
           ),
         ],
@@ -303,6 +303,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
         onChanged: (text) {
           passwordUsuario = text;
         },
+        style: TextStyle(fontSize: 30),
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           hintText: "Contraseña",
@@ -321,11 +322,11 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
               children: [
                 Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("Pictogramas que se le mostrarán al estudiante", style: TextStyle(fontSize: 17))
+                    child: Text("Pictogramas que se le mostrarán al estudiante", style: TextStyle(fontSize: 30))
                 ),
                 Container(
                     alignment: Alignment.centerLeft,
-                    child: Text("Seleccione los pictogramas de la clave", style: TextStyle(fontSize: 17))
+                    child: Text("Seleccione los pictogramas de la clave", style: TextStyle(fontSize: 30))
                 )
               ],
             )
@@ -449,7 +450,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Modificar Estudiante"),
+        title: Text("Modificar Estudiante", style: TextStyle(fontSize: 30)),
       ),
       body: SafeArea(
         child: ListView(
@@ -465,6 +466,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
                 onChanged: (text) {
                   nombre = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Nombre",
@@ -480,6 +482,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
                 onChanged: (text) {
                   apellidos = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Apellidos",
@@ -495,6 +498,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
                 onChanged: (text) {
                   email = text;
                 },
+                style: TextStyle(fontSize: 30),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: "Email",
@@ -516,7 +520,7 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
                   items: tipoDeAccesos.map<DropdownMenuItem<String>>((String valor) {
                     return DropdownMenuItem<String>(
                       value: valor,
-                      child: Text(valor),
+                      child: Text(valor, style: TextStyle(fontSize: 30)),
                     );
                   }).toList(),
                   onChanged: (String? valor) {
@@ -536,10 +540,10 @@ class _ModificarEstudianteState extends State<ModificarEstudiante> {
             //Registrar
             Container(
               alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, separacionElementos),
+              padding: EdgeInsets.all(separacionElementos),
               child: ElevatedButton(
                 onPressed: modificar,
-                child: Text("Modificar"),
+                child: Text("Modificar", style: TextStyle(fontSize: 30)),
                 style: ElevatedButton.styleFrom(
                   primary: colorBotones,
                 ),
