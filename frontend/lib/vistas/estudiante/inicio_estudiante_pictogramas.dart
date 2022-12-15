@@ -171,6 +171,23 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
                 ),
               ),
             ),
+            GestureDetector(
+              onTap: () {
+                Navigator.popUntil(context, (Route<dynamic> predicate) => predicate.isFirst);
+              },
+              child: Container(
+                margin: EdgeInsets.all(5),
+                height: MediaQuery.of(context).size.height / 3.75,
+                color: Colors.red,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text("Ver mi evaluación",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.white)),
+                    Icon(Icons.face,color: Colors.white, size: 40),
+                  ],
+                ),
+              ),
+            ),
 
             GestureDetector(
               onTap: () {
