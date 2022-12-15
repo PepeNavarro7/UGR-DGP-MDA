@@ -1,4 +1,4 @@
-/*
+
 import 'dart:ffi';
 
 import 'package:app/clases/estudiante.dart';
@@ -304,4 +304,3 @@ class _GraficaSeguimientoState extends State<GraficaSeguimiento> {
     );
   }
 }
- */
