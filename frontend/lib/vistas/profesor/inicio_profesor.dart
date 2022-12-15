@@ -36,25 +36,28 @@ class _InicioProfesorState extends State<InicioProfesor> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: Text("Colegio San Rafael"),
+        title: Text("Colegio San Rafael", style: TextStyle(fontSize: 30),),
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              height: MediaQuery.of(context).size.height * 0.1,
               width: MediaQuery.of(context).size.width*0.8,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push( context, MaterialPageRoute(builder: (context) => RegistrarEstudiante()), );
                 },
-                child: Text("Registrar estudiante"),
+                child: Text("Registrar estudiante", style: TextStyle(fontSize: 40)),
               ),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: ElevatedButton(
                 onPressed: () async {
                   List<Estudiante> listaEstudiantes = [];
@@ -76,24 +79,26 @@ class _InicioProfesorState extends State<InicioProfesor> {
 
                   Navigator.push( context, MaterialPageRoute(builder: (context) => VerEstudiantes(listaEstudiantes) ), );
                 },
-                child: Text("Ver estudiantes"),
+                child: Text("Ver estudiantes", style: TextStyle(fontSize: 40)),
               ),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: ElevatedButton(
                 onPressed: () {
                   Navigator.push( context, MaterialPageRoute(builder: (context) => CrearTarea()), );
                 },
-                child: Text("Crear tarea"),
+                child: Text("Crear tarea", style: TextStyle(fontSize: 40)),
               ),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: ElevatedButton(
                 onPressed: () async {
                   List<Tarea> listaTareas = [];
@@ -123,13 +128,14 @@ class _InicioProfesorState extends State<InicioProfesor> {
 
                   Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareas(listaTareas)));
                 },
-                child: Text("Ver tareas"),
+                child: Text("Ver tareas", style: TextStyle(fontSize: 40)),
               ),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: ElevatedButton(
                 onPressed: () async {
                   List<Tarea> listaTareas = [];
@@ -181,13 +187,14 @@ class _InicioProfesorState extends State<InicioProfesor> {
 
                   Navigator.push( context, MaterialPageRoute(builder: (context) => AsignarTarea(listaTareas, listaEstudiantes)));
                 },
-                child: Text("Asignar tarea"),
+                child: Text("Asignar tarea", style: TextStyle(fontSize: 40)),
               ),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: ElevatedButton(
                 onPressed: () async {
                   List<TareaAsignada> tareasAsignadas = [];
@@ -243,13 +250,14 @@ class _InicioProfesorState extends State<InicioProfesor> {
 
                   Navigator.push( context, MaterialPageRoute(builder: (context) => VerTareasAsignadas(tareasAsignadas, listaTareas, listaEstudiantes)));
                 },
-                child: Text("Marcar tarea como completada"),
+                child: Text("Marcar tarea como completada", style: TextStyle(fontSize: 40)),
               ),
             ),
 
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               width: MediaQuery.of(context).size.width*0.8,
+              height: MediaQuery.of(context).size.height * 0.1,
               child: ElevatedButton(
                 onPressed: () async {
                   List<Estudiante> listaEstudiantes = [];
@@ -307,7 +315,7 @@ class _InicioProfesorState extends State<InicioProfesor> {
                   }
                   Navigator.push( context, MaterialPageRoute(builder: (context) => SeguimientoEstudiante(listaEstudiantes, listaTareas, tareasAsignadas)));
                 },
-                child: Text("Seguimiento estudiantes"),
+                child: Text("Seguimiento estudiantes", style: TextStyle(fontSize: 40)),
               ),
             ),
           ],

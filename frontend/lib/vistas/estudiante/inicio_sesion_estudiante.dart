@@ -97,12 +97,14 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
     return Column(
       children: [
         Center(
-          child: Text("Hola ${estudiante!.nombre}", style: TextStyle(color: Colors.blue, fontSize: 40))
+          child: Text("Hola ${estudiante!.nombre} ${estudiante!.apellidos}", style: TextStyle(color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold))
         ),
 
         Container(
-          padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+          color: Colors.white,
+          margin: EdgeInsets.fromLTRB(100, 30, 100, 30),
           child: TextField(
+
             obscureText: true,
             onChanged: (text) {
               password = text;
@@ -158,20 +160,26 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ElevatedButton(
-          onPressed: () {
+        GestureDetector(
+          onTap: () {
             Navigator.pop(context);
           },
-          child: Text("Salir"),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.width * 0.4,
+            child: Image.asset("assets/imagenes/salir.png"),
+          ),
         ),
 
-        ElevatedButton(
-          onPressed: () {
-            if (loginCorrecto())
-                Navigator.push( context, MaterialPageRoute(builder: (context) =>InicioEstudiantePictograma(estudiante!)));
+        GestureDetector(
+          onTap: () {
+            if(loginCorrecto())
+              Navigator.push( context, MaterialPageRoute(builder: (context) =>InicioEstudiantePictograma(estudiante!)));
           },
-          child: Text("Acceder"),
-        )
+          child: SizedBox(
+            height: MediaQuery.of(context).size.width * 0.4,
+            child: Image.asset("assets/imagenes/acceder.png"),
+          ),
+        ),
       ],
     );
   }
@@ -179,12 +187,10 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorAppBar,
-        title: Text("Inicio sesión estudiante"),
-      ),
-      body: SafeArea(
+      body: Container(
+        color: Color(0xffffff50),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             estudiante!.acceso == "Alfanumerico" ? AccesoAlfanumerico() : AccesoPictogramas(),
             Botones(),

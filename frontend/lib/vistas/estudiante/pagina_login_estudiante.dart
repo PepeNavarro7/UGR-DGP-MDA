@@ -7,7 +7,7 @@ import 'package:app/clases/estudiante.dart';
 List<Estudiante> listaEstudiantes = [];
 
 int NumeroPagina = 0;
-int NumeroFilas = 4;
+int NumeroFilas = 2;
 int NumeroColumnas = 2;
 int NumeroCasillasTotales = 0;
 
@@ -130,7 +130,7 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
               return Container();
             } else {
               return Container(
-                margin: EdgeInsets.all(2),
+                margin: EdgeInsets.all(5),
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push( context, MaterialPageRoute(builder: (context) =>InicioSesionEstudiante(listaEstudiantes[index])));
@@ -151,27 +151,38 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: Visibility(
-                    visible: NumeroPagina > 0,
-                    child: IconButton(
-                      icon: new Icon(Icons.arrow_back, size: 70.0),
-                      onPressed: PaginaAnterior,
+              Visibility(
+                  visible: NumeroPagina > 0,
+                  child: GestureDetector(
+                    onTap: PaginaAnterior,
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.height * 0.2,
+                      child: Icon(Icons.arrow_back, size: MediaQuery.of(context).size.height * 0.2,),
                     ),
                   )
               ),
-              SizedBox(
-                  height: 100,
-                  width: 100,
-                  child: Visibility(
-                    visible: NumeroPagina < (listaEstudiantes.length / NumeroCasillasTotales - 1),
-                    child: IconButton(
-                      icon: new Icon(Icons.arrow_forward, size: 70.0),
-                      onPressed: PaginaSiguiente,
-                    ),
-                  )
+
+              Visibility(
+                visible: NumeroPagina < (listaEstudiantes.length / NumeroCasillasTotales - 1),
+                child: GestureDetector(
+                  onTap: PaginaSiguiente,
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    width: MediaQuery.of(context).size.height * 0.2,
+                    child: Icon(Icons.arrow_forward, size: MediaQuery.of(context).size.height * 0.2),
+                  ),
+                )
+              ),
+
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.2,
+                    child: Image.asset("assets/imagenes/salir.png"),
+                ),
               ),
             ],
           ),
@@ -179,6 +190,17 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
       );
     }
 
+    return Container(
+      color: Color(0xffffff50),
+      child: Column(
+        children: [
+          IconosUsuarios(),
+          Flechas()
+        ],
+      ),
+    );
+
+    /*
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -194,5 +216,6 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
         ],
       ),
     );
+     */
   }
 }

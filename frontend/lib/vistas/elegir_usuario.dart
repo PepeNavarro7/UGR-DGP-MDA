@@ -24,56 +24,49 @@ class _ElegirUsuarioState extends State<ElegirUsuario> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorAppBar,
-        title: Text("Elegir usuario"),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()), );
-                },
-                child: Text("Profesor"),
-              ),
+
+    return Container(
+      color: Color(0xffffff50),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()));
+            },
+            child: SizedBox(
+              child: Image.asset("assets/imagenes/profesor.png"),
             ),
+          ),
 
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              width: MediaQuery.of(context).size.width * 0.8,
-              child: ElevatedButton(
-                onPressed: () async {
-                  List<Estudiante> listaEstudiantes = [];
+          GestureDetector(
+            onTap: () async {
+              List<Estudiante> listaEstudiantes = [];
 
-                  try {
-                    String uri = "http://10.0.2.2/dgp_php_scripts/obtener_estudiantes.php";
-                    final response = await http.get(Uri.parse(uri));
+              try {
+                String uri = "http://10.0.2.2/dgp_php_scripts/obtener_estudiantes.php";
+                final response = await http.get(Uri.parse(uri));
 
-                    if (response.statusCode == 200) {
-                      var estudiantesJSON = json.decode(response.body);
-                      for (var estudiante in estudiantesJSON) {
-                        String foto = "http://10.0.2.2/" + estudiante['foto'].substring(3);
-                        Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], foto);
-                        listaEstudiantes.add(estudianteAux);
-                      }
-                    }
-                  } catch (e) {
-                    print("Exception: $e");
+                if (response.statusCode == 200) {
+                  var estudiantesJSON = json.decode(response.body);
+                  for (var estudiante in estudiantesJSON) {
+                    String foto = "http://10.0.2.2/" + estudiante['foto'].substring(3);
+                    Estudiante estudianteAux = new Estudiante(estudiante['id_estudiante'], estudiante['nombre'], estudiante['apellidos'], estudiante['email'], estudiante['acceso'], estudiante['accesibilidad'], estudiante['password_usuario'], foto);
+                    listaEstudiantes.add(estudianteAux);
                   }
+                }
+              } catch (e) {
+                print("Exception: $e");
+              }
 
-                  Navigator.push( context, MaterialPageRoute(builder: (context) =>PaginaLoginEstudiante(listaEstudiantes)));
-                },
-                child: Text("Estudiante"),
-              ),
+              Navigator.push( context, MaterialPageRoute(builder: (context) =>PaginaLoginEstudiante(listaEstudiantes)));
+            },
+            child: SizedBox(
+              child: Image.asset("assets/imagenes/estudiante.png"),
             ),
-          ],
-        ),
-      )
+          )
+        ],
+      ),
     );
   }
 }
