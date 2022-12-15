@@ -20,12 +20,10 @@ FToast ventana_mensajes = FToast();
 class CrearTarea extends StatefulWidget {
   @override
   _CrearTareaState createState() => _CrearTareaState();
-
 }
 
 class _CrearTareaState extends State<CrearTarea> {
-
-
+  // Color de la AppBar
   final colorAppBar = Colors.blue;
 
 // Color de los ElevatedButton
@@ -39,7 +37,6 @@ class _CrearTareaState extends State<CrearTarea> {
   TextEditingController controladorMaterial = new TextEditingController();
   TextEditingController controladorCantidad = new TextEditingController();
 
-
   // Datos de la tarea
   String nombre = "";
   String descripcion = "";
@@ -50,7 +47,6 @@ class _CrearTareaState extends State<CrearTarea> {
   String cantidad = "";
   List<String> listaPasos = [];
   List<MaterialComanda> listaMateriales = [];
-  DateTime fecha=DateTime.now();
 
   // Función que añade un paso a la lista de pasos, solo añade si no es null, el texto
   // no son solo espacio y no esta repetido el paso
@@ -63,22 +59,6 @@ class _CrearTareaState extends State<CrearTarea> {
     });
   }
 
-  final DateFormat formatoFecha = DateFormat('dd-MM-yyyy');
-
-  //Función que nos sirve para seleccionar una fecha inicial por defecto
-  Future<void> seleccionarFecha() async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: fecha,
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != fecha) {
-      setState(() {
-        fecha = picked;
-      });
-    }
-  }
   // Función que borrar todos los pasos de una lista
   void borrarPasos() {
     setState(() {
@@ -104,8 +84,6 @@ class _CrearTareaState extends State<CrearTarea> {
       listaMateriales.clear();
     });
   }
-
-
 
   bool datosCompletos() {
     bool aux = true;
@@ -219,13 +197,13 @@ class _CrearTareaState extends State<CrearTarea> {
             Container(
               padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
               child: TextField(
-                  onChanged: (text) {
-                    nombre = text;
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: "Nombre",
-                  )
+                onChanged: (text) {
+                  nombre = text;
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Nombre",
+                )
               ),
             ),
 
@@ -370,80 +348,44 @@ class _CrearTareaState extends State<CrearTarea> {
 
             /***************************************************/
             // TextField para escribir el paso a añadir
-            Visibility(
-              visible: tipo == "Tarea normal",
-              child: Container(
-                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextField(
-                      controller: controladorPasos,
-                      onChanged: (text) {
-                        paso = text;
-                      },
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Pasos",
-                      ),
-                    )
-                  ],
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              child: TextField(
+                controller: controladorPasos,
+                onChanged: (text) {
+                  paso = text;
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: "Paso",
                 ),
               ),
             ),
 
-            // Botones para añadir y quitar materiales
-            Visibility(
-              visible: tipo == "Tarea normal",
-              child: Container(
-                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: borrarPasos,
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.red,
-                      ),
-                      child: Text("Borrar pasos"),
+            // Botones para añadir y quitar pasos
+            Container(
+              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: borrarPasos,
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        aniadirPaso(paso);
-                        controladorPasos.text = "";
-                      },
-                      child: Text("Añadir pasos"),
-                    )
-                  ],
-                ),
+                    child: Text("Borrar pasos"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      aniadirPaso(paso);
+                      controladorPasos.text = "";
+                    },
+                    child: Text("Añadir pasos"),
+                  )
+                ],
               ),
             ),
 
-            // Pasos
-            Visibility(
-              visible: tipo == "Menú",
-              child: Container(
-                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextField(
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: seleccionarFecha,
-                          icon: Icon(Icons.calendar_today),
-                        ),
-                      ),
-                      controller: TextEditingController(
-                        text: formatoFecha.format(fecha),
-                      ),
-                      onTap: seleccionarFecha,
-                      readOnly: true,
-                    ),
-                  ],
-                ),
-              ),
-            ),
             // Pasos
             Visibility(
               visible: listaPasos.isNotEmpty,
@@ -454,15 +396,16 @@ class _CrearTareaState extends State<CrearTarea> {
                 child: ListView(
                   children: listaPasos.map((pasoAux) {
                     return Card(
-                        child: Container(
-                          padding: EdgeInsets.all(separacionElementos),
-                          child: Text((listaPasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux),
-                        )
+                      child: Container(
+                        padding: EdgeInsets.all(separacionElementos),
+                        child: Text((listaPasos.indexOf(pasoAux) + 1).toString() + ". " + pasoAux),
+                      )
                     );
                   }).toList(),
                 ),
               ),
             ),
+
             // Botón Crear
             Container(
               alignment: Alignment.center,
@@ -481,4 +424,5 @@ class _CrearTareaState extends State<CrearTarea> {
     );
   }
 }
+
 

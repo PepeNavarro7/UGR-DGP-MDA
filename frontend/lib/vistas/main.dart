@@ -1,10 +1,6 @@
 import 'package:app/clases/estudiante.dart';
 import 'package:app/vistas/elegir_usuario.dart';
-import 'package:app/vistas/profesor/crear_tarea.dart';
-import 'package:app/vistas/profesor/inicio_profesor.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
-
 
 void main() => runApp(const MyApp());
 
@@ -16,10 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home:
-      CrearTarea()
+      home: //InicioProfesor(),
       //InicioEstudiantePictograma(Alberto),
-      //MyApp(),
+      ElegirUsuario(),
     );
   }
 }
