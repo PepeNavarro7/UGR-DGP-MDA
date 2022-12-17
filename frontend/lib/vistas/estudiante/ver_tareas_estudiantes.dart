@@ -65,45 +65,117 @@ class _VerTareasEstudianteState extends State<VerTareasEstudiante> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: colorAppBar,
-        title: Text("Tareas de " + estudiante!.nombre),
-      ),
-      body: SafeArea(
-        child: ListView(
-            children: listaTareasAsignadas.map((tareaAsignada) {
-              return Card(
-                child: Container(
-                  padding: EdgeInsets.all(separacionElementos),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("Tarea: " + listaTareas[indiceDeTarea(tareaAsignada.idTarea)].nombre),
-                      Text("Tipo: " + tipoAString(listaTareas[indiceDeTarea(tareaAsignada.idTarea)].tipo)),
-                      Text(tareaAsignada.completada == "0" ? "No completada" : "Completada"),
-                      Text("Evaluación: " + tareaAsignada.calificacion),
-                    ],
-                  ),
-                ),
-              );
-            }).toList()
-        ),
-      ),
+  Widget Tareas() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.85,
+      height: MediaQuery.of(context).size.height * 0.85,
+      color: Colors.blue,
     );
   }
 
-  String tipoAString(String tipo) {
-    String aux = "";
-    if (tipo.contains("N"))
-      aux = "Normal";
-    else if (tipo.contains("C"))
-      aux = "Comanda";
-    else if (tipo.contains("M"))
-      aux = "Menú";
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        color: Color(0xffffff50),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Center(child: Text("TAREAS",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Image.asset("assets/imagenes/tarea.png")
+                    )
+                  ],
+                ),
+              ),
+            ),
 
-    return aux;
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Center(child: Text("COMANDA",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        margin: EdgeInsets.all(10),
+                        child: Image.asset("assets/imagenes/evaluacion.png")
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Center(child: Text("MENÚS",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        margin: EdgeInsets.all(10),
+                        child: Image.asset("assets/imagenes/menu.png")
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Container(
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Center(child: Text("VOLVER",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        margin: EdgeInsets.all(10),
+                        child: Image.asset("assets/imagenes/salir.png")
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

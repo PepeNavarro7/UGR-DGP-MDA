@@ -3,8 +3,6 @@ import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
 import 'package:flutter/material.dart';
 
-
-List<Estudiante> listaEstudiantes = [];
 List<Tarea> listaTareas = [];
 List<TareaAsignada> listaTareasAsignadas = [];
 List<Tarea> listaTareasCompletadas = [];
@@ -21,16 +19,6 @@ String? getTipoAccesibilidad(Estudiante? estudiante)
     tipoAccesibilidad = estudiante?.accesibilidad;
 
   return tipoAccesibilidad;
-}
-
-Estudiante buscarEstudiante(String nombre) {
-  Estudiante e = listaEstudiantes.first;
-
-  for (Estudiante eAux in listaEstudiantes)
-    if (eAux.nombre == nombre)
-      e = eAux;
-
-  return e;
 }
 
 Tarea buscarTarea(String idTarea) {
@@ -117,16 +105,14 @@ String evaluacionMedia() {
  */
 
 class VerMiEvaluacion extends StatefulWidget {
-  VerMiEvaluacion(List<Estudiante> estudiantes, List<Tarea> tareas, List<TareaAsignada> tareasAsignadas) {
-    listaEstudiantes.clear();
+  VerMiEvaluacion(Estudiante e, List<Tarea> tareas, List<TareaAsignada> tareasAsignadas) {
     listaTareas.clear();
     listaTareasAsignadas.clear();
 
-    listaEstudiantes.addAll(estudiantes);
     listaTareas.addAll(tareas);
     listaTareasAsignadas.addAll(tareasAsignadas);
 
-    estudiante = listaEstudiantes.first;
+    estudiante = e;
     actualizarListaTareasCompletadas(estudiante!);
     actualizarListaTareasNoCompletadas(estudiante!);
   }
@@ -152,7 +138,7 @@ class _VerMiEvaluacionState extends State<VerMiEvaluacion> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: colorAppBar,
-        title: const Text("Ver mi evaluacion"),
+        title: const Text("VER MI EVALUACIÓN"),
       ),
       body: SafeArea(
           child: Container()

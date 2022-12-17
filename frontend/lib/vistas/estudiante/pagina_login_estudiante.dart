@@ -29,59 +29,6 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
     double TamanioLetra = EscalaTexto * 20;
     NumeroCasillasTotales = NumeroFilas * NumeroColumnas;
 
-    AlertDialog MenuAjustes() {
-      return AlertDialog(
-        content: Container(
-          height: 150,
-          child: Column(
-            children: [
-              Text('Tamaño iconos:', style: TextStyle(fontSize: TamanioLetra)),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                      child: Text("2x1", style: TextStyle(fontSize: TamanioLetra, color: Colors.black)),
-                      onPressed: () {
-                        setState(() {
-                          NumeroPagina = 0;
-                          NumeroFilas = 2;
-                          NumeroColumnas = 1;
-                          NumeroCasillasTotales = NumeroFilas * NumeroColumnas;
-                        });
-                      }
-                  ),
-                  TextButton(
-                      child: Text("4x2", style: TextStyle(fontSize: TamanioLetra, color: Colors.black)),
-                      onPressed: () {
-                        setState(() {
-                          NumeroPagina = 0;
-                          NumeroFilas = 4;
-                          NumeroColumnas = 2;
-                          NumeroCasillasTotales = NumeroFilas * NumeroColumnas;
-                        });
-                      }
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    void RealizarAccionPopupMenu(String value) {
-      switch (value) {
-        case "Ajustes":
-          showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return MenuAjustes();
-              }
-          );
-          break;
-      }
-    }
-
     void PaginaAnterior() {
       setState(() {
         if(NumeroPagina > 0)
@@ -94,20 +41,6 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
         if(NumeroPagina < (listaEstudiantes.length / NumeroCasillasTotales - 1))
           NumeroPagina++;
       });
-    }
-
-    Widget PopupMenu () {
-      return PopupMenuButton <String>(
-        onSelected: RealizarAccionPopupMenu,
-        itemBuilder: (BuildContext context) {
-          return {'Ajustes'}.map((String choice) {
-            return PopupMenuItem<String>(
-              value: choice,
-              child: Text(choice),
-            );
-          }).toList();
-        },
-      );
     }
 
     Widget IconosUsuarios() {
@@ -199,23 +132,5 @@ class _PaginaLoginEstudianteState extends State<PaginaLoginEstudiante> {
         ],
       ),
     );
-
-    /*
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: Text("Página Login", style: TextStyle(fontSize: TamanioLetra)),
-        actions: <Widget>[
-          PopupMenu(),
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          IconosUsuarios(),
-          Flechas(),
-        ],
-      ),
-    );
-     */
   }
 }

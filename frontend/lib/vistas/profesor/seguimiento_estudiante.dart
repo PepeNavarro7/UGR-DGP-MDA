@@ -77,26 +77,14 @@ int numTareasMuyBien() {
   return contador;
 }
 
-String evaluacionMedia() {
-  int numBien = numTareasBien();
-  int numMuyBien = numTareasMuyBien();
-  int numNormal = listaTareasCompletadas.length - numMuyBien - numMuyBien;
+int numTareasExcelente() {
+  int contador = 0;
 
-  double mediaMuyBien = 1.0;
-  double mediaBien = 0.5;
-  double mediaNormal = 0.0;
+  for (TareaAsignada ta in listaTareasAsignadas)
+    if (ta.completada == "1" && ta.calificacion == "Excelente" && ta.idEstudiante == estudiante!.idEstudiante)
+      contador++;
 
-  double media = ((numNormal * mediaNormal + numBien * mediaBien + numMuyBien * mediaMuyBien) / 3);
-  String evaluacion = "";
-
-  if (media >= 0.75)
-    evaluacion = "Muy bien";
-  else if (media >= 0.5)
-    evaluacion = "Bien";
-  else
-    evaluacion = "Normal";
-
-  return evaluacion;
+  return contador;
 }
 
 /*
@@ -229,20 +217,10 @@ class _SeguimientoEstudianteState extends State<SeguimientoEstudiante> {
                 children: [
                   Text("Tareas \"Bien\" realizadas: " + numTareasBien().toString(), style: TextStyle(fontSize: 30)),
                   Text("Tareas \"Muy Bien\" realizadas: " + numTareasMuyBien().toString(), style: TextStyle(fontSize: 30)),
-                  Text("Evaluación media (sin contar las no completadas): " + evaluacionMedia(), style: TextStyle(fontSize: 30))
+                  Text("Tareas \"Excelente\" realizadas: " + numTareasExcelente().toString(), style: TextStyle(fontSize: 30)),
                 ],
               ),
             ),
-
-            Container(
-              padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-              child: ElevatedButton(
-                onPressed: (){ //TO-DO
-                  //IR A VER_GRÁFICA_SEGUIMIENTO - parámetros del constructor: el objeto Estudiante e, listaTareasAsignadas
-                },
-                child: Text("Ver gráfico detallado", style: TextStyle(fontSize: 30)),
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.green))
-            )
           ], // children
         ),
       ),

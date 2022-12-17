@@ -4,14 +4,10 @@ import 'package:app/clases/estudiante.dart';
 import 'package:app/clases/material.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
+import 'package:app/vistas/estudiante/ver_mi_evaluacion.dart';
 import 'package:app/vistas/estudiante/ver_tareas_estudiantes.dart';
-import 'package:app/vistas/profesor/ver_grafica_seguimiento.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
-
-
-
 
 class InicioEstudiantePictograma extends StatefulWidget {
   // El objeto _estudiante es miembro de la clase InicioEstudiante, para poder utilizarlo
@@ -124,11 +120,36 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
-                      child: Center(child: Text("Ver mis tareas",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                      child: Center(child: Text("VER MIS TAREAS",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
                     ),
                     Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                       child: Image.asset("assets/imagenes/tareas.png")
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: () {
+                //Navigator.push( context, MaterialPageRoute(builder: (context) => VerMiEvaluacion(inicioEstudiante.getEstudiante())));
+              },
+              child: Container(
+                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
+                height: MediaQuery.of(context).size.height * 0.2,
+                color: Colors.white,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        child: Center(child: Text("EVALUACIÓN",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                    ),
+                    Container(
+                        width: MediaQuery.of(context).size.width * 0.4,
+                        margin: EdgeInsets.all(10),
+                        child: Image.asset("assets/imagenes/evaluacion.png")
                     )
                   ],
                 ),
@@ -166,35 +187,12 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
-                      child: Center(child: Text("Perfil",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                      child: Center(child: Text("PERFIL",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
                       margin: EdgeInsets.all(10),
                       child: Image.network("http://10.0.2.2/fotos_estudiantes/${inicioEstudiante.getEstudiante().nombre}${inicioEstudiante.getEstudiante().apellidos.replaceAll(' ', '')}.jpg")
-                    )
-                  ],
-                ),
-              ),
-            ),
-
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                height: MediaQuery.of(context).size.height * 0.2,
-                color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        child: Center(child: Text("Evaluación",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
-                    ),
-                    Container(
-                        width: MediaQuery.of(context).size.width * 0.4,
-                        margin: EdgeInsets.all(10),
-                        child: Image.asset("assets/imagenes/evaluacion.png")
                     )
                   ],
                 ),
@@ -214,7 +212,7 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,
-                      child: Center(child: Text("Salir",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
+                      child: Center(child: Text("SALIR",style: TextStyle(fontWeight: FontWeight.bold, fontSize: 50)))
                     ),
                     Container(
                       width: MediaQuery.of(context).size.width * 0.4,

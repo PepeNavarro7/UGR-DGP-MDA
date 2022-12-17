@@ -77,8 +77,8 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
         resultado = true;
       else
         FToast().showToast(
-            child: Text("Contraseña incorrecta",
-              style: TextStyle(fontSize: 25, color: Colors.red),
+            child: Text("CONTRASEÑA INCORRECTA",
+              style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold, color: Colors.red),
             )
         );
     } else if (estudiante!.acceso == "Pictogramas") {
@@ -86,8 +86,8 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
         resultado = true;
       else
         FToast().showToast(
-            child: Text("Pictogramas incorrectos",
-              style: TextStyle(fontSize: 25, color: Colors.red),
+            child: Text("PICTOGRAMAS INCORRECTOS",
+              style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold, color: Colors.red),
             )
         );
     }
@@ -99,7 +99,7 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
     return Column(
       children: [
         Center(
-          child: Text("Hola ${estudiante!.nombre} ${estudiante!.apellidos}", style: TextStyle(color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold))
+          child: Text("HOLA ${estudiante!.nombre.toUpperCase()} ${estudiante!.apellidos.toUpperCase()}", style: TextStyle(color: Colors.blue, fontSize: 50, fontWeight: FontWeight.bold))
         ),
 
         Container(
@@ -113,7 +113,7 @@ class _InicioSesionEstudianteState extends State<InicioSesionEstudiante> {
             },
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: "Contraseña",
+              hintText: "CONTRASEÑA",
             ),
           ),
         ),

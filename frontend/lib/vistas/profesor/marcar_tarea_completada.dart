@@ -14,7 +14,7 @@ TareaAsignada? tareaAsignada;
 Tarea? tarea;
 Estudiante? estudiante;
 
-List<String> calificaciones = ["Normal", "Bien", "Muy bien"];
+List<String> calificaciones = ["Bien", "Muy Bien", "Excelente"];
 String calificacion = "";
 
 

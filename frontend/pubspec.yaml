@@ -75,6 +75,8 @@ flutter:
     - assets/imagenes/acceder.png
     - assets/imagenes/tareas.png
     - assets/imagenes/evaluacion.png
+    - assets/imagenes/tarea.png
+    - assets/imagenes/menu.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
@@ -88,6 +90,10 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
 
+  fonts:
+    - family: Escolar
+      fonts:
+        - asset: assets/fonts/escolar.ttf
 
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
