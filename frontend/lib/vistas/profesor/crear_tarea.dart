@@ -429,26 +429,6 @@ class _CrearTareaState extends State<CrearTarea> {
             Visibility(
               visible: tipo == "Menú",
               child: Container(
-                padding: EdgeInsets.fromLTRB(separacionElementos, separacionElementos, separacionElementos, 0.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextField(
-                      style: TextStyle(fontSize: 30),
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: seleccionarFecha,
-                          icon: Icon(Icons.calendar_today),
-                        ),
-                      ),
-                      controller: TextEditingController(
-                        text: formatoFecha.format(fecha),
-                      ),
-                      onTap: seleccionarFecha,
-                      readOnly: true,
-                    ),
-                  ],
-                ),
               ),
             ),
             // Pasos

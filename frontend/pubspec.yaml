@@ -77,6 +77,29 @@ flutter:
     - assets/imagenes/evaluacion.png
     - assets/imagenes/tarea.png
     - assets/imagenes/menu.png
+    - assets/imagenes/comanda.png
+    - assets/imagenes/correcto.png
+    - assets/imagenes/menus/bajoColesterol.png
+    - assets/imagenes/menus/basal.png
+    - assets/imagenes/menus/diabetico.png
+    - assets/imagenes/menus/regimen.png
+    - assets/imagenes/menus/sinCarne.png
+    - assets/imagenes/menus/sinCerdo.png
+    - assets/imagenes/menus/triturado.png
+    - assets/imagenes/evaluacion/tareasCompletadas.png
+    - assets/imagenes/evaluacion/bien.png
+    - assets/imagenes/evaluacion/muyBien.png
+    - assets/imagenes/evaluacion/excelente.png
+    - assets/imagenes/evaluacion/evaluacionMedia.png
+    - assets/imagenes/cantidadespictogramas/10%.png
+    - assets/imagenes/cantidadespictogramas/15%.png
+    - assets/imagenes/cantidadespictogramas/25%.png
+    - assets/imagenes/cantidadespictogramas/35%.png
+    - assets/imagenes/cantidadespictogramas/50%.png
+    - assets/imagenes/cantidadespictogramas/65%.png
+    - assets/imagenes/cantidadespictogramas/85%.png
+    - assets/imagenes/cantidadespictogramas/95%.png
+    - assets/imagenes/cantidadespictogramas/100%.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

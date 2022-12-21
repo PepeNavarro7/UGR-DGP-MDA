@@ -5,6 +5,7 @@ import 'package:app/clases/material.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
 import 'package:app/vistas/estudiante/ver_mi_evaluacion.dart';
+import 'package:app/vistas/estudiante/ver_mi_perfil_estudiante.dart';
 import 'package:app/vistas/estudiante/ver_tareas_estudiantes.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -132,8 +133,50 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
             ),
 
             GestureDetector(
-              onTap: () {
-                //Navigator.push( context, MaterialPageRoute(builder: (context) => VerMiEvaluacion(inicioEstudiante.getEstudiante())));
+              onTap: () async {
+                List<Tarea> listaTareas = [];
+                List<TareaAsignada> tareasAsignadas = [];
+
+                try {
+                  String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                  var response = await http.get(Uri.parse(uri));
+
+                  print(response.body);
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+
+                      List<MaterialComanda> listaMateriales = [];
+                      List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                      for (int i = 0; i < listaMaterialesString.length; i++) {
+                        MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                        listaMateriales.add(aux);
+                      }
+
+                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
+                      listaTareas.add(tareaAux);
+                    }
+                  }
+
+                  uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas_asignadas.php";
+                  response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      TareaAsignada tareaAux = new TareaAsignada(tarea['id_tarea'], tarea['id_estudiante'], tarea['fecha_inicio'], tarea['fecha_fin'], tarea['completada'], tarea['calificacion']);
+                      tareasAsignadas.add(tareaAux);
+                    }
+                  }
+
+                } catch (e) {
+                  print("Exception: $e");
+                }
+
+                Navigator.push( context, MaterialPageRoute(builder: (context) => VerMiEvaluacion(inicioEstudiante.getEstudiante(), listaTareas, tareasAsignadas)));
               },
               child: Container(
                 margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
@@ -157,26 +200,8 @@ class _InicioEstudiantePictogramaState extends State<InicioEstudiantePictograma>
             ),
 
             GestureDetector(
-              onTap: () async {
-                List<Tarea> listaTareas = [];
-
-                try {
-                  String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
-                  var response = await http.get(Uri.parse(uri));
-
-                  if (response.statusCode == 200) {
-                    var tareasJSON = json.decode(response.body);
-                    for (var tarea in tareasJSON) {
-                      List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
-                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], tarea['materiales'], listaPasos);
-                      listaTareas.add(tareaAux);
-                    }
-                  }
-                } catch (e) {
-                  print("Exception: $e");
-                }
-
-                //Navigator.push( context, MaterialPageRoute(builder: (context) => GraficaSeguimiento(inicioEstudiante.getEstudiante(), listaTareas)));
+              onTap: () {
+                Navigator.push( context, MaterialPageRoute(builder: (context) => VerPerfilEstudiante(inicioEstudiante.getEstudiante())));
               },
               child: Container(
                 margin: EdgeInsets.fromLTRB(50, 0, 50, 0),

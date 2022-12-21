@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:app/clases/estudiante.dart';
+import 'package:app/clases/material.dart';
 import 'package:app/clases/tarea.dart';
 import 'package:app/clases/tarea_asignada.dart';
+import 'package:app/vistas/estudiante/tareas_estudiante.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -82,7 +84,61 @@ class _VerTareasEstudianteState extends State<VerTareasEstudiante> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                List<TareaAsignada> tareasAsignadas = [];
+                List<Tarea> listaTareas = [];
+
+                try {
+                  String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas_asignadas.php";
+                  var response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      TareaAsignada tareaAux = new TareaAsignada(tarea['id_tarea'], tarea['id_estudiante'], tarea['fecha_inicio'], tarea['fecha_fin'], tarea['completada'], tarea['calificacion']);
+                      tareasAsignadas.add(tareaAux);
+                    }
+                  }
+
+                  uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                  response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+
+                      List<MaterialComanda> listaMateriales = [];
+                      List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                      for (int i = 0; i < listaMaterialesString.length; i++) {
+                        MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                        listaMateriales.add(aux);
+                      }
+
+                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
+                      listaTareas.add(tareaAux);
+                    }
+                  }
+                } catch (e) {
+                  print("Exception: $e");
+                }
+
+                List<Tarea> aux = [];
+
+                listaTareas.forEach((element) {
+                  int indice = 0;
+                  for (TareaAsignada ta in listaTareasAsignadas) {
+                    if (ta.idTarea == element.idTarea)
+                      indice = listaTareasAsignadas.indexOf(ta);
+                  }
+
+                  if(element.tipo == "N" && listaTareasAsignadas[indice].idEstudiante == estudiante!.idEstudiante)
+                    aux.add(element);
+                });
+
+                Navigator.push( context, MaterialPageRoute(builder: (context) => TareasEstudiante(aux)));
+              },
               child: Container(
                 margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 height: MediaQuery.of(context).size.height * 0.2,
@@ -104,7 +160,61 @@ class _VerTareasEstudianteState extends State<VerTareasEstudiante> {
             ),
 
             GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                List<TareaAsignada> tareasAsignadas = [];
+                List<Tarea> listaTareas = [];
+
+                try {
+                  String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas_asignadas.php";
+                  var response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      TareaAsignada tareaAux = new TareaAsignada(tarea['id_tarea'], tarea['id_estudiante'], tarea['fecha_inicio'], tarea['fecha_fin'], tarea['completada'], tarea['calificacion']);
+                      tareasAsignadas.add(tareaAux);
+                    }
+                  }
+
+                  uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                  response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+
+                      List<MaterialComanda> listaMateriales = [];
+                      List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                      for (int i = 0; i < listaMaterialesString.length; i++) {
+                        MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                        listaMateriales.add(aux);
+                      }
+
+                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
+                      listaTareas.add(tareaAux);
+                    }
+                  }
+                } catch (e) {
+                  print("Exception: $e");
+                }
+
+                List<Tarea> aux = [];
+
+                listaTareas.forEach((element) {
+                  int indice = 0;
+                  for (TareaAsignada ta in listaTareasAsignadas) {
+                    if (ta.idTarea == element.idTarea)
+                      indice = listaTareasAsignadas.indexOf(ta);
+                  }
+
+                  if(element.tipo == "C" && listaTareasAsignadas[indice].idEstudiante == estudiante!.idEstudiante)
+                    aux.add(element);
+                });
+
+                Navigator.push( context, MaterialPageRoute(builder: (context) => TareasEstudiante(aux)));
+              },
               child: Container(
                 margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 height: MediaQuery.of(context).size.height * 0.2,
@@ -119,7 +229,7 @@ class _VerTareasEstudianteState extends State<VerTareasEstudiante> {
                     Container(
                         width: MediaQuery.of(context).size.width * 0.4,
                         margin: EdgeInsets.all(10),
-                        child: Image.asset("assets/imagenes/evaluacion.png")
+                        child: Image.asset("assets/imagenes/comanda.png")
                     )
                   ],
                 ),
@@ -127,7 +237,61 @@ class _VerTareasEstudianteState extends State<VerTareasEstudiante> {
             ),
 
             GestureDetector(
-              onTap: () {},
+              onTap: () async {
+                List<TareaAsignada> tareasAsignadas = [];
+                List<Tarea> listaTareas = [];
+
+                try {
+                  String uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas_asignadas.php";
+                  var response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      TareaAsignada tareaAux = new TareaAsignada(tarea['id_tarea'], tarea['id_estudiante'], tarea['fecha_inicio'], tarea['fecha_fin'], tarea['completada'], tarea['calificacion']);
+                      tareasAsignadas.add(tareaAux);
+                    }
+                  }
+
+                  uri = "http://10.0.2.2/dgp_php_scripts/obtener_tareas.php";
+                  response = await http.get(Uri.parse(uri));
+
+                  if (response.statusCode == 200) {
+                    var tareasJSON = json.decode(response.body);
+                    for (var tarea in tareasJSON) {
+                      List<String> listaPasos = (jsonDecode( tarea['pasos']) as List<dynamic>).cast<String>();
+
+                      List<MaterialComanda> listaMateriales = [];
+                      List<String> listaMaterialesString = (jsonDecode( tarea['materiales']) as List<dynamic>).cast<String>();
+
+                      for (int i = 0; i < listaMaterialesString.length; i++) {
+                        MaterialComanda aux = MaterialComanda(listaMaterialesString[i].split(" ")[0], listaMaterialesString[i].split(" ")[1]);
+                        listaMateriales.add(aux);
+                      }
+
+                      Tarea tareaAux = new Tarea(tarea['id_tarea'], tarea['nombre'], tarea['descripcion'], tarea['lugar'], tarea['tipo'], listaMateriales, listaPasos);
+                      listaTareas.add(tareaAux);
+                    }
+                  }
+                } catch (e) {
+                  print("Exception: $e");
+                }
+
+                List<Tarea> aux = [];
+
+                listaTareas.forEach((element) {
+                  int indice = 0;
+                  for (TareaAsignada ta in listaTareasAsignadas) {
+                    if (ta.idTarea == element.idTarea)
+                      indice = listaTareasAsignadas.indexOf(ta);
+                  }
+
+                  if(element.tipo == "M" && listaTareasAsignadas[indice].idEstudiante == estudiante!.idEstudiante)
+                    aux.add(element);
+                });
+
+                Navigator.push( context, MaterialPageRoute(builder: (context) => TareasEstudiante(aux)));
+              },
               child: Container(
                 margin: EdgeInsets.fromLTRB(50, 0, 50, 0),
                 height: MediaQuery.of(context).size.height * 0.2,
