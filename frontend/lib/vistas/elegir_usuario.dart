@@ -34,8 +34,13 @@ class _ElegirUsuarioState extends State<ElegirUsuario> {
             onTap: () {
               Navigator.push( context, MaterialPageRoute(builder: (context) => InicioProfesor()));
             },
-            child: SizedBox(
-              child: Image.asset("assets/imagenes/profesor.png"),
+            child: Stack(
+              children: [
+                Text("Profesor"),
+                SizedBox(
+                  child: Image.asset("assets/imagenes/profesor.png"),
+                ),
+              ]
             ),
           ),
 
@@ -61,8 +66,13 @@ class _ElegirUsuarioState extends State<ElegirUsuario> {
 
               Navigator.push( context, MaterialPageRoute(builder: (context) =>PaginaLoginEstudiante(listaEstudiantes)));
             },
-            child: SizedBox(
-              child: Image.asset("assets/imagenes/estudiante.png"),
+            child: Stack(
+                children: [
+                  Text("Estudiante"),
+                  SizedBox(
+                    child: Image.asset("assets/imagenes/estudiante.png"),
+                  ),
+                ]
             ),
           )
         ],

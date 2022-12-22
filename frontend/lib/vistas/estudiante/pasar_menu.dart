@@ -1,5 +1,10 @@
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:path_provider/path_provider.dart';
 
 String nombreClase = "";
 List<String> menus = ["bajoColesterol", "basal", "diabetico", "regimen", "sinCarne", "sinCerdo", "triturado"];
@@ -130,6 +135,21 @@ class _PasarMenuState extends State<PasarMenu> {
               )
           ),
           GestureDetector(
+            onTap: () async {
+              final pdf = pw.Document();
+              pdf.addPage(pw.Page(
+                  pageFormat: PdfPageFormat.a4,
+                  build: (pw.Context context) {
+                    return pw.Center(
+                      child: pw.Text("Hello World"),
+                    ); // Center
+                  }));
+
+              final output = await getTemporaryDirectory();
+              final file = File("${output.path}/example.pdf");
+              await file.writeAsBytes(await pdf.save());
+
+            },
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.2,
               child: Image.asset("assets/imagenes/correcto.png"),
